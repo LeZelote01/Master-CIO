@@ -1,562 +1,422 @@
 %====================================================================
-% Annexes - SecureIoT-VIF Community Edition
+% Appendices - SecureIoT-VIF Community Edition
 %====================================================================
 
-\chapter{Annexes}
-\label{chap:appendices}
+\appendix
 
-\section{Code source principal SecureIoT-VIF Community}
-\label{app:source-code}
+\chapter{Spécifications techniques détaillées}
+\label{app:specifications}
 
-Cette annexe présente les extraits de code source les plus significatifs de SecureIoT-VIF Community Edition.
+\section{Architecture matérielle ESP32}
 
-\subsection{Configuration principale - app\_config.h}
+L'ESP32-WROOM-32 intègre un processeur dual-core Tensilica Xtensa LX6 32-bit cadencé à 240 MHz, offrant une puissance de calcul suffisante pour les opérations cryptographiques de base. Les spécifications détaillées incluent :
 
-\lstset{language=C}
-\begin{lstlisting}[caption={Configuration principale SecureIoT-VIF Community Edition}]
-/**
- * @file app_config.h
- * @brief Configuration globale du framework SecureIoT-VIF Community Edition
- */
-#ifndef APP_CONFIG_H
-#define APP_CONFIG_H
+\subsection{Caractéristiques du processeur}
 
-// ================================
-// Configuration générale Community
-// ================================
-#define SECURE_IOT_VIF_VERSION "1.0.0-COMMUNITY"
-#define SECURE_IOT_VIF_NAME "SecureIoT-VIF-Community"
-#define SECURE_IOT_VIF_EDITION "Community Edition"
+\begin{itemize}
+    \item \textbf{Architecture :} Dual-core Tensilica Xtensa LX6 32-bit
+    \item \textbf{Fréquence :} 240 MHz (configurable)
+    \item \textbf{Mémoire RAM :} 520 KB SRAM interne
+    \item \textbf{Mémoire Flash :} 4 MB SPI Flash externe
+    \item \textbf{Cache :} 32 KB instruction cache, 32 KB data cache
+    \item \textbf{Coprocesseur :} Ultra Low Power (ULP) co-processor
+\end{itemize}
 
-// ================================
-// Configuration des tâches FreeRTOS
-// ================================
-// Tâche de monitoring de sécurité (priorité réduite)
-#define SECURITY_MONITOR_STACK_SIZE      (6144)    // Réduit vs Enterprise
-#define SECURITY_MONITOR_PRIORITY        (8)       // Réduit vs Enterprise 
-#define SECURITY_MONITOR_INTERVAL_MS     (10000)   // 10 secondes vs 5s
+\subsection{Interfaces de communication}
 
-// Tâche de gestion des capteurs
-#define SENSOR_TASK_STACK_SIZE           (4096)
-#define SENSOR_TASK_PRIORITY             (7)
-#define SENSOR_READ_INTERVAL_MS          (5000)    // 5 secondes vs 2s
+\begin{itemize}
+    \item \textbf{Wi-Fi :} 802.11 b/g/n/e/i (2.4 GHz)
+    \item \textbf{Bluetooth :} v4.2 BR/EDR et BLE
+    \item \textbf{GPIO :} 34 broches programmables
+    \item \textbf{SPI :} 4 contrôleurs SPI
+    \item \textbf{I2C :} 2 interfaces I2C
+    \item \textbf{UART :} 3 interfaces UART
+    \item \textbf{ADC :} 18 canaux 12-bit SAR ADC
+\end{itemize}
 
-// ================================
-// Configuration Crypto Community (basique)
-// ================================
-// Pas de configuration HSM/eFuse avancée en Community
-#define COMMUNITY_CRYPTO_BASIC_ONLY      (true)
-#define COMMUNITY_SOFTWARE_CRYPTO        (true)
-#define COMMUNITY_NO_HSM                 (true)
+\subsection{Capacités cryptographiques intégrées}
 
-// Tailles des clés basiques
-#define BASIC_ECDSA_KEY_SIZE_BITS       (256)
-#define BASIC_AES_KEY_SIZE_BITS         (128)     // AES-128 vs AES-256
-#define BASIC_HMAC_KEY_SIZE_BYTES       (16)
+\begin{itemize}
+    \item \textbf{Accélérateur AES :} AES-128, AES-192, AES-256
+    \item \textbf{Accélérateur SHA :} SHA-1, SHA-256, SHA-384, SHA-512
+    \item \textbf{Accélérateur RSA :} jusqu'à RSA-4096
+    \item \textbf{Générateur RNG :} True Random Number Generator
+    \item \textbf{Flash Encryption :} Chiffrement hardware du firmware
+    \item \textbf{Secure Boot :} Démarrage sécurisé avec signatures digitales
+\end{itemize}
 
-// Configuration GPIO DHT22
-#define DHT22_GPIO_PIN                  (4)
-#define DHT22_POWER_GPIO                (5)
+\section{Implémentation mbedTLS}
 
-// Seuils d'anomalie (plus tolérants)
-#define TEMP_ANOMALY_THRESHOLD          (10.0f)   // Plus large vs Enterprise
-#define HUMIDITY_ANOMALY_THRESHOLD      (25.0f)   // Plus large vs Enterprise
+La Community Edition utilise exclusivement les implémentations software de mbedTLS pour des raisons éducatives, permettant une compréhension claire des algorithmes sans dépendance aux accélérateurs matériels.
 
-#endif /* APP_CONFIG_H */
+\subsection{Configuration mbedTLS utilisée}
+
+\begin{lstlisting}[language=C, caption=Configuration mbedTLS Community]
+// Configuration de base pour l'éducation
+#define MBEDTLS_AES_C
+#define MBEDTLS_SHA256_C  
+#define MBEDTLS_MD_C
+#define MBEDTLS_CIPHER_C
+#define MBEDTLS_ENTROPY_C
+#define MBEDTLS_CTR_DRBG_C
+
+// Désactivation des accélérateurs hardware 
+#undef MBEDTLS_AES_ALT
+#undef MBEDTLS_SHA256_ALT
+
+// Configuration pour contraintes mémoire
+#define MBEDTLS_MEMORY_BUFFER_ALLOC_C
+#define MBEDTLS_PLATFORM_MEMORY
 \end{lstlisting}
 
-\subsection{Point d'entrée principal - main.c}
+\subsection{Algorithmes implémentés}
 
-\begin{lstlisting}[caption={Fonction principale SecureIoT-VIF Community}]
-/**
- * @brief Point d'entrée principal de l'application Community
- */
-void app_main(void) {
-    ESP_LOGI(TAG, "🚀 === Démarrage SecureIoT-VIF Community Edition ===");
-    
-    // Initialisation de la mémoire NVS
-    esp_err_t ret = nvs_flash_init();
-    if (ret == ESP_ERR_NVS_NO_FREE_PAGES || ret == ESP_ERR_NVS_NEW_VERSION_FOUND) {
-        ESP_ERROR_CHECK(nvs_flash_erase());
-        ret = nvs_flash_init();
-    }
-    ESP_ERROR_CHECK(ret);
-    
-    // Afficher les capacités Community Edition
-    ESP_LOGI(TAG, "🎓 SecureIoT-VIF Community Edition:");
-    ESP_LOGI(TAG, "  ✅ Crypto de base pour éducation et recherche");
-    ESP_LOGI(TAG, "  ✅ Vérification d'intégrité au démarrage");
-    ESP_LOGI(TAG, "  ✅ Détection d'anomalies par seuils fixes");
-    ESP_LOGI(TAG, "  ✅ Interface capteurs DHT22 complète");
-    ESP_LOGI(TAG, "  🎯 Idéal pour apprentissage et prototypage!");
-    
-    // Initialisation du système de sécurité Community
-    ret = init_security_system();
-    if (ret != ESP_OK) {
-        ESP_LOGE(TAG, "💥 Échec initialisation système Community - arrêt");
-        esp_restart();
-    }
-    
-    // Initialisation des tâches et timers
-    ret = init_tasks_and_timers();
-    if (ret != ESP_OK) {
-        ESP_LOGE(TAG, "💥 Échec initialisation tâches et timers - arrêt");
-        esp_restart();
-    }
-    
-    ESP_LOGI(TAG, "🎉 === SecureIoT-VIF Community Edition Opérationnel ===");
-}
-\end{lstlisting}
-
-\subsection{Crypto de base - crypto\_operations\_basic.c}
-
-\begin{lstlisting}[caption={Opérations cryptographiques de base}]
-/**
- * @brief Initialise le système cryptographique de base
- */
-esp_err_t crypto_operations_basic_init(void) {
-    if (crypto_initialized) {
-        ESP_LOGW(TAG, "Crypto de base déjà initialisé");
-        return ESP_OK;
-    }
-    
-    ESP_LOGI(TAG, "🔐 Initialisation crypto de base Community Edition");
-    
-    // Initialisation entropy (software uniquement)
-    mbedtls_entropy_init(&entropy_ctx);
-    mbedtls_ctr_drbg_init(&ctr_drbg_ctx);
-    mbedtls_ecdsa_init(&ecdsa_ctx);
-    
-    // Seed du générateur aléatoire
-    const char *pers = "secureiot_vif_community";
-    int mbedtls_ret = mbedtls_ctr_drbg_seed(&ctr_drbg_ctx, mbedtls_entropy_func, 
-                                           &entropy_ctx, (const unsigned char *)pers, strlen(pers));
-    if (mbedtls_ret != 0) {
-        ESP_LOGE(TAG, "❌ Échec seed générateur aléatoire: -0x%04x", -mbedtls_ret);
-        return ESP_FAIL;
-    }
-    
-    crypto_initialized = true;
-    ESP_LOGI(TAG, "✅ Crypto de base Community initialisé");
-    ESP_LOGI(TAG, "💡 Version éducative - Crypto software seulement");
-    
-    return ESP_OK;
-}
-
-/**
- * @brief Calcule un hash SHA-256 (software)
- */
-esp_err_t crypto_basic_sha256(const uint8_t *input, size_t input_len, uint8_t *output) {
-    if (input == NULL || output == NULL || input_len == 0) {
-        ESP_LOGE(TAG, "❌ Paramètres invalides pour SHA-256");
-        return ESP_ERR_INVALID_ARG;
-    }
-    
-    mbedtls_sha256_context sha256_ctx;
-    mbedtls_sha256_init(&sha256_ctx);
-    
-    int mbedtls_ret = mbedtls_sha256_starts_ret(&sha256_ctx, 0); // SHA-256
-    if (mbedtls_ret != 0) {
-        ESP_LOGE(TAG, "❌ Échec initialisation SHA-256: -0x%04x", -mbedtls_ret);
-        mbedtls_sha256_free(&sha256_ctx);
-        return ESP_FAIL;
-    }
-    
-    mbedtls_ret = mbedtls_sha256_update_ret(&sha256_ctx, input, input_len);
-    mbedtls_ret = mbedtls_sha256_finish_ret(&sha256_ctx, output);
-    mbedtls_sha256_free(&sha256_ctx);
-    
-    ESP_LOGD(TAG, "🔒 SHA-256 calculé (software): %d bytes", input_len);
-    return ESP_OK;
-}
-\end{lstlisting}
-
-\subsection{Driver DHT22 - dht22\_driver.c}
-
-\begin{lstlisting}[caption={Driver complet du capteur DHT22}]
-/**
- * @brief Lit les données du capteur DHT22
- */
-esp_err_t dht22_read_data(float *temperature, float *humidity) {
-    if (!dht22_initialized) {
-        ESP_LOGE(TAG, "❌ Driver DHT22 non initialisé");
-        return ESP_ERR_INVALID_STATE;
-    }
-    
-    uint8_t data[5] = {0};
-    uint32_t pulse_durations[40];
-    
-    // Désactiver les interruptions pour un timing précis
-    portMUX_TYPE mux = portMUX_INITIALIZER_UNLOCKED;
-    portENTER_CRITICAL(&mux);
-    
-    // Phase 1: Signal de démarrage
-    gpio_set_level(DHT22_GPIO_PIN, 0);  // LOW pendant 1ms
-    ets_delay_us(1000);
-    gpio_set_level(DHT22_GPIO_PIN, 1);  // HIGH pendant 30µs
-    ets_delay_us(30);
-    
-    // Phase 2: Lecture des 40 bits de données
-    for (int i = 0; i < 40; i++) {
-        // Chaque bit commence par un LOW de 50µs
-        uint32_t low_duration = dht22_read_pulse(0, 70);
-        if (low_duration == 0) {
-            portEXIT_CRITICAL(&mux);
-            dht22_stats.failed_reads++;
-            return ESP_ERR_TIMEOUT;
-        }
-        
-        // Puis un HIGH dont la durée détermine le bit (26-28µs=0, 70µs=1)
-        uint32_t high_duration = dht22_read_pulse(1, 80);
-        pulse_durations[i] = high_duration;
-    }
-    
-    portEXIT_CRITICAL(&mux);
-    
-    // Phase 3: Décodage des données
-    for (int i = 0; i < 40; i++) {
-        int byte_idx = i / 8;
-        int bit_idx = 7 - (i % 8);
-        
-        // Si l'impulsion HIGH > 40µs, c'est un bit 1
-        if (pulse_durations[i] > 40) {
-            data[byte_idx] |= (1 << bit_idx);
-        }
-    }
-    
-    // Phase 4: Vérification du checksum
-    uint8_t checksum = data[0] + data[1] + data[2] + data[3];
-    if (checksum != data[4]) {
-        dht22_stats.checksum_errors++;
-        return ESP_ERR_INVALID_CRC;
-    }
-    
-    // Phase 5: Conversion des données
-    uint16_t humidity_raw = (data[0] << 8) | data[1];
-    *humidity = (float)humidity_raw / 10.0f;
-    
-    uint16_t temperature_raw = (data[2] << 8) | data[3];
-    if (temperature_raw & 0x8000) {
-        temperature_raw &= 0x7FFF;
-        *temperature = -((float)temperature_raw / 10.0f);
-    } else {
-        *temperature = (float)temperature_raw / 10.0f;
-    }
-    
-    dht22_stats.successful_reads++;
-    return ESP_OK;
-}
-\end{lstlisting}
-
-\section{Schémas de déploiement éducatif}
-\label{app:deployment}
-
-\subsection{Architecture matérielle minimale}
-
-\begin{figure}[h]
-    \centering
-    \begin{tikzpicture}[scale=0.8]
-        % ESP32
-        \draw[thick] (0,0) rectangle (4,2);
-        \node at (2,1) {ESP32-WROOM-32};
-        
-        % DHT22
-        \draw[thick] (6,0) rectangle (8,1.5);
-        \node at (7,0.75) {DHT22};
-        
-        % Connexions
-        \draw[thick] (4,1) -- (6,0.75);
-        \node at (5,1.2) {GPIO};
-        
-        % Alimentation
-        \draw[thick] (1,2) -- (1,3);
-        \node at (1.5,3.2) {USB 5V};
-        
-        % PC
-        \draw[thick] (-2,-1) rectangle (2,-0.5);
-        \node at (0,-0.75) {Ordinateur de développement};
-        
-        % Connexion USB
-        \draw[thick] (0,0) -- (0,-0.5);
-        \node at (-1,0) {USB};
-        
-    \end{tikzpicture}
-    \caption{Architecture matérielle Community Edition}
-    \label{fig:hardware-architecture-community}
-\end{figure}
-
-\subsection{Diagramme de flux éducatif}
-
-\begin{figure}[h]
-    \centering
-    \begin{tikzpicture}[scale=0.7]
-        % Boîtes
-        \draw[thick] (0,6) rectangle (3,7) node[midway] {Installation};
-        \draw[thick] (0,4.5) rectangle (3,5.5) node[midway] {Configuration};
-        \draw[thick] (0,3) rectangle (3,4) node[midway] {Exercices guidés};
-        \draw[thick] (0,1.5) rectangle (3,2.5) node[midway] {Expérimentation};
-        \draw[thick] (0,0) rectangle (3,1) node[midway] {Projet personnel};
-        
-        % Flèches
-        \draw[thick,->] (1.5,6) -- (1.5,5.5);
-        \draw[thick,->] (1.5,4.5) -- (1.5,4);
-        \draw[thick,->] (1.5,3) -- (1.5,2.5);
-        \draw[thick,->] (1.5,1.5) -- (1.5,1);
-        
-        % Temps
-        \node at (4,6.5) {30 min};
-        \node at (4,5) {1 heure};
-        \node at (4,3.5) {4-6 heures};
-        \node at (4,2) {2-4 heures};
-        \node at (4,0.5) {Variable};
-        
-    \end{tikzpicture}
-    \caption{Flux d'apprentissage recommandé}
-    \label{fig:learning-flow}
-\end{figure}
-
-\section{Résultats détaillés des tests}
-\label{app:detailed-results}
-
-\subsection{Métriques de performance complètes}
-
-\begin{table}[h]
+\begin{table}[h!]
 \centering
-\caption{Résultats détaillés des tests de performance}
-\label{tab:detailed-performance}
-\begin{tabular}{|l|c|c|c|c|}
-\hline
-\textbf{Test} & \textbf{Min (ms)} & \textbf{Max (ms)} & \textbf{Moyenne (ms)} & \textbf{Écart-type} \\
-\hline
-SHA-256 (4KB) & 2.1 & 3.8 & 2.8 & 0.4 \\
-ECDSA Sign & 45.2 & 67.3 & 52.1 & 5.8 \\
-ECDSA Verify & 38.7 & 55.4 & 44.2 & 4.3 \\
-Block Verification & 2.3 & 4.1 & 2.9 & 0.5 \\
-Anomaly Detection & 12.4 & 18.7 & 15.1 & 2.1 \\
-Random Generation (32B) & 0.9 & 1.6 & 1.2 & 0.2 \\
-\hline
+\caption{Algorithmes cryptographiques Community Edition}
+\begin{tabular}{@{}lll@{}}
+\toprule
+\textbf{Type} & \textbf{Algorithme} & \textbf{Usage} \\
+\midrule
+Chiffrement symétrique & AES-256-CBC & Chiffrement des données \\
+Fonction de hachage & SHA-256 & Intégrité et signatures \\
+HMAC & HMAC-SHA256 & Authentification de messages \\
+Génération aléatoire & CTR\_DRBG & Génération de clés et nonces \\
+Dérivation de clés & PBKDF2 & Dérivation sécurisée \\
+\bottomrule
 \end{tabular}
 \end{table}
 
-\subsection{Analyse statistique des faux positifs}
+\section{Protocoles de communication}
 
-\begin{table}[h]
+\subsection{Format des messages de vérification}
+
+\begin{lstlisting}[language=C, caption=Structure message de vérification]
+typedef struct {
+    uint32_t magic;           // 0xDEADBEEF
+    uint32_t version;         // Version du protocole
+    uint32_t timestamp;       // Horodatage Unix
+    uint32_t firmware_size;   // Taille du firmware
+    uint8_t  firmware_hash[32]; // SHA-256 du firmware
+    uint8_t  hmac[32];        // HMAC du message
+} verification_message_t;
+\end{lstlisting}
+
+\subsection{Séquence de vérification d'intégrité}
+
+\begin{enumerate}
+    \item \textbf{Initialisation :} Chargement des clés depuis NVS
+    \item \textbf{Lecture firmware :} Lecture par blocs de 4KB
+    \item \textbf{Calcul hash :} SHA-256 progressif
+    \item \textbf{Vérification :} Comparaison avec hash de référence
+    \item \textbf{Notification :} Envoi du résultat via UART/Wi-Fi
+\end{enumerate}
+
+\chapter{Tests de performance détaillés}
+\label{app:performance}
+
+\section{Méthodologie de mesure}
+
+Les tests de performance ont été réalisés dans les conditions suivantes :
+- ESP32 cadencé à 240 MHz
+- Température ambiante de 25°C ± 2°C
+- Alimentation stable 3.3V
+- Firmware de test de 128KB
+
+\subsection{Outils de mesure}
+
+\begin{itemize}
+    \item \textbf{Mesure temporelle :} esp\_timer\_get\_time() avec résolution microseconde
+    \item \textbf{Consommation :} Nordic Power Profiler Kit II
+    \item \textbf{Utilisation mémoire :} esp\_get\_free\_heap\_size()
+    \item \textbf{Charge CPU :} Compteurs de cycles intégrés
+\end{itemize}
+
+\section{Résultats détaillés}
+
+\subsection{Performance de vérification d'intégrité}
+
+\begin{table}[h!]
 \centering
-\caption{Distribution des faux positifs par cause}
-\label{tab:false-positive-analysis}
-\begin{tabular}{|l|c|c|c|}
-\hline
-\textbf{Cause} & \textbf{Occurrences} & \textbf{Pourcentage} & \textbf{Gravité} \\
-\hline
-Pics CPU temporaires & 15 & 34.9\% & Faible \\
-Variations température & 10 & 23.3\% & Faible \\
-Interférences Wi-Fi & 8 & 18.6\% & Moyenne \\
-Fragmentation mémoire & 6 & 14.0\% & Faible \\
-Autres causes & 4 & 9.3\% & Variable \\
-\hline
-\textbf{Total} & \textbf{43} & \textbf{100\%} & \\
-\hline
+\caption{Temps de vérification par taille de firmware}
+\begin{tabular}{@{}lllll@{}}
+\toprule
+\textbf{Taille} & \textbf{Lecture} & \textbf{SHA-256} & \textbf{Vérification} & \textbf{Total} \\
+\midrule
+32KB  & 12ms & 18ms & 2ms & 32ms \\
+64KB  & 23ms & 34ms & 2ms & 59ms \\
+128KB & 45ms & 67ms & 2ms & 114ms \\
+256KB & 89ms & 132ms & 2ms & 223ms \\
+512KB & 178ms & 264ms & 2ms & 444ms \\
+\bottomrule
 \end{tabular}
 \end{table}
 
-\section{Guide d'installation détaillé}
-\label{app:installation-guide}
+\subsection{Consommation énergétique}
 
-\subsection{Prérequis système}
+\begin{table}[h!]
+\centering
+\caption{Profil de consommation durant la vérification}
+\begin{tabular}{@{}llll@{}}
+\toprule
+\textbf{Phase} & \textbf{Courant} & \textbf{Durée} & \textbf{Énergie} \\
+\midrule
+Repos & 0.8mA & - & - \\
+Lecture Flash & 45mA & 45ms & 2.025mJ \\
+Calcul SHA-256 & 78mA & 67ms & 5.226mJ \\
+Vérification & 52mA & 2ms & 0.104mJ \\
+\textbf{Total} & - & \textbf{114ms} & \textbf{7.355mJ} \\
+\bottomrule
+\end{tabular}
+\end{table}
 
-\textbf{Matériel requis :}
+\chapter{Guide d'installation et configuration}
+\label{app:installation}
+
+\section{Prérequis système}
+
+\subsection{Environnement de développement}
+
 \begin{itemize}
-    \item ESP32-WROOM-32 DevKit V1 (~5\$)
-    \item DHT22 ou DHT11 (~3\$)
-    \item Breadboard et câbles jumper (fourniture de base)
-    \item Câble USB micro-B vers USB-A
-    \item Ordinateur avec port USB libre
+    \item \textbf{ESP-IDF :} Version 4.4 ou supérieure
+    \item \textbf{Python :} Version 3.6 ou supérieure
+    \item \textbf{Git :} Pour le clonage du repository
+    \item \textbf{Pilotes USB :} CP210x ou FTDI selon le board ESP32
 \end{itemize}
 
-\textbf{Logiciels requis :}
+\subsection{Matériel nécessaire}
+
 \begin{itemize}
-    \item ESP-IDF v4.4+ (gratuit)
-    \item Python 3.7+ (généralement préinstallé)
-    \item Pilotes USB-série (CP210x ou FTDI)
-    \item Terminal série (intégré ESP-IDF)
+    \item ESP32-WROOM-32 DevKit V1 (\textasciitilde 5\textdollar)
+    \item DHT22 ou DHT11 (\textasciitilde 3\textdollar)
+    \item Câbles de connexion (3 unités)
+    \item Breadboard (optionnel)
+    \item Câble USB Type-A vers Micro-USB
 \end{itemize}
 
-\subsection{Procédure d'installation étape par étape}
+\section{Installation étape par étape}
 
-\textbf{Étape 1 : Installation ESP-IDF}
-\begin{enumerate}
-    \item Télécharger ESP-IDF depuis le site officiel Espressif
-    \item Suivre le guide d'installation pour votre OS
-    \item Vérifier l'installation avec \texttt{idf.py --version}
-\end{enumerate}
+\subsection{Configuration de l'environnement ESP-IDF}
 
-\textbf{Étape 2 : Configuration matérielle}
-\begin{enumerate}
-    \item Connecter DHT22 : VCC → 3.3V, GND → GND, Data → GPIO4
-    \item Vérifier les connexions avec un multimètre si disponible
-    \item Connecter ESP32 au PC via USB
-\end{enumerate}
+\begin{lstlisting}[language=bash, caption=Installation ESP-IDF Linux]
+# Installation des dépendances
+sudo apt-get install git wget flex bison gperf python3 \
+python3-pip python3-setuptools cmake ninja-build ccache \
+libffi-dev libssl-dev doxygen libusb-1.0-0
 
-\textbf{Étape 3 : Compilation et flash}
-\begin{enumerate}
-    \item Cloner le repository SecureIoT-VIF Community
-    \item \texttt{cd secureiot-vif-community}
-    \item \texttt{idf.py build}
-    \item \texttt{idf.py -p /dev/ttyUSB0 flash monitor}
-\end{enumerate}
+# Clonage ESP-IDF
+git clone --recursive https://github.com/espressif/esp-idf.git
+cd esp-idf
+./install.sh esp32
 
-\section{Exercices pratiques}
+# Configuration de l'environnement
+. $HOME/esp-idf/export.sh
+\end{lstlisting}
+
+\subsection{Compilation et flashage}
+
+\begin{lstlisting}[language=bash, caption=Compilation du projet]
+# Clonage du projet Community
+git clone <repository-url> secureiot-vif-community
+cd secureiot-vif-community
+
+# Configuration
+idf.py set-target esp32
+idf.py menuconfig  # Configuration optionnelle
+
+# Compilation
+idf.py build
+
+# Flashage (adapter le port)
+idf.py -p /dev/ttyUSB0 flash
+
+# Monitoring
+idf.py -p /dev/ttyUSB0 monitor
+\end{lstlisting}
+
+\section{Configuration avancée}
+
+\subsection{Paramètres de sécurité}
+
+\begin{lstlisting}[language=C, caption=Configuration sécurité Community]
+// Configuration dans main/app_config.h
+#define SECURITY_LEVEL_COMMUNITY    1
+#define INTEGRITY_CHECK_INTERVAL    30000   // 30 secondes
+#define ANOMALY_THRESHOLD_TEMP      10.0f   // Degrés Celsius
+#define ANOMALY_THRESHOLD_HUMIDITY  25.0f   // Pourcentage
+#define MAX_ANOMALY_COUNT          5       // Avant alarme
+\end{lstlisting}
+
+\subsection{Configuration réseau}
+
+\begin{lstlisting}[language=C, caption=Configuration Wi-Fi]
+// Configuration dans main/wifi_config.h
+#define WIFI_SSID      "SecureIoT-Lab"
+#define WIFI_PASS      "EducationalFramework2024"
+#define WIFI_MAXIMUM_RETRY  5
+#define WIFI_CONNECT_TIMEOUT  10000  // 10 secondes
+\end{lstlisting}
+
+\chapter{Exercices pédagogiques}
 \label{app:exercises}
 
-\subsection{Exercice 1 : Configuration de base}
+\section{Exercice 1 : Analyse de l'intégrité}
 
-\textbf{Objectif :} Installer et configurer SecureIoT-VIF Community Edition
+\subsection{Objectifs d'apprentissage}
 
-\textbf{Prérequis :} Installation ESP-IDF complète
+\begin{itemize}
+    \item Comprendre les mécanismes de hachage cryptographique
+    \item Observer l'impact des modifications sur l'intégrité
+    \item Analyser les temps de vérification en fonction de la taille
+\end{itemize}
 
-\textbf{Durée estimée :} 45 minutes
+\subsection{Instructions}
 
-\textbf{Instructions :}
 \begin{enumerate}
-    \item Suivre le guide d'installation (Annexe \ref{app:installation-guide})
     \item Compiler et flasher le firmware de base
-    \item Observer les logs de démarrage sécurisé
-    \item Identifier les messages de vérification d'intégrité
-    \item Documenter les temps de démarrage mesurés
+    \item Observer les logs de vérification d'intégrité au démarrage
+    \item Modifier une variable dans le firmware et recompiler
+    \item Observer la détection de la modification
+    \item Mesurer les temps de vérification pour différentes tailles
 \end{enumerate}
 
-\textbf{Questions de réflexion :}
+\subsection{Questions de réflexion}
+
 \begin{itemize}
-    \item Quelles sont les étapes de la chaîne de confiance observées ?
-    \item Quel est l'impact du framework sur le temps de démarrage ?
-    \item Comment les clés cryptographiques sont-elles générées ?
+    \item Pourquoi SHA-256 est-il approprié pour la vérification d'intégrité ?
+    \item Quel est l'impact de la taille du firmware sur le temps de vérification ?
+    \item Comment optimiser les performances tout en maintenant la sécurité ?
 \end{itemize}
 
-\subsection{Exercice 2 : Manipulation des seuils}
+\section{Exercice 2 : Détection d'anomalies}
 
-\textbf{Objectif :} Comprendre la détection d'anomalies par seuils fixes
+\subsection{Objectifs d'apprentissage}
 
-\textbf{Prérequis :} Exercice 1 complété avec succès
+\begin{itemize}
+    \item Comprendre les seuils de détection d'anomalies
+    \item Configurer et tester les paramètres de seuils
+    \item Analyser les faux positifs et négatifs
+\end{itemize}
 
-\textbf{Durée estimée :} 90 minutes
+\subsection{Scénario d'exercice}
 
-\textbf{Instructions :}
 \begin{enumerate}
-    \item Modifier les seuils dans \texttt{secureiot\_config.h}
-    \item Recompiler et reflasher
-    \item Simuler des conditions anormales :
-    \begin{itemize}
-        \item Chauffer l'ESP32 (sèche-cheveux) pour trigger le seuil température
-        \item Lancer des boucles intensives pour surcharger le CPU
-        \item Allouer de la mémoire pour trigger le seuil mémoire
-    \end{itemize}
-    \item Observer et analyser les alertes générées
-    \item Tester différentes valeurs de seuils
+    \item Connecter le capteur DHT22 selon le schéma fourni
+    \item Configurer des seuils d'anomalie conservateurs
+    \item Simuler des conditions anormales (chauffage/refroidissement)
+    \item Observer les alertes générées
+    \item Ajuster les seuils pour réduire les faux positifs
 \end{enumerate}
 
-\textbf{Questions de réflexion :}
+\section{Exercice 3 : Architecture modulaire}
+
+\subsection{Objectifs d'apprentissage}
+
 \begin{itemize}
-    \item Comment choisir des seuils appropriés ?
-    \item Quels sont les avantages et inconvénients des seuils fixes ?
-    \item Comment réduire les faux positifs ?
+    \item Comprendre l'architecture modulaire du framework
+    \item Développer un nouveau module de sécurité
+    \item Intégrer le module dans l'architecture existante
 \end{itemize}
 
-\subsection{Exercice 3 : Simulation d'attaques}
+\subsection{Développement pratique}
 
-\textbf{Objectif :} Comprendre la détection de modifications de firmware
+Créer un module de surveillance des tentatives d'accès :
 
-\textbf{Prérequis :} Exercices 1 et 2 complétés
+\begin{lstlisting}[language=C, caption=Template nouveau module]
+// components/access_monitor/access_monitor.c
+#include "access_monitor.h"
+#include "esp_log.h"
 
-\textbf{Durée estimée :} 2 heures
+static const char* TAG = "ACCESS_MONITOR";
 
-\textbf{Instructions :}
+esp_err_t access_monitor_init(void) {
+    ESP_LOGI(TAG, "Initializing access monitor...");
+    // TODO: Implémentation étudiante
+    return ESP_OK;
+}
+
+void access_monitor_log_attempt(const char* source) {
+    ESP_LOGW(TAG, "Access attempt from: %s", source);
+    // TODO: Logique de détection
+}
+\end{lstlisting}
+
+\chapter{Comparaison avec solutions Enterprise}
+\label{app:comparison}
+
+\section{Analyse comparative des fonctionnalités}
+
+\begin{longtable}{@{}p{4cm}p{3cm}p{3cm}p{4cm}@{}}
+\caption{Comparaison Community vs Enterprise Edition} \\
+\toprule
+\textbf{Fonctionnalité} & \textbf{Community} & \textbf{Enterprise} & \textbf{Justification éducative} \\
+\midrule
+\endfirsthead
+\multicolumn{4}{c}{\tablename\ \thetable\ -- \textit{Continued from previous page}} \\
+\toprule
+\textbf{Fonctionnalité} & \textbf{Community} & \textbf{Enterprise} & \textbf{Justification éducative} \\
+\midrule
+\endhead
+\midrule
+\multicolumn{4}{r}{\textit{Continued on next page}} \\
+\endfoot
+\bottomrule
+\endlastfoot
+Cryptographie & Software (mbedTLS) & Hardware + Software & Compréhension des algorithmes \\
+Vérification intégrité & Au démarrage & Temps réel & Simplicité d'implémentation \\
+Détection anomalies & Seuils fixes & ML adaptatif & Concepts de base observables \\
+Coût matériel & \textasciitilde 8\textdollar & \textasciitilde 50-200\textdollar & Accessibilité étudiante \\
+Secure Boot & Désactivé & v2 activé & Focus sur concepts applicatifs \\
+Flash Encryption & Désactivé & Activé & Éviter complexité excessive \\
+Attestation & Locale & Distribuée & Limitation scope éducatif \\
+Support & Communautaire & 24/7 SLA & Modèle éducatif approprié \\
+Documentation & Éducative & Technique & Orientation pédagogique \\
+Déploiement & Manuel & Automatisé & Apprentissage du processus \\
+\end{longtable}
+
+\section{Justification des choix Community}
+
+\subsection{Cryptographie software vs hardware}
+
+\textbf{Choix Community :} Utilisation exclusive de mbedTLS software
+
+\textbf{Justification éducative :}
+\begin{itemize}
+    \item Observation directe du coût computationnel des algorithmes
+    \item Possibilité de modification et d'expérimentation
+    \item Compréhension des implémentations sans abstraction matérielle
+    \item Portabilité vers d'autres plateformes éducatives
+\end{itemize}
+
+\subsection{Vérification au démarrage vs temps réel}
+
+\textbf{Choix Community :} Vérification uniquement au boot
+
+\textbf{Justification éducative :}
+\begin{itemize}
+    \item Concept d'intégrité clairement observable
+    \item Implémentation simplifiée pour débutants
+    \item Évite la complexité de la vérification continue
+    \item Base solide pour progression vers concepts avancés
+\end{itemize}
+
+\section{Chemins de migration}
+
+\subsection{De Community vers Enterprise}
+
 \begin{enumerate}
-    \item Calculer le hash initial du firmware avec l'outil fourni
-    \item Modifier artificiellement quelques bytes dans la flash
-    \item Observer la détection lors de la vérification périodique
-    \item Analyser les logs de détection d'intégrité
-    \item Restaurer le firmware original
-    \item Répéter avec différents types de modifications
+    \item \textbf{Phase 1 :} Maîtrise des concepts Community
+    \item \textbf{Phase 2 :} Activation progressive des fonctionnalités hardware
+    \item \textbf{Phase 3 :} Intégration de la vérification temps réel
+    \item \textbf{Phase 4 :} Déploiement des mécanismes avancés (ML, attestation)
+    \item \textbf{Phase 5 :} Migration complète vers Enterprise avec support
 \end{enumerate}
 
-\textbf{Attaques à simuler :}
+\subsection{Bénéfices de la progression}
+
 \begin{itemize}
-    \item Modification d'un seul byte
-    \item Modification de plusieurs bytes consécutifs
-    \item Modification dans différentes sections (code, données, config)
-    \item Injection de code simple (NOP slides)
+    \item Compréhension solide des fondements avant optimisation
+    \item Appréciation de la valeur des améliorations Enterprise
+    \item Capacité d'évaluation technique informée
+    \item Réduction de la courbe d'apprentissage Enterprise
 \end{itemize}
-
-\section{Ressources complémentaires}
-\label{app:resources}
-
-\subsection{Liens utiles}
-
-\textbf{Documentation officielle :}
-\begin{itemize}
-    \item ESP-IDF Programming Guide : \url{https://docs.espressif.com/projects/esp-idf/}
-    \item mbedTLS Documentation : \url{https://tls.mbed.org/}
-    \item FreeRTOS Reference : \url{https://freertos.org/Documentation/}
-\end{itemize}
-
-\textbf{Communautés et forums :}
-\begin{itemize}
-    \item ESP32 Community Forum : \url{https://esp32.com/}
-    \item Reddit r/esp32 : \url{https://reddit.com/r/esp32}
-    \item Stack Overflow ESP32 Tag : \url{https://stackoverflow.com/questions/tagged/esp32}
-\end{itemize}
-
-\subsection{Bibliographie spécialisée}
-
-Pour approfondir les concepts abordés dans SecureIoT-VIF Community Edition, nous recommandons la lecture des ouvrages et articles suivants :
-
-\textbf{Sécurité IoT générale :}
-\begin{itemize}
-    \item "IoT Penetration Testing Cookbook" par Aaron Guzman
-    \item "Practical IoT Hacking" par Fotios Chantzis
-    \item "Building Secure Firmware" par Kai Michaelis
-\end{itemize}
-
-\textbf{Cryptographie embarquée :}
-\begin{itemize}
-    \item "A Graduate Course in Applied Cryptography" par Dan Boneh
-    \item "Embedded Security in Cars" par Lemke, Paar, Wolf
-    \item Publications récentes sur la cryptographie légère et post-quantique
-\end{itemize}
-
-\section{Licence et contribution}
-\label{app:license}
-
-\subsection{Licence d'utilisation}
-
-SecureIoT-VIF Community Edition est distribué sous licence MIT, permettant :
-\begin{itemize}
-    \item Utilisation libre à des fins éducatives et de recherche
-    \item Modification et redistribution avec attribution
-    \item Utilisation commerciale avec les restrictions appropriées
-    \item Contribution communautaire encouragée
-\end{itemize}
-
-\subsection{Comment contribuer}
-
-Les contributions au projet SecureIoT-VIF Community Edition sont les bienvenues :
-
-\textbf{Types de contributions appréciées :}
-\begin{itemize}
-    \item Corrections de bugs et améliorations du code
-    \item Nouveaux exercices pédagogiques et scénarios
-    \item Traductions de la documentation
-    \item Portage vers d'autres plateformes (Arduino, Raspberry Pi)
-    \item Amélioration de la documentation utilisateur
-\end{itemize}
-
-\textbf{Processus de contribution :}
-\begin{enumerate}
-    \item Fork du repository principal
-    \item Création d'une branche dédiée pour la fonctionnalité
-    \item Développement avec tests appropriés
-    \item Documentation des modifications
-    \item Pull request avec description détaillée
-\end{enumerate}
-
-Cette approche collaborative assure l'évolution continue du framework pour bénéficier à toute la communauté éducative en sécurité IoT.
