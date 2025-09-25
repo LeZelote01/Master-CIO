@@ -35,8 +35,9 @@
 \usepackage{setspace}
 \usepackage{titlesec}
 \usepackage{tocloft}
-\usepackage[backend=biber,style=ieee]{biblatex}
-\addbibresource{bibliography/references.bib}
+% Configuration pour bibtex (au lieu de biber)
+\usepackage{natbib}
+\bibliographystyle{ieeetr}
 
 % Configuration de la page
 \geometry{
@@ -171,6 +172,6 @@
 \input{chapters/appendix}
 
 % Bibliographie
-\printbibliography[title=Bibliographie]
+\bibliography{bibliography/references}
 
 \end{document}
