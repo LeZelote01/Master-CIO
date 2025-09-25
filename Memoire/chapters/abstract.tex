@@ -55,3 +55,53 @@ Cette recherche établit un nouveau standard pour l'éducation en sécurité IoT
 \begin{center}
 \textbf{Mots-clés :} IoT, Sécurité Firmware, Framework Éducatif, ESP32, Édition Community, Crypto Software, mbedTLS, Vérification Intégrité, Détection Anomalies, Sécurité Légère, Technologie Éducative
 \end{center}
+
+%====================================================================
+% Abstract English Version
+%====================================================================
+
+\chapter*{Abstract}
+\addcontentsline{toc}{chapter}{Abstract}
+
+\section*{Context}
+
+The Internet of Things (IoT) is experiencing exponential growth with 75 billion connected devices expected by 2025. This expansion is accompanied by a surge in cyberattacks targeting IoT firmwares, with 89\% of devices presenting critical vulnerabilities. Facing these challenges, the academic community and developers need accessible educational and research tools to understand and develop IoT security solutions.
+
+\section*{Problem Statement}
+
+Current IoT firmware security solutions present several major limitations: implementation complexity for students and researchers, high cost of specialized security equipment, lack of practical pedagogical tools, and absence of educational frameworks allowing secure experimentation. There is a critical need to develop accessible, educational, and practical solutions for IoT security learning.
+
+\section*{Objective}
+
+This research aims to design, develop and validate SecureIoT-VIF Community Edition, an educational integrity verification framework specifically designed for learning and research in IoT security. The approach adopts a proof-of-concept methodology centered on an accessible implementation using affordable components (ESP32 ~\$8) with basic security functionalities, complemented by comparative studies with more advanced approaches.
+
+\section*{Contributions}
+
+\textbf{Theoretical contribution:} Development of an educational security model combining basic integrity verification and threshold-based anomaly detection, specifically designed for learning fundamental IoT security concepts on constrained platforms.
+
+\textbf{Methodological contribution:}
+\begin{itemize}
+    \item Implementation methodology for basic security mechanisms on ESP32 with software cryptography (mbedTLS)
+    \item Development of a progressive educational approach enabling concept understanding before implementation
+    \item Test and evaluation framework accessible to educational institutions
+\end{itemize}
+
+\textbf{Technical contribution:} Complete implementation of an educational framework:
+\begin{itemize}
+    \item Boot-time integrity verification with minimal overhead (< 8\%)
+    \item Threshold-based anomaly detection with 85\% detection rate
+    \item Modular architecture facilitating progressive learning
+    \item Total cost of \$8 enabling educational accessibility
+\end{itemize}
+
+\textbf{Empirical contribution:} Experimental evaluation on representative educational scenarios, validation of pedagogical effectiveness, and demonstration of practical feasibility for IoT security education.
+
+\section*{Results}
+
+The evaluation reveals performance suitable for educational use: 85\% detection rate on basic attacks, 7.2\% computational overhead, 5.1\% energy impact, and total cost of \$8 for a complete device. The ESP32 modular architecture enables progressive understanding of security concepts. Pedagogical tests confirm effectiveness for learning fundamental concepts.
+
+\section*{Impact}
+
+This research establishes a new standard for IoT security education by proposing an accessible framework that allows students and researchers to concretely understand IoT firmware security mechanisms. The results pave the way for democratizing IoT security education with practical and affordable tools.
+
+\textbf{Keywords:} IoT, Firmware Security, Educational Framework, ESP32, Community Edition, Software Cryptography, mbedTLS, Integrity Verification, Anomaly Detection, Lightweight Security, Educational Technology
