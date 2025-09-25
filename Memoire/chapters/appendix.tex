@@ -1,0 +1,357 @@
+%====================================================================
+% Appendices - SecureIoT-VIF Community Edition
+%====================================================================
+
+\appendix
+
+\chapter{Extraits de code principaux}
+\label{app:code}
+
+Cette appendice présente les extraits de code les plus représentatifs du framework SecureIoT-VIF Community Edition, mettant en évidence l'approche éducative et la simplicité de mise en œuvre.
+
+\section{Code principal du framework}
+
+\subsection{Point d'entrée principal (main.c)}
+
+Le point d'entrée principal illustre l'architecture modulaire du framework :
+
+\begin{lstlisting}[language=C, caption={Structure principale du framework - main.c}, label=lst:main-structure]
+/**
+ * @file main.c
+ * @brief Point d'entrée principal du framework SecureIoT-VIF Community Edition
+ * Version simplifiée avec fonctionnalités de base pour éducation et recherche.
+ */
+#include "app_config.h"
+#include "crypto_operations_basic.h"  // Version simplifiée
+#include "integrity_checker.h"
+#include "sensor_manager.h"
+#include "anomaly_detector.h"
+#include "incident_manager.h"
+
+static const char *TAG = "SECURE_IOT_VIF_COMMUNITY";
+
+// Handles des tâches principales éducatives
+static TaskHandle_t security_monitor_task_handle = NULL;
+static TaskHandle_t sensor_task_handle = NULL;
+
+// Fonction principale d'initialisation éducative
+void app_main(void) {
+    ESP_LOGI(TAG, "SecureIoT-VIF Community Edition - Démarrage");
+    
+    // Initialisation des composants de base
+    esp_err_t ret = nvs_flash_init();
+    if (ret == ESP_ERR_NVS_NO_FREE_PAGES) {
+        ESP_ERROR_CHECK(nvs_flash_erase());
+        ret = nvs_flash_init();
+    }
+    ESP_ERROR_CHECK(ret);
+    
+    // Initialisation des modules de sécurité éducatifs
+    init_crypto_operations_basic();
+    init_integrity_checker();
+    init_sensor_manager();
+    init_anomaly_detector();
+    init_incident_manager();
+    
+    ESP_LOGI(TAG, "Framework initialisé - Mode éducatif actif");
+}
+\end{lstlisting}
+
+\subsection{Vérification d'intégrité simplifiée}
+
+Le module de vérification d'intégrité utilise des mécanismes de base compréhensibles :
+
+\begin{lstlisting}[language=C, caption={Module de vérification d'intégrité - integrity\_checker.c}, label=lst:integrity-checker]
+/**
+ * @file integrity_checker.c
+ * @brief Vérificateur d'intégrité éducatif avec mécanismes de base
+ */
+
+// Structure de données éducative pour IVM
+typedef struct {
+    uint32_t firmware_size;
+    uint8_t expected_hash[32];  // SHA-256 simplifié
+    uint32_t boot_count;
+    bool integrity_status;
+    char last_check_time[32];
+} ivm_data_basic_t;
+
+// Fonction de vérification principale éducative
+esp_err_t check_firmware_integrity_basic(void) {
+    ESP_LOGI(TAG, "Début vérification intégrité - Mode éducatif");
+    
+    const esp_partition_t* app_partition = esp_ota_get_running_partition();
+    if (!app_partition) {
+        ESP_LOGE(TAG, "Impossible d'obtenir la partition active");
+        return ESP_FAIL;
+    }
+    
+    // Calcul du hash simplifié pour éducation
+    uint8_t calculated_hash[32];
+    esp_err_t ret = calculate_partition_hash_basic(app_partition, calculated_hash);
+    if (ret != ESP_OK) {
+        ESP_LOGE(TAG, "Erreur calcul hash: %s", esp_err_to_name(ret));
+        return ret;
+    }
+    
+    // Comparaison avec référence stockée
+    if (memcmp(calculated_hash, ivm_data.expected_hash, 32) == 0) {
+        ESP_LOGI(TAG, "Intégrité vérifiée - Firmware sain");
+        return ESP_OK;
+    } else {
+        ESP_LOGW(TAG, "Intégrité compromise - Firmware modifié");
+        trigger_security_incident_basic("INTEGRITY_VIOLATION");
+        return ESP_FAIL;
+    }
+}
+
+// Calcul de hash éducatif simplifié
+static esp_err_t calculate_partition_hash_basic(const esp_partition_t* partition, 
+                                               uint8_t* hash_output) {
+    mbedtls_sha256_context sha256_ctx;
+    mbedtls_sha256_init(&sha256_ctx);
+    mbedtls_sha256_starts(&sha256_ctx, 0);
+    
+    uint8_t buffer[1024];
+    size_t bytes_read = 0;
+    
+    for (size_t offset = 0; offset < partition->size; offset += sizeof(buffer)) {
+        size_t to_read = MIN(sizeof(buffer), partition->size - offset);
+        
+        esp_err_t ret = esp_partition_read(partition, offset, buffer, to_read);
+        if (ret != ESP_OK) {
+            mbedtls_sha256_free(&sha256_ctx);
+            return ret;
+        }
+        
+        mbedtls_sha256_update(&sha256_ctx, buffer, to_read);
+        bytes_read += to_read;
+    }
+    
+    mbedtls_sha256_finish(&sha256_ctx, hash_output);
+    mbedtls_sha256_free(&sha256_ctx);
+    
+    ESP_LOGI(TAG, "Hash calculé pour %zu bytes", bytes_read);
+    return ESP_OK;
+}
+\end{lstlisting}
+
+\section{Détection d'anomalies par seuils fixes}
+
+\subsection{Algorithme de détection éducatif}
+
+Le système de détection d'anomalies utilise des seuils fixes configurables :
+
+\begin{lstlisting}[language=C, caption={Détecteur d'anomalies éducatif - anomaly\_detector.c}, label=lst:anomaly-detector]
+/**
+ * @file anomaly_detector.c  
+ * @brief Détecteur d'anomalies avec seuils fixes pour éducation
+ */
+
+// Configuration des seuils éducatifs
+typedef struct {
+    uint8_t cpu_threshold_percent;      // Seuil CPU (ex: 80%)
+    uint32_t memory_threshold_kb;       // Seuil mémoire libre (ex: 50KB)
+    float temperature_threshold_c;      // Seuil température (ex: 45°C)
+    uint32_t network_threshold_bps;     // Seuil réseau (ex: 1000 bps)
+    bool thresholds_active;
+} anomaly_thresholds_t;
+
+static anomaly_thresholds_t edu_thresholds = {
+    .cpu_threshold_percent = 80,
+    .memory_threshold_kb = 50,
+    .temperature_threshold_c = 45.0,
+    .network_threshold_bps = 1000,
+    .thresholds_active = true
+};
+
+// Fonction principale de détection éducative
+esp_err_t detect_system_anomalies_basic(void) {
+    ESP_LOGI(TAG, "Analyse anomalies - Seuils fixes éducatifs");
+    
+    system_metrics_t current_metrics;
+    esp_err_t ret = collect_system_metrics_basic(&current_metrics);
+    if (ret != ESP_OK) {
+        return ret;
+    }
+    
+    bool anomaly_detected = false;
+    char anomaly_details[256] = {0};
+    
+    // Vérification CPU
+    if (current_metrics.cpu_usage > edu_thresholds.cpu_threshold_percent) {
+        anomaly_detected = true;
+        snprintf(anomaly_details, sizeof(anomaly_details), 
+                 "CPU surcharge: %d%% > %d%%", 
+                 current_metrics.cpu_usage, edu_thresholds.cpu_threshold_percent);
+        ESP_LOGW(TAG, "%s", anomaly_details);
+    }
+    
+    // Vérification mémoire
+    if (current_metrics.free_memory_kb < edu_thresholds.memory_threshold_kb) {
+        anomaly_detected = true;
+        snprintf(anomaly_details + strlen(anomaly_details), 
+                 sizeof(anomaly_details) - strlen(anomaly_details),
+                 "%sMémoire faible: %luKB < %luKB", 
+                 strlen(anomaly_details) > 0 ? "; " : "",
+                 current_metrics.free_memory_kb, edu_thresholds.memory_threshold_kb);
+        ESP_LOGW(TAG, "Mémoire critique: %lu KB disponible", current_metrics.free_memory_kb);
+    }
+    
+    // Vérification température (capteur éducatif)
+    if (current_metrics.temperature_c > edu_thresholds.temperature_threshold_c) {
+        anomaly_detected = true;
+        snprintf(anomaly_details + strlen(anomaly_details),
+                 sizeof(anomaly_details) - strlen(anomaly_details),
+                 "%sTempérature élevée: %.1f°C > %.1f°C",
+                 strlen(anomaly_details) > 0 ? "; " : "",
+                 current_metrics.temperature_c, edu_thresholds.temperature_threshold_c);
+        ESP_LOGW(TAG, "Surchauffe détectée: %.1f°C", current_metrics.temperature_c);
+    }
+    
+    if (anomaly_detected) {
+        trigger_security_incident_basic("BEHAVIORAL_ANOMALY");
+        ESP_LOGW(TAG, "Anomalie système: %s", anomaly_details);
+        return ESP_FAIL;
+    }
+    
+    ESP_LOGI(TAG, "Système normal - Aucune anomalie détectée");
+    return ESP_OK;
+}
+\end{lstlisting}
+
+\section{Interface capteur éducative}
+
+\subsection{Gestionnaire de capteur DHT22}
+
+L'interface capteur utilise le DHT22 accessible pour la température et humidité :
+
+\begin{lstlisting}[language=C, caption={Interface capteur éducative - sensor\_manager.c}, label=lst:sensor-manager]
+/**
+ * @file sensor_manager.c
+ * @brief Gestionnaire de capteurs éducatif - DHT22 pour température/humidité  
+ */
+
+// Configuration éducative du capteur DHT22
+#define DHT22_GPIO_PIN GPIO_NUM_4
+#define SENSOR_READ_INTERVAL_MS 30000  // 30 secondes pour observation
+
+typedef struct {
+    float temperature_c;
+    float humidity_percent;
+    uint32_t timestamp;
+    bool data_valid;
+} sensor_reading_t;
+
+static sensor_reading_t last_reading = {0};
+
+// Lecture éducative du capteur DHT22
+esp_err_t read_dht22_sensor_basic(sensor_reading_t* reading) {
+    ESP_LOGI(TAG, "Lecture capteur DHT22 - Mode éducatif");
+    
+    // Configuration GPIO pour DHT22
+    gpio_config_t io_conf = {
+        .pin_bit_mask = (1ULL << DHT22_GPIO_PIN),
+        .mode = GPIO_MODE_OUTPUT_OD,
+        .pull_up_en = GPIO_PULLUP_ENABLE,
+        .pull_down_en = GPIO_PULLDOWN_DISABLE,
+        .intr_type = GPIO_INTR_DISABLE
+    };
+    gpio_config(&io_conf);
+    
+    // Séquence de démarrage DHT22 simplifiée pour éducation
+    gpio_set_level(DHT22_GPIO_PIN, 0);
+    vTaskDelay(pdMS_TO_TICKS(20));  // Signal de démarrage 20ms
+    
+    gpio_set_level(DHT22_GPIO_PIN, 1);
+    gpio_set_direction(DHT22_GPIO_PIN, GPIO_MODE_INPUT);
+    
+    // Attente réponse du capteur (version simplifiée)
+    uint32_t timeout = 100;
+    while (gpio_get_level(DHT22_GPIO_PIN) == 1 && timeout--) {
+        ets_delay_us(1);
+    }
+    
+    if (timeout == 0) {
+        ESP_LOGE(TAG, "DHT22 timeout - Capteur non détecté");
+        reading->data_valid = false;
+        return ESP_FAIL;
+    }
+    
+    // Lecture des données (implémentation simplifiée)
+    uint8_t data[5] = {0};
+    esp_err_t ret = read_dht22_data_basic(data);
+    
+    if (ret == ESP_OK) {
+        // Calcul température et humidité (format DHT22)
+        uint16_t humidity_raw = (data[0] << 8) | data[1];
+        uint16_t temperature_raw = (data[2] << 8) | data[3];
+        
+        reading->humidity_percent = humidity_raw / 10.0;
+        reading->temperature_c = temperature_raw / 10.0;
+        reading->timestamp = xTaskGetTickCount();
+        reading->data_valid = true;
+        
+        ESP_LOGI(TAG, "DHT22: %.1f°C, %.1f%% humidité", 
+                 reading->temperature_c, reading->humidity_percent);
+        
+        last_reading = *reading;
+        return ESP_OK;
+    }
+    
+    reading->data_valid = false;
+    return ESP_FAIL;
+}
+\end{lstlisting}
+
+\section{Configuration éducative}
+
+\subsection{Paramètres du framework}
+
+La configuration éducative privilégie la simplicité et l'observabilité :
+
+\begin{lstlisting}[language=C, caption={Configuration éducative - app\_config.h}, label=lst:app-config]
+/**
+ * @file app_config.h
+ * @brief Configuration du framework SecureIoT-VIF Community Edition
+ */
+
+#ifndef APP_CONFIG_H
+#define APP_CONFIG_H
+
+// Configuration éducative générale
+#define SECUREIOT_VERSION_MAJOR 1
+#define SECUREIOT_VERSION_MINOR 0  
+#define SECUREIOT_VERSION_PATCH 0
+#define SECUREIOT_EDITION "Community"
+
+// Paramètres de sécurité éducatifs
+#define INTEGRITY_CHECK_INTERVAL_SEC 300    // 5 minutes pour observation
+#define ANOMALY_CHECK_INTERVAL_SEC 30       // 30 secondes pour apprentissage
+#define HEARTBEAT_INTERVAL_SEC 60           // 1 minute de monitoring
+
+// Seuils de détection éducatifs configurables
+#define DEFAULT_CPU_THRESHOLD_PERCENT 80    // Seuil CPU accessible
+#define DEFAULT_MEMORY_THRESHOLD_KB 50      // Seuil mémoire observable  
+#define DEFAULT_TEMP_THRESHOLD_C 45.0       // Seuil température sûr
+#define DEFAULT_NETWORK_THRESHOLD_BPS 1000  // Seuil réseau éducatif
+
+// Configuration matérielle éducative
+#define LED_STATUS_PIN GPIO_NUM_2           // LED intégrée ESP32
+#define BUTTON_PIN GPIO_NUM_0               // Bouton BOOT pour tests
+#define DHT22_SENSOR_PIN GPIO_NUM_4         // Capteur DHT22 standard
+
+// Mode débogage éducatif activé
+#define EDUCATIONAL_DEBUG_MODE 1
+#define VERBOSE_LOGGING 1
+#define SECURITY_ALERTS_CONSOLE 1
+
+// Limites éducatives pour expérimentation sûre
+#define MAX_INCIDENT_LOG_ENTRIES 50
+#define MAX_SENSOR_READINGS_BUFFER 100
+#define MAX_ANOMALY_HISTORY 20
+
+#endif // APP_CONFIG_H
+\end{lstlisting}
+
+Cette appendice illustre l'approche éducative du framework SecureIoT-VIF Community Edition, privilégiant la clarté du code, la simplicité de configuration, et l'observabilité des mécanismes de sécurité pour faciliter l'apprentissage et l'expérimentation pédagogique.
