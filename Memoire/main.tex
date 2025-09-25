@@ -1,9 +1,12 @@
 %====================================================================
-% Mémoire de Master - SecureIoT-VIF Community Edition:
-% Un Framework Éducatif pour la Sécurité des Firmwares IoT
+% Memoire de Master - SecureIoT-VIF Community Edition:
+% Un Framework Éducatif pour la Securite des Firmwares IoT
 %====================================================================
 
 \documentclass[12pt,a4paper,twoside]{book}
+
+% Configuration mémoire LaTeX
+\def\mainmemory{8000000}
 
 % Packages essentiels
 \usepackage[utf8]{inputenc}
@@ -17,7 +20,23 @@
 \usepackage{amssymb}
 \usepackage{url}
 \usepackage{hyperref}
+
+% Configuration des listings avec optimisation mémoire
 \usepackage{listings}
+\lstset{
+  basicstyle=\footnotesize\ttfamily,
+  breaklines=true,
+  breakatwhitespace=true,
+  showspaces=false,
+  showstringspaces=false,
+  tabsize=2,
+  frame=none,
+  columns=flexible,
+  keepspaces=true,
+  xleftmargin=0pt,
+  xrightmargin=0pt,
+  resetmargins=true
+}
 \usepackage{color}
 \usepackage{xcolor}
 \usepackage{tikz}
@@ -48,7 +67,7 @@
     bindingoffset=0.5cm
 }
 
-% Configuration des en-têtes et pieds de page
+% Configuration des en-tetes et pieds de page
 \pagestyle{fancy}
 \fancyhf{}
 \fancyhead[LE,RO]{\thepage}
@@ -62,9 +81,9 @@
     filecolor=magenta,
     urlcolor=cyan,
     citecolor=red,
-    pdftitle={SecureIoT-VIF Community Edition: Un Framework Éducatif pour la Sécurité des Firmwares IoT},
-    pdfauthor={Nom de l'étudiant},
-    pdfsubject={Mémoire de Master},
+    pdftitle={SecureIoT-VIF Community Edition: Un Framework Éducatif pour la Securite des Firmwares IoT},
+    pdfauthor={Nom de l'etudiant},
+    pdfsubject={Memoire de Master},
     pdfkeywords={IoT, Firmware Security, Educational Framework, ESP32, Community Edition, mbedTLS, Lightweight Security}
 }
 
@@ -104,10 +123,10 @@
 {\normalfont\huge\bfseries}{\chaptertitlename\ \thechapter}{20pt}{\Huge}
 
 % Variables pour la page de titre
-\newcommand{\universite}{Université [Nom de votre université]}
-\newcommand{\faculte}{Faculté [Nom de votre faculté]}
-\newcommand{\departement}{Département [Nom de votre département]}
-\newcommand{\titre}{SecureIoT-VIF Community Edition: Un Framework Éducatif pour la Sécurité des Firmwares IoT - Conception et Validation d'une Solution d'Apprentissage Accessible basée sur ESP32 et Cryptographie Software}
+\newcommand{\universite}{Universite [Nom de votre universite]}
+\newcommand{\faculte}{Faculte [Nom de votre faculte]}
+\newcommand{\departement}{Departement [Nom de votre departement]}
+\newcommand{\titre}{SecureIoT-VIF Community Edition: Un Framework Éducatif pour la Securite des Firmwares IoT - Conception et Validation d'une Solution d'Apprentissage Accessible basee sur ESP32 et Cryptographie Software}
 \newcommand{\auteur}{[Votre nom]}
 \newcommand{\directeur}{[Nom du directeur]}
 \newcommand{\codirecteur}{[Nom du co-directeur]}
@@ -121,7 +140,7 @@
 
 \begin{document}
 
-% Pages préliminaires
+% Pages preliminaires
 \frontmatter
 
 % Page de titre
@@ -130,16 +149,16 @@
 % Page blanche
 \cleardoublepage
 
-% Dédicace
+% Dedicace
 \input{chapters/dedication}
 
 % Remerciements
 \input{chapters/acknowledgments}
 
-% Résumé
+% Resume
 \input{chapters/abstract}
 
-% Table des matières
+% Table des matieres
 \tableofcontents
 
 % Liste des figures
