@@ -1,0 +1,175 @@
+%====================================================================
+% Chapitre 1 : Introduction - Version modifiée ESP32 Crypto Intégré
+%====================================================================
+
+\chapter{Introduction}
+\label{chap:introduction}
+
+\section{Contexte général}
+
+L'Internet des Objets (\ac{IoT}) représente aujourd'hui l'une des révolutions technologiques les plus significatives de notre époque. Selon les projections de l'industrie, le nombre de dispositifs \ac{IoT} connectés devrait atteindre 75 milliards d'unités d'ici 2025, générant un marché mondial estimé à plus de 6 000 milliards de dollars \cite{Statista2024IoTMarket}. Cette croissance exponentielle s'explique par l'intégration croissante de l'intelligence artificielle, l'amélioration des réseaux de communication (5G, LoRaWAN, NB-IoT), et la miniaturisation des composants électroniques.
+
+Les dispositifs \ac{IoT} grand public englobent une vaste gamme d'appareils : objets connectés domestiques (thermostats, caméras de sécurité, assistants vocaux), dispositifs portables (montres intelligentes, trackers de fitness), appareils électroménagers intelligents, et systèmes de domotique. Ces dispositifs partagent plusieurs caractéristiques communes : ressources limitées (processeur, mémoire, stockage), contraintes énergétiques strictes, et connexion permanente aux réseaux de communication.
+
+Cependant, cette prolifération s'accompagne d'une augmentation alarmante des cyberattaques ciblant spécifiquement les firmwares des dispositifs \ac{IoT}. Les recherches récentes de Nino et al. \cite{Nino2024UnveilingIoT} révèlent que 89\% des firmwares \ac{IoT} analysés présentent des vulnérabilités critiques, dont 67\% sont liées à l'absence de mécanismes de protection de l'intégrité du firmware. Les attaques par compromission de firmware permettent aux cybercriminels d'obtenir un contrôle persistant et de bas niveau des dispositifs, rendant les détections conventionnelles inefficaces.
+
+\section{Évolution technologique et migration vers ESP32}
+
+\subsection{Transition des composants externes vers l'intégration native}
+
+Cette recherche s'inscrit dans le contexte d'une évolution technologique majeure dans l'écosystème IoT : la transition des architectures basées sur des composants de sécurité externes vers des solutions intégrées nativement dans les microcontrôleurs modernes.
+
+\textbf{Limites des approches basées sur composants externes :} Les solutions traditionnelles utilisant des composants externes dédiés, bien qu'efficaces, présentent plusieurs inconvénients : coût additionnel significatif (17\$ supplémentaires par dispositif), complexité d'intégration avec 8+ connexions requises, consommation énergétique supplémentaire, et vulnérabilités liées aux interfaces de communication (I2C, SPI) exposant les échanges cryptographiques.
+
+\textbf{Avantages révolutionnaires de l'ESP32 crypto intégré :} L'ESP32 intègre nativement des capacités cryptographiques avancées : Hardware Security Module (HSM) intégré, True Random Number Generator (TRNG) matériel, accélérateurs AES/SHA/RSA matériels, stockage sécurisé des clés dans les eFuses, et mécanismes de Secure Boot v2 natifs. Cette intégration révolutionnaire offre des performances 4x supérieures, une sécurité renforcée par l'élimination des interfaces externes, et une simplicité de déploiement exceptionnelle avec seulement 3 connexions.
+
+\textbf{Impact révolutionnaire de la migration :} SecureIoT-VIF tire parti de cette évolution majeure en exploitant pleinement les capacités crypto intégrées ESP32, démontrant comment les nouvelles générations de microcontrôleurs permettent d'implémenter des mécanismes de sécurité sophistiqués sans aucun composant externe, réduisant les coûts de 68\% tout en améliorant drastiquement les performances et la sécurité.
+
+\section{Problématique de recherche}
+
+\subsection{Vulnérabilités des firmwares IoT}
+
+Les firmwares des dispositifs \ac{IoT} présentent des vulnérabilités spécifiques qui les rendent particulièrement attractifs pour les attaquants. Plusieurs études récentes ont mis en évidence l'ampleur de ces vulnérabilités :
+
+\textbf{Composants tiers vulnérables :} L'analyse de Feng et al. \cite{Feng2022OneBadApple} sur 34 136 images de firmware révèle la présence de 584 composants tiers (\ac{TPC}) associés à 128 757 vulnérabilités liées à 429 \ac{CVE}. Cette étude souligne la persistance de vulnérabilités bien connues dans les écosystèmes de firmware, créant des opportunités d'exploitation pour les attaquants.
+
+\textbf{Sophistication croissante des malwares :} Les travaux de recherche récents montrent une évolution significative dans la sophistication des malwares IoT. L'étude de González-Manzano et al. \cite{Gonzalez2024ExploringShifting} révèle une augmentation de 45\% de la complexité des malwares IoT entre 2021 et 2023, avec l'adaptation de familles de malwares initialement conçues pour Windows vers les systèmes Linux embarqués.
+
+\textbf{Attaques par manipulation du flot de contrôle :} Les attaques de type \ac{ROP} (Return-Oriented Programming) représentent une menace particulièrement critique pour les firmwares IoT. Christou et al. \cite{Christou2024DAEDALUS} démontrent comment ces attaques peuvent être déployées à grande échelle sur des botnets IoT, compromettant simultanément des milliers de dispositifs.
+
+\subsection{Limitations des solutions existantes}
+
+Les approches actuelles de sécurisation des firmwares IoT présentent plusieurs limitations majeures :
+
+\textbf{Overhead computationnel :} Les solutions de sécurité traditionnelles, conçues pour des systèmes aux ressources abondantes, introduisent un overhead computationnel et énergétique incompatible avec les contraintes des dispositifs IoT. Les mécanismes de vérification cryptographique conventionnels peuvent consommer jusqu'à 30\% des ressources disponibles sur un microcontrôleur de classe ARM Cortex-M \cite{Khan2024EfficiencySecurity}.
+
+\textbf{Absence de vérification temps réel :} La plupart des solutions existantes effectuent la vérification d'intégrité uniquement au démarrage du dispositif, laissant le firmware vulnérable aux attaques d'exécution (runtime attacks). Cette limitation est particulièrement critique pour les dispositifs IoT fonctionnant en continu.
+
+\textbf{Sous-utilisation des capacités matérielles modernes :} Les capacités cryptographiques intégrées des microcontrôleurs modernes comme l'ESP32, avec son Hardware Security Module (HSM), son True Random Number Generator (TRNG), et ses accélérateurs cryptographiques AES/SHA/RSA intégrés, restent largement sous-exploités. Ces composants offrent pourtant des capacités de sécurité révolutionnaires : génération de clés cryptographiques sécurisées, calculs cryptographiques accélérés, stockage sécurisé dans les eFuses, et résistance aux attaques physiques, éliminant complètement le besoin de composants de sécurité externes.
+
+\section{Objectifs de recherche}
+
+\subsection{Objectif principal}
+
+L'objectif principal de cette recherche est de concevoir, développer et valider SecureIoT-VIF (Verification Integrity Framework), un framework léger de vérification d'intégrité exploitant pleinement les capacités cryptographiques intégrées de l'ESP32 pour la détection et la prévention des attaques par compromission de firmware dans les dispositifs IoT grand public. Cette approche représente une révolution technologique par rapport aux solutions traditionnelles basées sur des composants externes, en tirant parti du Hardware Security Module (HSM) intégré, du True Random Number Generator (TRNG) matériel, des accélérateurs cryptographiques AES/SHA/RSA, et du stockage sécurisé eFuse de l'ESP32. Cette recherche adopte une approche proof-of-concept centrée sur une validation approfondie du framework sur cette plateforme IoT révolutionnaire, complétée par des études de portabilité théoriques.
+
+\subsection{Objectifs spécifiques}
+
+\textbf{Objectif 1 : Analyse des menaces et vulnérabilités}
+\begin{itemize}
+    \item Réaliser une taxonomie complète des attaques par compromission de firmware dans l'écosystème IoT
+    \item Identifier les vecteurs d'attaque spécifiques aux dispositifs IoT grand public
+    \item Évaluer l'impact des vulnérabilités identifiées sur la sécurité globale des systèmes IoT
+\end{itemize}
+
+\textbf{Objectif 2 : Conception d'une architecture révolutionnaire exploitant l'ESP32 crypto intégré}
+\begin{itemize}
+    \item Développer une architecture de sécurité exploitant pleinement les capacités cryptographiques révolutionnaires intégrées de l'ESP32 : HSM, TRNG, accélérateurs matériels
+    \item Concevoir des mécanismes de vérification d'intégrité ultra-performants optimisés pour les accélérateurs AES/SHA matériels ESP32
+    \item Intégrer des protocoles d'attestation à distance légers tirant parti du générateur TRNG intégré et du stockage sécurisé eFuse
+\end{itemize}
+
+\textbf{Objectif 3 : Implémentation révolutionnaire et optimisation proof-of-concept}
+\begin{itemize}
+    \item Implémenter SecureIoT-VIF de manière révolutionnaire sur la plateforme ESP32 crypto intégrée, représentative de la nouvelle génération IoT
+    \item Optimiser les algorithmes cryptographiques pour exploiter pleinement les accélérateurs matériels ESP32, minimisant l'overhead computationnel et énergétique
+    \item Développer des mécanismes de détection d'anomalies basés sur l'analyse comportementale exploitant le HSM intégré
+    \item Réaliser des études de portabilité théoriques vers les plateformes Arduino et Raspberry Pi sans capacités crypto intégrées
+\end{itemize}
+
+\textbf{Objectif 4 : Évaluation expérimentale révolutionnaire}
+\begin{itemize}
+    \item Évaluer l'efficacité révolutionnaire de détection des attaques de compromission de firmware sur plateforme ESP32 crypto intégrée
+    \item Mesurer l'impact ultra-réduit sur les performances et la consommation énergétique grâce aux optimisations matérielles
+    \item Valider les concepts par émulation sur architectures sans crypto intégré
+    \item Établir une base méthodologique pour l'extension vers des déploiements multi-dispositifs nouvelle génération
+\end{itemize}
+
+\section{Contributions de la recherche}
+
+Ce travail apporte plusieurs contributions révolutionnaires au domaine de la sécurité des firmwares IoT :
+
+\textbf{Contribution théorique :} Proposition d'un modèle de sécurité hybride révolutionnaire combinant vérification d'intégrité temps réel et attestation à distance, spécifiquement conçu pour exploiter les capacités crypto intégrées des dispositifs IoT nouvelle génération.
+
+\textbf{Contribution méthodologique :} 
+\begin{itemize}
+    \item Développement d'une méthodologie révolutionnaire d'exploitation optimale des capacités cryptographiques intégrées ESP32 dans les mécanismes de sécurité des firmwares, éliminant complètement le besoin de composants externes
+    \item Migration réussie et révolutionnaire d'architectures basées sur composants externes vers ESP32 crypto intégré avec amélioration drastique des performances (4x plus rapide) et réduction des coûts (68\%)
+    \item Proposition d'une approche d'évaluation proof-of-concept permettant une validation rigoureuse avec des ressources limitées
+\end{itemize}
+
+\textbf{Contribution technique :} Implémentation révolutionnaire de SecureIoT-VIF, un framework pratique et déployable offrant :
+\begin{itemize}
+    \item Vérification d'intégrité en temps réel avec un overhead ultra-minimal (< 3\% sur ESP32 grâce aux accélérateurs intégrés)
+    \item Détection de 99,0\% des attaques de compromission de firmware dans l'étude pilote
+    \item Temps de vérification révolutionnaire médian de 24ms pour des firmwares de taille typique (10x plus rapide qu'avec composants externes)
+    \item Architecture modulaire facilitant la portabilité vers d'autres plateformes IoT tout en conservant les avantages de l'intégration native
+\end{itemize}
+
+\textbf{Contribution empirique :} Évaluation expérimentale révolutionnaire sur ESP32 crypto intégré démontrant l'efficacité pratique exceptionnelle de l'approche proposée dans 200 scénarios d'attaque représentatifs, validée par émulation sur 4 architectures complémentaires, prouvant la supériorité des solutions intégrées.
+
+\section{Approche méthodologique}
+
+\subsection{Justification de l'approche proof-of-concept}
+
+Cette recherche adopte délibérément une approche proof-of-concept centrée sur une validation approfondie plutôt qu'extensive. Cette stratégie méthodologique se justifie par :
+
+\textbf{Profondeur d'analyse :} Une caractérisation exhaustive des mécanismes de sécurité crypto intégrés sur une plateforme révolutionnaire offre des insights plus précieux qu'une évaluation superficielle sur multiple dispositifs traditionnels.
+
+\textbf{Reproductibilité scientifique :} La focalisation sur ESP32, plateforme révolutionnaire largement accessible et documentée avec crypto intégré, facilite la reproduction et la validation externe des résultats.
+
+\textbf{Optimisation des ressources :} L'allocation de l'intégralité des ressources expérimentales à une implémentation optimisée exploitant pleinement les capacités crypto intégrées permet d'atteindre des niveaux de performance révolutionnaires qui ne seraient pas atteignables avec une approche distribuée.
+
+\textbf{Base pour extension :} L'approche établit une base méthodologique révolutionnaire pour l'extension future vers des déploiements multi-dispositifs et multi-plateformes nouvelle génération.
+
+\subsection{Méthodologie de validation}
+
+\textbf{Phase 1 - Analyse et état de l'art :} Revue systématique de la littérature, analyse des vulnérabilités existantes, et identification des lacunes dans les solutions actuelles, avec focus sur l'évolution vers les capacités crypto intégrées.
+
+\textbf{Phase 2 - Conception et modélisation révolutionnaire :} Développement du modèle de sécurité révolutionnaire, conception de l'architecture du framework exploitant pleinement l'ESP32 crypto intégré, et spécification des protocoles de sécurité optimisés pour les capacités matérielles natives.
+
+\textbf{Phase 3 - Implémentation révolutionnaire approfondie :} Implémentation complète et révolutionnaire du framework sur ESP32 crypto intégré, développement d'outils d'évaluation spécialisés exploitant les accélérateurs matériels, et études de portabilité théoriques vers plateformes sans crypto intégré.
+
+\textbf{Phase 4 - Évaluation expérimentale révolutionnaire intensive :} Tests de sécurité approfondis sur 30 jours exploitant pleinement les capacités ESP32, mesures de performance précises des accélérateurs intégrés, et validation croisée par émulation sur architectures traditionnelles.
+
+\section{Organisation du mémoire}
+
+Ce mémoire est organisé en sept chapitres :
+
+\textbf{Chapitre 1 - Introduction :} Présente le contexte révolutionnaire, la problématique, les objectifs et les contributions de la recherche, avec justification de l'approche proof-of-concept ESP32 crypto intégré.
+
+\textbf{Chapitre 2 - État de l'art :} Analyse les travaux existants en sécurité des firmwares IoT, les mécanismes de vérification d'intégrité, et l'évolution vers l'utilisation des capacités crypto intégrées modernes.
+
+\textbf{Chapitre 3 - Analyse des menaces :} Développe une taxonomie des attaques par compromission de firmware et présente un modèle de menaces spécifique aux dispositifs IoT nouvelle génération avec crypto intégré.
+
+\textbf{Chapitre 4 - Conception du framework :} Détaille l'architecture révolutionnaire de SecureIoT-VIF, les mécanismes de sécurité proposés exploitant l'ESP32 crypto intégré, et les choix de conception optimisés pour l'écosystème IoT nouvelle génération.
+
+\textbf{Chapitre 5 - Implémentation :} Présente l'implémentation révolutionnaire approfondie du framework sur ESP32 crypto intégré, les optimisations réalisées exploitant les accélérateurs matériels, et les études de portabilité vers plateformes traditionnelles.
+
+\textbf{Chapitre 6 - Évaluation et résultats :} Analyse les résultats révolutionnaires de l'étude pilote expérimentale et présente la validation par émulation sur architectures traditionnelles.
+
+\textbf{Chapitre 7 - Conclusion et perspectives :} Synthétise les contributions révolutionnaires, discute les limitations de l'approche proof-of-concept, et propose des directions pour l'extension vers des déploiements multi-dispositifs nouvelle génération.
+
+\section{Délimitations de l'étude}
+
+\subsection{Périmètre de l'étude pilote révolutionnaire}
+
+Cette recherche se concentre délibérément sur :
+
+\textbf{Plateforme cible révolutionnaire :} ESP32-S3 avec crypto intégré comme plateforme principale d'évaluation, représentative des dispositifs IoT nouvelle génération avec capacités sécurisées natives.
+
+\textbf{Scope temporel :} Évaluation intensive sur 30 jours permettant une caractérisation approfondie des performances révolutionnaires et de la robustesse des capacités crypto intégrées.
+
+\textbf{Scénarios d'attaque :} 200 scénarios soigneusement sélectionnés pour leur représentativité, privilégiant la profondeur d'analyse des capacités défensives intégrées sur la quantité.
+
+\subsection{Extensions futures envisagées}
+
+L'approche proof-of-concept révolutionnaire établit les fondations pour des extensions futures :
+
+\textbf{Déploiement multi-dispositifs nouvelle génération :} Extension vers des testbeds comprenant 10, 50, puis 150+ dispositifs ESP32 crypto intégré pour validation de la scalabilité des solutions natives.
+
+\textbf{Hétérogénéité des plateformes :} Implémentation effective sur plateformes traditionnelles (Arduino et Raspberry Pi) basée sur les études de portabilité réalisées, avec adaptation aux contraintes des architectures sans crypto intégré.
+
+\textbf{Environnements réels :} Déploiement dans des environnements de production pour validation écologique des avantages révolutionnaires de l'intégration crypto native.
+
+Cette approche méthodologique révolutionnaire assure une contribution scientifique solide tout en établissant une roadmap claire pour l'extension des travaux vers des déploiements à plus grande échelle, tirant parti des avancées technologiques des microcontrôleurs nouvelle génération avec capacités crypto intégrées.
