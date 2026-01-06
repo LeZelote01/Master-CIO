@@ -2,70 +2,63 @@
 % Liste des acronymes
 %====================================================================
 
-\chapter*{Liste des acronymes}
-\addcontentsline{toc}{chapter}{Liste des acronymes}
+\chapter*{Acronymes et Terminologie}
+\addcontentsline{toc}{chapter}{Acronymes et Terminologie}
 
-\begin{acronym}[Community]
-
-\acro{ADM}{Anomaly Detection Module}
-\acro{API}{Application Programming Interface}
+\begin{acronym}[Configuration]
+\acro{ADM}{Anomaly Detection Module - Module de Détection d'Anomalies}
 \acro{AES}{Advanced Encryption Standard}
+\acro{API}{Application Programming Interface}
 \acro{ARM}{Advanced RISC Machines}
 \acro{CFI}{Control Flow Integrity}
 \acro{CoAP}{Constrained Application Protocol}
 \acro{CPU}{Central Processing Unit}
-\acro{CVE}{Common Vulnerabilities and Exposures}
+\acro{DHT22}{Digital Humidity and Temperature sensor}
 \acro{DDoS}{Distributed Denial of Service}
-\acro{DHT}{Digital Humidity and Temperature}
+\acro{DRAM}{Dynamic Random Access Memory}
 \acro{ECDSA}{Elliptic Curve Digital Signature Algorithm}
-\acro{ESP-IDF}{Espressif IoT Development Framework}
-\acro{FPR}{False Positive Rate}
+\acro{ESP32}{Microcontrôleur d'Espressif Systems}
+\acro{FreeRTOS}{Free Real-Time Operating System}
+\acro{FPGA}{Field-Programmable Gate Array}
 \acro{GPIO}{General Purpose Input/Output}
 \acro{HKDF}{HMAC-based Key Derivation Function}
-\acro{HSM}{Hardware Security Module}
-\acro{HTTP}{HyperText Transfer Protocol}
-\acro{IoT}{Internet of Things}
-\acro{IVM}{Integrity Verification Module}
-\acro{JSON}{JavaScript Object Notation}
-\acro{KMM}{Key Management Module}
+\acro{HMAC}{Hash-based Message Authentication Code}
+\acro{HSM}{Hardware Security Module - Module de Sécurité Matériel}
+\acro{HTTP}{Hypertext Transfer Protocol}
+\acro{IoT}{Internet of Things - Internet des Objets}
+\acro{IVM}{Integrity Verification Module - Module de Vérification d'Intégrité}
+\acro{JTAG}{Joint Test Action Group}
+\acro{KMM}{Key Management Module - Module de Gestion des Clés}
 \acro{LoRaWAN}{Long Range Wide Area Network}
-\acro{mbedTLS}{mbed Transport Layer Security}
-\acro{ML}{Machine Learning}
+\acro{mbedTLS}{Bibliothèque cryptographique pour systèmes embarqués}
+\acro{ML}{Machine Learning - Apprentissage Automatique}
 \acro{MQTT}{Message Queuing Telemetry Transport}
-\acro{MTTD}{Mean Time To Detection}
-\acro{OTA}{Over-The-Air}
+\acro{NB-IoT}{Narrowband Internet of Things}
+\acro{NVS}{Non-Volatile Storage}
+\acro{OTA}{Over-The-Air (mise à jour)}
 \acro{PUF}{Physically Unclonable Function}
-\acro{RAM}{Remote Attestation Module}
-\acro{RISC-V}{Reduced Instruction Set Computer - Five}
+\acro{RAM}{Random Access Memory}
+\acro{RCE}{Remote Code Execution}
+\acro{RISC-V}{Reduced Instruction Set Computer - Version V}
 \acro{ROP}{Return-Oriented Programming}
-\acro{RTOS}{Real-Time Operating System}
-\acro{SDK}{Software Development Kit}
-\acro{SE}{Secure Element}
+\acro{RSA}{Rivest-Shamir-Adleman (algorithme)}
+\acro{SE}{Secure Element - Élément Sécurisé}
 \acro{SHA}{Secure Hash Algorithm}
-\acro{SRAM}{Static Random Access Memory}
-\acro{TLS}{Transport Layer Security}
+\acro{SLA}{Service Level Agreement}
+\acro{SSH}{Secure Shell}
+\acro{TEE}{Trusted Execution Environment}
 \acro{TPM}{Trusted Platform Module}
-\acro{TPR}{True Positive Rate}
 \acro{TRNG}{True Random Number Generator}
-\acro{UART}{Universal Asynchronous Receiver-Transmitter}
-\acro{USB}{Universal Serial Bus}
-\acro{VIF}{Verification Integrity Framework}
-\acro{Wi-Fi}{Wireless Fidelity}
+\acro{VIF}{Verification and Integrity Framework}
 
 \end{acronym}
 
-\vspace{1cm}
+\section*{Terminologie spécifique}
 
-\section*{Termes spécifiques}
+\textbf{Configuration Standard :} Configuration implémentée et validée expérimentalement de SecureIoT-VIF, intégrant des mécanismes de sécurité basés sur la cryptographie software (mbedTLS), la vérification d'intégrité au démarrage et périodique, et la détection d'anomalies par seuils adaptatifs. Cette configuration démontre la faisabilité de l'approche sur plateforme ESP32.
 
-\textbf{Community Edition :} Version éducative et accessible de SecureIoT-VIF, conçue pour l'apprentissage avec des composants abordables et de la cryptographie software.
+\textbf{Configuration Expert :} Configuration conçue en détail pour SecureIoT-VIF, spécifiant l'intégration de mécanismes de sécurité avancés (HSM matériel, vérification temps réel continue, machine learning adaptatif, attestation distante). Cette configuration établit une roadmap scientifiquement fondée pour l'évolution future du framework.
 
-\textbf{Enterprise Edition :} Version avancée (théorique) utilisant des accélérateurs matériels et des fonctionnalités sophistiquées pour les déploiements industriels.
+\textbf{Overhead acceptable :} Impact mesuré sur les performances (temps d'exécution, consommation mémoire, énergie) qui reste dans des limites compatibles avec les contraintes opérationnelles des dispositifs IoT.
 
-\textbf{Cryptographie Software :} Implémentation des algorithmes cryptographiques en logiciel (mbedTLS) plutôt qu'en matériel dédié.
-
-\textbf{Seuils fixes :} Méthode de détection d'anomalies basée sur des valeurs limites prédéfinies, par opposition aux approches adaptatives ou d'apprentissage automatique.
-
-\textbf{Overhead éducatif :} Impact acceptable sur les performances en échange d'une meilleure compréhension et observabilité des mécanismes de sécurité.
-
-\textbf{Framework éducatif :} Outil logiciel conçu spécifiquement pour l'enseignement et l'apprentissage, privilégiant la compréhension sur l'optimisation maximale.
+\textbf{Architecture modulaire :} Structure logicielle composée de modules indépendants et interchangeables, facilitant l'extension et l'adaptation du système selon les exigences spécifiques.
