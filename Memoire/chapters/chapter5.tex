@@ -13,96 +13,96 @@ Ce chapitre présente l'implémentation concrète du framework SecureIoT-VIF. L'
 
 \subsection{Vue d'ensemble technique}
 
-L'implémentation de SecureIoT-VIF suit une architecture modulaire simple, spécifiquement conçue pour l'accessibilité professionnelle et la approche modulaire de sécurité IoT.
+L'implémentation de SecureIoT-VIF suit une architecture modulaire, spécifiquement conçue pour valider l'approche de sécurité IoT proposée.
 
 \begin{figure}[h]
     \centering
     \includegraphics[width=0.9\textwidth]{assets/figures/implementation_architecture_esp32.png}
     \caption{Architecture d'implémentation SecureIoT-VIF }
-    \label{fig:implementation-architecture-community}
+    \label{fig:implementation-architecture}
 \end{figure}
 
-\textbf{Couche d'abstraction matérielle professionnelle (HAL) :} Interface unifiée simple exploitant les ressources de base de l'ESP32 : processeur dual-core Xtensa LX6, 512KB SRAM, 16MB Flash, et périphériques de base (GPIO, UART, Wi-Fi).
+\textbf{Couche d'abstraction matérielle (HAL) :} Interface unifiée exploitant les ressources de l'ESP32 : processeur dual-core Xtensa LX6, 512~KB SRAM, 16~MB Flash, et périphériques standard (GPIO, UART, Wi-Fi).
 
-\textbf{Couche de services cryptographiques software :} Implémentation transparente des primitives cryptographiques utilisant exclusivement mbedTLS pour des opérations auditables et compréhensibles.
+\textbf{Couche de services cryptographiques software :} Implémentation des primitives cryptographiques utilisant exclusivement mbedTLS pour garantir l'auditabilité et la reproductibilité des résultats.
 
-\textbf{Couche de gestion de la sécurité professionnelle :} Orchestration simple des mécanismes de vérification d'intégrité et de détection d'anomalies, adaptée aux contraintes techniques et optimisée pour la compréhension.
+\textbf{Couche de gestion de la sécurité :} Orchestration des mécanismes de vérification d'intégrité et de détection d'anomalies, optimisée pour les contraintes des dispositifs IoT.
 
-\textbf{Couche d'interface professionnelle :} API légère exposant les services de SecureIoT-VIF Community aux applications professionnelles et aux exercices pratiques, maximisant la lisibilité du code.
+\textbf{Couche d'interface applicative :} API exposant les services de SecureIoT-VIF Configuration Standard aux applications, avec une conception modulaire facilitant les extensions futures.
 
-\subsection{Choix technologiques professionnels}
+\subsection{Choix technologiques}
 
-\subsubsection{Environnement de développement accessible}
+\subsubsection{Environnement de développement}
 
 \textbf{ESP-IDF (Espressif IoT Development Framework) :} Framework officiel choisi pour sa documentation complète, sa communauté active, et son excellent support de mbedTLS intégré.
 
-\textbf{FreeRTOS professionnel :} Système d'exploitation temps réel simple, permettant l'ordonnancement coopératif des tâches de vérification avec les applications utilisateur de manière transparente.
+\textbf{FreeRTOS :} Système d'exploitation temps réel permettant l'ordonnancement efficace des tâches de vérification avec les applications utilisateur de manière transparente.
 
-\textbf{Toolchain GCC standard :} Compilateur standard pour l'architecture Xtensa, largement disponible et bien documenté pour le déploiement.
+\textbf{Toolchain GCC :} Compilateur standard pour l'architecture Xtensa, largement disponible et bien documenté.
 
-\subsubsection{Bibliothèques cryptographiques professionnelles}
+\subsubsection{Bibliothèques cryptographiques}
 
 \textbf{mbedTLS intégré :} Utilisation exclusive de la bibliothèque mbedTLS fournie avec ESP-IDF pour toutes les opérations cryptographiques, garantissant la transparence et l'auditabilité.
 
-\textbf{Implémentations software uniquement :} Évitement délibéré des accélérateurs matériels pour privilégier la compréhension des algorithmes et la portabilité professionnelle.
+\textbf{Implémentations software :} Utilisation délibérée d'implémentations logicielles pour garantir la portabilité et la reproductibilité des résultats expérimentaux.
 
-\textbf{Logging professionnel détaillé :} Instrumentation complète du code pour permettre le suivi et la compréhension de chaque opération cryptographique.
+\textbf{Logging détaillé :} Instrumentation complète du code pour permettre le suivi et l'analyse de chaque opération cryptographique.
 
 \section{Implémentation détaillée sur ESP32}
 
-\subsection{Spécifications de la plateforme professionnelle}
+\subsection{Spécifications de la plateforme}
 
 \subsubsection{Caractéristiques matérielles exploitées}
 
-L'ESP32-WROOM-32 utilisé pour l'implémentation Community présente les caractéristiques suivantes :
+L'ESP32-WROOM-32 utilisé pour l'implémentation de la Configuration Standard présente les caractéristiques suivantes :
 
 \begin{table}[h]
 \centering
-\caption{Spécifications ESP32 pour SecureIoT-VIF }
-\label{tab:esp32-community-specs}
+\caption{Spécifications ESP32 pour SecureIoT-VIF Configuration Standard}
+\label{tab:esp32-specs}
 \begin{tabular}{|l|c|c|}
 \hline
 \textbf{Composant} & \textbf{Spécification} & \textbf{Coût approximatif} \\
 \hline
-ESP32-WROOM-32 & Dual-core Xtensa LX6 @ 240 MHz & ~5\$ \\
-SRAM & 512 KB total & Inclus \\
-Flash & 16 MB (optionnel 4MB min) & +0\$ (4MB) / +1\$ (16MB) \\
-DHT22 & Capteur température/humidité & ~3\$ \\
-Connecteurs & Breadboard + câbles & ~0\$ (matériel de base) \\
+ESP32-WROOM-32 & Dual-core Xtensa LX6 @ 240~MHz & $\sim$5\$ \\
+SRAM & 512~KB total & Inclus \\
+Flash & 16~MB (optionnel 4~MB min) & +0\$ (4~MB) / +1\$ (16~MB) \\
+DHT22 & Capteur température/humidité & $\sim$3\$ \\
+Connecteurs & Breadboard + câbles & $\sim$0\$ (matériel de base) \\
 \hline
-\textbf{Coût total} & \textbf{Système complet} & \textbf{~8\$} \\
+\textbf{Coût total} & \textbf{Système complet} & \textbf{$\sim$8\$} \\
 \hline
 \end{tabular}
 \end{table}
 
-\subsection{Architecture logicielle professionnelle détaillée}
+\subsection{Architecture logicielle détaillée}
 
-\subsubsection{Répartition des tâches professionnelle}
+\subsubsection{Répartition des tâches}
 
-L'ESP32 dual-core permet une répartition simple et compréhensible des charges :
+L'ESP32 dual-core permet une répartition efficace des charges de traitement :
 
 \textbf{Core 0 (Protocol CPU) :}
 \begin{itemize}
-    \item Applications utilisateur professionnelles
-    \item Communications réseau Wi-Fi de base
-    \item Interface API SecureIoT-VIF simple
+    \item Applications utilisateur
+    \item Communications réseau Wi-Fi
+    \item Interface API SecureIoT-VIF
     \item Gestion des interruptions système
 \end{itemize}
 
 \textbf{Core 1 (Application CPU) :}
 \begin{itemize}
-    \item Tâches de vérification d'intégrité periodiques
-    \item Détection d'anomalies par seuils fixes
+    \item Tâches de vérification d'intégrité périodiques
+    \item Détection d'anomalies par seuils configurables
     \item Opérations cryptographiques software via mbedTLS
-    \item Logging et monitoring professionnel
+    \item Logging et monitoring système
 \end{itemize}
 
-\subsection{Modules d'implémentation professionnels principaux}
+\subsection{Modules d'implémentation principaux}
 
-\subsubsection{Module de vérification d'intégrité professionnel (IVM-Community)}
+\subsubsection{Module de vérification d'intégrité (IVM)}
 
 \lstset{language=C}
-\begin{lstlisting}[caption={Implémentation IVM Community utilisant mbedTLS}]
+\begin{lstlisting}[caption={Implémentation IVM Configuration Standard utilisant mbedTLS}]
 #include "esp_system.h"
 #include "esp_flash.h"
 #include "mbedtls/sha256.h"         // Crypto software uniquement
@@ -110,194 +110,193 @@ L'ESP32 dual-core permet une répartition simple et compréhensible des charges 
 #include "freertos/FreeRTOS.h"
 #include "freertos/task.h"
 
-// Configuration professionnelle de vérification 
+// Configuration de verification Configuration Standard
 typedef struct {
-    size_t block_size;              // 4KB pour granularité professionnelle
-    uint32_t vérification_interval; // 5 minutes pour déploiement industriel
-    bool software_crypto_only;      // Toujours true en Community
-    uint8_t core_affinity;          // Core 1 dédié sécurité
-} secureiot_community_ivm_config_t;
+    size_t block_size;              // 4KB pour granularite optimale
+    uint32_t verification_interval; // 5 minutes pour validation experimentale
+    bool software_crypto_only;      // Toujours true en Configuration Standard
+    uint8_t core_affinity;          // Core 1 dedie securite
+} secureiot_standard_ivm_config_t;
 
-// Structure de hash par bloc professionnelle
+// Structure de hash par bloc
 typedef struct {
     uint32_t block_id;
     uint8_t hash[32];               // SHA-256 standard
     uint32_t timestamp;
     bool verified;
-    char description[64];           // Description professionnelle
-} secureiot_community_block_hash_t;
+    char description[64];           // Description pour logging
+} secureiot_standard_block_hash_t;
 
-// Cache de hashes pour optimisation professionnelle
-#define MAX_CACHED_BLOCKS 128      // Limité pour contraintes professionnelles
-static secureiot_community_block_hash_t hash_cache[MAX_CACHED_BLOCKS];
+// Cache de hashes pour optimisation
+#define MAX_CACHED_BLOCKS 128      // Limite pour contraintes memoire
+static secureiot_standard_block_hash_t hash_cache[MAX_CACHED_BLOCKS];
 static size_t cache_size = 0;
 static SemaphoreHandle_t cache_mutex;
 
-// Initialisation professionnelle du module IVM Community
-esp_err_t secureiot_community_ivm_init(
-    secureiot_community_ivm_config_t* config) {
+// Initialisation du module IVM Configuration Standard
+esp_err_t secureiot_standard_ivm_init(
+    secureiot_standard_ivm_config_t* config) {
     esp_err_t ret = ESP_OK;
     
-    ESP_LOGI(TAG, "🎓 Initializing SecureIoT-VIF ");
-    ESP_LOGI(TAG, "📚 Educational framework - Software crypto only");
+    ESP_LOGI(TAG, "Initializing SecureIoT-VIF Configuration Standard");
+    ESP_LOGI(TAG, "Implementation - Software crypto only");
     
-    // Création du mutex pour protection cache professionnelle
+    // Creation du mutex pour protection cache
     cache_mutex = xSemaphoreCreateMutex();
     if (cache_mutex == NULL) {
-        ESP_LOGE(TAG, "❌ Failed to create educational cache mutex");
+        ESP_LOGE(TAG, "Failed to create cache mutex");
         return ESP_ERR_NO_MEM;
     }
     
-    // Initialisation mbedTLS pour éducation
+    // Initialisation mbedTLS
     mbedtls_sha256_context sha256_ctx;
     mbedtls_sha256_init(&sha256_ctx);
     
-    // Test professionnel de mbedTLS
-    uint8_t test_data[] = "SecureIoT-VIF Community Test";
+    // Test de mbedTLS
+    uint8_t test_data[] = "SecureIoT-VIF Standard Configuration Test";
     uint8_t test_hash[32];
     int mbedtls_ret = mbedtls_sha256_ret(test_data, strlen((char*)test_data), 
                                         test_hash, 0);
     
     if (mbedtls_ret != 0) {
-        ESP_LOGE(TAG, "❌ mbedTLS initialization failed: -0x%04x", -mbedtls_ret);
+        ESP_LOGE(TAG, "mbedTLS initialization failed: -0x%04x", -mbedtls_ret);
         return ESP_FAIL;
     }
     
-    ESP_LOGI(TAG, "✅ mbedTLS initialized successfully for education");
+    ESP_LOGI(TAG, "mbedTLS initialized successfully");
     
-    // Calcul initial des hashes de référence professionnels
-    ret = secureiot_calculate_reference_hashes_community();
+    // Calcul initial des hashes de reference
+    ret = secureiot_calculate_reference_hashes_standard();
     if (ret != ESP_OK) {
-        ESP_LOGE(TAG, "❌ Failed to calculate educational reference hashes");
+        ESP_LOGE(TAG, "Failed to calculate reference hashes");
         return ret;
     }
     
-    ESP_LOGI(TAG, "🎉 Community IVM initialized with %d cached blocks", cache_size);
-    ESP_LOGI(TAG, "💡 Ideal for learning IoT security concepts!");
+    ESP_LOGI(TAG, "IVM initialized with %d cached blocks", cache_size);
+    ESP_LOGI(TAG, "Configuration Standard operational");
     
     return ESP_OK;
 }
 
-// Vérification professionnelle d'intégrité par bloc avec mbedTLS
-esp_err_t secureiot_community_verify_block(uint32_t block_id) {
+// Verification d'integrite par bloc avec mbedTLS
+esp_err_t secureiot_standard_verify_block(uint32_t block_id) {
     esp_err_t ret = ESP_OK;
     uint8_t calculated_hash[32];
     uint8_t reference_hash[32];
     
-    ESP_LOGD(TAG, "🔍 Verifying educational block %lu with software crypto", block_id);
+    ESP_LOGD(TAG, "Verifying block %lu with software crypto", block_id);
     
     // Calcul du hash avec mbedTLS (software uniquement)
     ret = secureiot_calculate_block_hash_mbedtls(block_id, calculated_hash);
     if (ret != ESP_OK) {
-        ESP_LOGE(TAG, "❌ Educational hash calculation failed for block %lu", block_id);
+        ESP_LOGE(TAG, "Hash calculation failed for block %lu", block_id);
         return ret;
     }
     
-    // Récupération du hash de référence depuis cache professionnel
-    ret = secureiot_get_reference_hash_community(block_id, reference_hash);
+    // Recuperation du hash de reference depuis cache
+    ret = secureiot_get_reference_hash_standard(block_id, reference_hash);
     if (ret != ESP_OK) {
-        ESP_LOGW(TAG, "⚠️  Reference hash not found for block %lu (educational)", block_id);
+        ESP_LOGW(TAG, "Reference hash not found for block %lu", block_id);
         return ret;
     }
     
-    // Comparaison professionnelle transparente des hashes
+    // Comparaison des hashes
     if (memcmp(calculated_hash, reference_hash, 32) != 0) {
-        ESP_LOGW(TAG, "🚨 Educational integrity violation detected in block %lu", block_id);
-        ESP_LOGW(TAG, "💡 This is an excellent learning opportunity!");
+        ESP_LOGW(TAG, "Integrity violation detected in block %lu", block_id);
         return ESP_ERR_INVALID_CRC;
     }
     
-    // Mise à jour du cache professionnel
+    // Mise a jour du cache
     if (xSemaphoreTake(cache_mutex, pdMS_TO_TICKS(100)) == pdTRUE) {
-        secureiot_update_hash_cache_community(block_id, calculated_hash);
+        secureiot_update_hash_cache_standard(block_id, calculated_hash);
         xSemaphoreGive(cache_mutex);
     }
     
-    ESP_LOGD(TAG, "✅ Educational block %lu verified successfully", block_id);
+    ESP_LOGD(TAG, "Block %lu verified successfully", block_id);
     return ESP_OK;
 }
 
-// Calcul professionnel de hash avec mbedTLS pur
+// Calcul de hash avec mbedTLS
 esp_err_t secureiot_calculate_block_hash_mbedtls(uint32_t block_id, 
                                                 uint8_t* hash) {
-    const size_t BLOCK_SIZE = FIRMWARE_CHUNK_SIZE;  // 4KB professionnel
+    const size_t BLOCK_SIZE = FIRMWARE_CHUNK_SIZE;  // 4KB
     uint8_t block_buffer[BLOCK_SIZE];
     
-    ESP_LOGD(TAG, "📊 Calculating educational hash for block %lu with mbedTLS", block_id);
+    ESP_LOGD(TAG, "Calculating hash for block %lu with mbedTLS", block_id);
     
-    // Lecture professionnelle du bloc depuis la flash
+    // Lecture du bloc depuis la flash
     uint32_t block_addr = FIRMWARE_BASE_ADDR + (block_id * BLOCK_SIZE);
     esp_err_t ret = esp_flash_read(NULL, block_buffer, block_addr, BLOCK_SIZE);
     if (ret != ESP_OK) {
-        ESP_LOGE(TAG, "❌ Failed to read educational block %lu: %s", 
+        ESP_LOGE(TAG, "Failed to read block %lu: %s", 
                  block_id, esp_err_to_name(ret));
         return ret;
     }
     
-    // Calcul SHA-256 professionnel avec mbedTLS (software uniquement)
+    // Calcul SHA-256 avec mbedTLS (software uniquement)
     int mbedtls_ret = mbedtls_sha256_ret(block_buffer, BLOCK_SIZE, hash, 0);
     if (mbedtls_ret != 0) {
-        ESP_LOGE(TAG, "❌ mbedTLS SHA256 failed for educational block %lu: -0x%04x", 
+        ESP_LOGE(TAG, "mbedTLS SHA256 failed for block %lu: -0x%04x", 
                  block_id, -mbedtls_ret);
         return ESP_FAIL;
     }
     
-    ESP_LOGV(TAG, "✅ Educational SHA-256 completed for block %lu (software)", block_id);
+    ESP_LOGV(TAG, "SHA-256 completed for block %lu (software)", block_id);
     return ESP_OK;
 }
 
-// Tâche professionnelle de vérification continue Community
-void secureiot_community_continuous_vérification_task(void* parameter) {
-    secureiot_community_ivm_config_t* config = 
-        (secureiot_community_ivm_config_t*)parameter;
+// Tache de verification continue Configuration Standard
+void secureiot_standard_continuous_verification_task(void* parameter) {
+    secureiot_standard_ivm_config_t* config = 
+        (secureiot_standard_ivm_config_t*)parameter;
     
-    // Affinité au Core 1 pour isolation professionnelle
+    // Affinite au Core 1 pour isolation
     vTaskPinToCore(NULL, 1);
     
     uint32_t current_block = 0;
-    uint32_t total_blocks = secureiot_get_total_firmware_blocks_community();
+    uint32_t total_blocks = secureiot_get_total_firmware_blocks_standard();
     TickType_t last_wake_time = xTaskGetTickCount();
     
-    ESP_LOGI(TAG, "🎓 Community continuous vérification task started on core 1");
-    ESP_LOGI(TAG, "📚 Educational mode: software crypto only, 5-minute intervals");
+    ESP_LOGI(TAG, "Continuous verification task started on core 1");
+    ESP_LOGI(TAG, "Configuration Standard: software crypto, 5-minute intervals");
     
     while (true) {
-        // Vérification professionnelle adaptative basée sur la charge
-        if (secureiot_get_system_load_community() < 80) {
-            esp_err_t ret = secureiot_community_verify_block(current_block);
+        // Verification adaptative basee sur la charge
+        if (secureiot_get_system_load_standard() < 80) {
+            esp_err_t ret = secureiot_standard_verify_block(current_block);
             if (ret != ESP_OK) {
-                // Déclenchement d'alerte professionnelle
-                ESP_LOGW(TAG, "🎓 Educational security event: integrity violation in block %lu", 
+                // Declenchement d'alerte
+                ESP_LOGW(TAG, "Security event: integrity violation in block %lu", 
                          current_block);
-                secureiot_trigger_educational_alert_community(current_block);
+                secureiot_trigger_alert_standard(current_block);
             } else {
-                ESP_LOGD(TAG, "✅ Educational block %lu vérification completed", current_block);
+                ESP_LOGD(TAG, "Block %lu verification completed", current_block);
             }
             
-            // Passage au bloc suivant avec wrap-around professionnel
+            // Passage au bloc suivant avec wrap-around
             current_block = (current_block + 1) % total_blocks;
         } else {
-            ESP_LOGD(TAG, "⏳ System load high, skipping vérification (educational)");
+            ESP_LOGD(TAG, "System load high, skipping verification");
         }
         
-        // Attente professionnelle avec intervalle fixe (5 minutes)
+        // Attente avec intervalle fixe (5 minutes)
         vTaskDelayUntil(&last_wake_time, 
-                       pdMS_TO_TICKS(config->vérification_interval));
+                       pdMS_TO_TICKS(config->verification_interval));
     }
 }
 \end{lstlisting}
 
-\subsubsection{Module de détection d'anomalies professionnel (ADM-Community)}
+\subsubsection{Module de détection d'anomalies (ADM)}
 
-\begin{lstlisting}[caption={Module professionnel de détection d'anomalies par seuils}]
+\begin{lstlisting}[caption={Module de détection d'anomalies par seuils configurables}]
 #include "esp_system.h"
 #include "esp_timer.h"
 #include "driver/temperature_sensor.h"
 
-// Configuration professionnelle de détection d'anomalies Community
+// Configuration de detection d'anomalies Configuration Standard
 typedef struct {
-    float temp_threshold_high;      // 50°C pour éducation
-    float temp_threshold_low;       // 10°C pour éducation
+    float temp_threshold_high;      // 50°C pour validation
+    float temp_threshold_low;       // 10°C pour validation
     uint32_t cpu_threshold_high;    // 80% pour éducation
     uint32_t memory_threshold_low;  // 50KB pour éducation
     uint32_t detection_interval;    // 30s pour éducation
