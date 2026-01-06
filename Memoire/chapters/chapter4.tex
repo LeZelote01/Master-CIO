@@ -13,34 +13,34 @@ Ce chapitre présente la conception détaillée de SecureIoT-VIF, notre framewor
 
 \subsection{Principes de conception}
 
-La conception de SecureIoT-VIF repose sur plusieurs principes fondamentaux orientés vers la recherche appliquée :
+La conception de SecureIoT-VIF repose sur plusieurs principes fondamentaux orientés vers la recherche appliquée~:
 
-\textbf{Principe de modularité :} L'architecture à deux configurations permet une évolution progressive. La Configuration Standard, implémentée et validée expérimentalement, établit les fondations avec des mécanismes de sécurité basés sur la cryptographie software (mbedTLS). La Configuration Expert, conçue en détail, spécifie l'intégration de mécanismes avancés (HSM matériel, vérification temps réel, machine learning adaptatif).
+\textbf{Principe de modularité~:} L'architecture à deux configurations permet une évolution progressive. La Configuration Standard, implémentée et validée expérimentalement, établit les fondations avec des mécanismes de sécurité basés sur la cryptographie logicielle (mbedTLS). La Configuration Expert, conçue en détail, spécifie l'intégration de mécanismes avancés (HSM matériel, vérification temps réel, machine learning adaptatif).
 
-\textbf{Principe d'optimisation des ressources :} Chaque composant est optimisé pour fonctionner efficacement sur des plateformes à ressources contraintes (ESP32) sans compromettre la sécurité, démontrant la faisabilité de l'approche sur du matériel accessible.
+\textbf{Principe d'optimisation des ressources~:} Chaque composant est optimisé pour fonctionner efficacement sur des plateformes à ressources contraintes (ESP32) sans compromettre la sécurité, démontrant la faisabilité de l'approche sur du matériel accessible.
 
-\textbf{Principe de transparence :} Le framework fonctionne de manière observable, permettant une validation expérimentale rigoureuse grâce à un logging détaillé et des interfaces de monitoring pour l'analyse scientifique des comportements.
+\textbf{Principe de transparence~:} Le framework fonctionne de manière observable, permettant une validation expérimentale rigoureuse grâce à un logging détaillé et des interfaces de monitoring pour l'analyse scientifique des comportements.
 
-\textbf{Principe d'extensibilité :} L'architecture modulaire permet l'intégration progressive de fonctionnalités avancées sans refonte majeure, facilitant l'évolution de la Configuration Standard vers la Configuration Expert.
+\textbf{Principe d'extensibilité~:} L'architecture modulaire permet l'intégration progressive de fonctionnalités avancées sans refonte majeure, facilitant l'évolution de la Configuration Standard vers la Configuration Expert.
 
 \subsection{Vue d'ensemble architecturale}
 
-L'architecture de SecureIoT-VIF suit un modèle hiérarchique à quatre couches, chacune ayant des responsabilités spécifiques et interagissant avec les couches adjacentes selon des interfaces bien définies. Cette architecture supporte deux configurations :
+L'architecture de SecureIoT-VIF suit un modèle hiérarchique à quatre couches, chacune ayant des responsabilités spécifiques et interagissant avec les couches adjacentes selon des interfaces bien définies. Cette architecture supporte deux configurations~:
 
 \begin{figure}[h]
     \centering
     \includegraphics[width=0.9\textwidth]{assets/figures/secureiot_architecture_esp32.png}
-    \caption{Architecture modulaire de SecureIoT-VIF avec ses deux configurations}
+    \caption{Architecture modulaire de SecureIoT-VIF avec ses deux configurations complémentaires}
     \label{fig:secureiot-architecture}
 \end{figure}
 
-\textbf{Couche cryptographique :} Cette couche fondamentale comprend les opérations cryptographiques nécessaires pour assurer la sécurité du framework. Dans la Configuration Standard, elle utilise mbedTLS pour les opérations software (génération de clés, calculs de hash SHA-256, signatures ECDSA, génération de nombres aléatoires). La Configuration Expert spécifie l'intégration de HSM matériel pour des performances et une sécurité accrues.
+\textbf{Couche cryptographique~:} Cette couche fondamentale comprend les opérations cryptographiques nécessaires pour assurer la sécurité du framework. Dans la Configuration Standard, elle utilise mbedTLS pour les opérations logicielles (génération de clés, calculs de hash SHA-256, signatures ECDSA, génération de nombres aléatoires). La Configuration Expert spécifie l'intégration de HSM matériel pour des performances et une sécurité accrues.
 
-\textbf{Couche de vérification d'intégrité :} Cette couche implémente les mécanismes de vérification d'intégrité du firmware. La Configuration Standard intègre la vérification au démarrage et le monitoring périodique. La Configuration Expert spécifie la vérification temps réel continue avec attestation distante.
+\textbf{Couche de vérification d'intégrité~:} Cette couche implémente les mécanismes de vérification d'intégrité du firmware. La Configuration Standard intègre la vérification au démarrage et le monitoring périodique. La Configuration Expert spécifie la vérification temps réel continue avec attestation distante.
 
-\textbf{Couche de services de sécurité :} Cette couche fournit les services de sécurité de niveau intermédiaire. La Configuration Standard inclut la détection d'anomalies par seuils fixes et la gestion des clés software. La Configuration Expert spécifie l'intégration de machine learning adaptatif et de gestion avancée des clés avec protection matérielle.
+\textbf{Couche de services de sécurité~:} Cette couche fournit les services de sécurité de niveau intermédiaire. La Configuration Standard inclut la détection d'anomalies par seuils configurables et la gestion des clés logicielles. La Configuration Expert spécifie l'intégration de machine learning adaptatif et de gestion avancée des clés avec protection matérielle.
 
-\textbf{Couche d'interface applicative :} Cette couche expose les services de sécurité aux applications via des API standardisées, assurant la compatibilité et l'extensibilité du framework.
+\textbf{Couche d'interface applicative~:} Cette couche expose les services de sécurité aux applications via des API standardisées, assurant la compatibilité et l'extensibilité du framework.
 
 \section{Composants principaux}
 
@@ -52,33 +52,33 @@ Le Module de Vérification d'Intégrité constitue le cœur de SecureIoT-VIF. Il
 
 Le processus de démarrage sécurisé établit une chaîne de confiance depuis le bootloader jusqu'au firmware applicatif. Cette approche utilise les primitives cryptographiques de mbedTLS.
 
-\textbf{Étape 1 - Initialisation cryptographique :} Le processus démarre par l'initialisation de mbedTLS et la configuration des algorithmes cryptographiques. Cette étape établit l'environnement sécurisé pour les opérations ultérieures.
+\textbf{Étape 1 -- Initialisation cryptographique~:} Le processus démarre par l'initialisation de mbedTLS et la configuration des algorithmes cryptographiques. Cette étape établit l'environnement sécurisé pour les opérations ultérieures.
 
-\textbf{Étape 2 - Vérification du bootloader :} Le bootloader principal est vérifié cryptographiquement avant son exécution en utilisant des signatures ECDSA. Cette vérification établit la racine de confiance du système.
+\textbf{Étape 2 -- Vérification du bootloader~:} Le bootloader principal est vérifié cryptographiquement avant son exécution en utilisant des signatures ECDSA. Cette vérification établit la racine de confiance du système.
 
-\textbf{Étape 3 - Vérification du kernel :} Le kernel du système d'exploitation embarqué est vérifié selon le même processus, étendant la chaîne de confiance.
+\textbf{Étape 3 -- Vérification du noyau~:} Le noyau du système d'exploitation embarqué est vérifié selon le même processus, étendant la chaîne de confiance.
 
-\textbf{Étape 4 - Vérification du firmware applicatif :} Le firmware applicatif principal est vérifié et son intégrité est attestée avant le démarrage des services utilisateur, complétant la chaîne de confiance.
+\textbf{Étape 4 -- Vérification du firmware applicatif~:} Le firmware applicatif principal est vérifié et son intégrité est attestée avant le démarrage des services utilisateur, complétant la chaîne de confiance.
 
 \subsubsection{Vérification périodique (Configuration Standard)}
 
 La Configuration Standard implémente une vérification périodique pendant l'exécution, permettant la détection de modifications malveillantes post-démarrage.
 
-\textbf{Mécanisme de hachage par blocs :} Le firmware est divisé en blocs de 4~KB et chaque bloc est haché périodiquement en utilisant SHA-256. Cette approche équilibre granularité de détection et overhead computationnel.
+\textbf{Mécanisme de hachage par blocs~:} Le firmware est divisé en blocs de 4~KB et chaque bloc est haché périodiquement en utilisant SHA-256. Cette approche équilibre granularité de détection et overhead computationnel.
 
-\textbf{Vérification basée sur un calendrier configurable :} La vérification suit un calendrier configurable (5 minutes par défaut dans l'implémentation validée) permettant l'adaptation aux contraintes spécifiques de chaque déploiement.
+\textbf{Vérification basée sur un calendrier configurable~:} La vérification suit un calendrier configurable (5~minutes par défaut dans l'implémentation validée) permettant l'adaptation aux contraintes spécifiques de chaque déploiement.
 
-\textbf{Optimisation des ressources :} La vérification est réalisée sur un seul cœur de l'ESP32 avec des algorithmes optimisés pour minimiser l'impact sur les performances système.
+\textbf{Optimisation des ressources~:} La vérification est réalisée sur un seul cœur de l'ESP32 avec des algorithmes optimisés pour minimiser l'impact sur les performances du système.
 
-\subsubsection{Vérification temps réel (Configuration Expert - Conçue)}
+\subsubsection{Vérification temps réel (Configuration Expert -- Conçue)}
 
-La Configuration Expert spécifie des mécanismes de vérification temps réel continue :
+La Configuration Expert spécifie des mécanismes de vérification temps réel continue~:
 
-\textbf{Vérification continue :} Surveillance permanente de l'intégrité du firmware pendant l'exécution avec détection en temps réel des modifications.
+\textbf{Vérification continue~:} Surveillance permanente de l'intégrité du firmware pendant l'exécution avec détection en temps réel des modifications.
 
-\textbf{Attestation distante :} Protocoles d'attestation permettant la vérification de l'intégrité du dispositif à distance.
+\textbf{Attestation distante~:} Protocoles d'attestation permettant la vérification de l'intégrité du dispositif à distance.
 
-\textbf{HSM matériel intégré :} Utilisation des capacités cryptographiques matérielles de l'ESP32 (accélérateurs AES, SHA, générateur de nombres aléatoires matériel) pour améliorer performances et sécurité.
+\textbf{HSM matériel intégré~:} Utilisation des capacités cryptographiques matérielles de l'ESP32 (accélérateurs AES, SHA, générateur de nombres aléatoires matériel) pour améliorer performances et sécurité.
 
 \subsection{Module de détection d'anomalies (ADM)}
 
@@ -86,29 +86,29 @@ Le Module de Détection d'Anomalies implémente des techniques de détection com
 
 \subsubsection{Collecte de métriques comportementales (Configuration Standard)}
 
-\textbf{Métriques de performance :} Analyse de l'utilisation CPU, de la mémoire disponible, et de la température pour détecter les déviations du comportement normal en utilisant des seuils configurables.
+\textbf{Métriques de performance~:} Analyse de l'utilisation CPU, de la mémoire disponible, et de la température pour détecter les déviations du comportement normal en utilisant des seuils configurables.
 
-\textbf{Métriques de ressources système :} Surveillance de l'utilisation des ressources système pour identifier les consommations anormales indicatrices d'activité malveillante.
+\textbf{Métriques de ressources système~:} Surveillance de l'utilisation des ressources système pour identifier les consommations anormales indicatrices d'activité malveillante.
 
-\textbf{Métriques de communication :} Analyse des patterns de communication réseau pour détecter les communications suspectes.
+\textbf{Métriques de communication~:} Analyse des patterns de communication réseau pour détecter les communications suspectes.
 
-\subsubsection{Algorithmes de détection par seuils fixes (Configuration Standard)}
+\subsubsection{Algorithmes de détection par seuils configurables (Configuration Standard)}
 
-\textbf{Détection par seuils adaptatifs :} Utilisation d'algorithmes de détection basés sur des seuils configurables pour identifier les patterns anormaux. Les seuils sont ajustables selon les caractéristiques spécifiques du déploiement.
+\textbf{Détection par seuils adaptatifs~:} Utilisation d'algorithmes de détection basés sur des seuils configurables pour identifier les patterns anormaux. Les seuils sont ajustables selon les caractéristiques spécifiques du déploiement.
 
-\textbf{Analyse temporelle :} Prise en compte de la dimension temporelle dans l'analyse des comportements en utilisant des fenêtres glissantes pour détecter les anomalies persistantes.
+\textbf{Analyse temporelle~:} Prise en compte de la dimension temporelle dans l'analyse des comportements en utilisant des fenêtres glissantes pour détecter les anomalies persistantes.
 
-\textbf{Règles de décision configurables :} Implémentation de règles de décision explicites permettant l'ajustement des paramètres de détection selon les exigences de sécurité.
+\textbf{Règles de décision configurables~:} Implémentation de règles de décision explicites permettant l'ajustement des paramètres de détection selon les exigences de sécurité.
 
-\subsubsection{Machine learning adaptatif (Configuration Expert - Conçue)}
+\subsubsection{Machine learning adaptatif (Configuration Expert -- Conçue)}
 
-La Configuration Expert spécifie l'intégration d'algorithmes d'apprentissage automatique pour une détection plus sophistiquée :
+La Configuration Expert spécifie l'intégration d'algorithmes d'apprentissage automatique pour une détection plus sophistiquée~:
 
-\textbf{Apprentissage du comportement normal :} Algorithmes d'apprentissage non supervisé pour modéliser le comportement normal du dispositif.
+\textbf{Apprentissage du comportement normal~:} Algorithmes d'apprentissage non supervisé pour modéliser le comportement normal du dispositif.
 
-\textbf{Détection adaptative :} Ajustement automatique des seuils de détection basé sur l'analyse comportementale continue.
+\textbf{Détection adaptative~:} Ajustement automatique des seuils de détection basé sur l'analyse comportementale continue.
 
-\textbf{Classification des anomalies :} Catégorisation automatique des anomalies détectées selon leur niveau de sévérité et leur type.
+\textbf{Classification des anomalies~:} Catégorisation automatique des anomalies détectées selon leur niveau de sévérité et leur type.
 
 \subsection{Module de gestion des clés (KMM)}
 
@@ -116,31 +116,31 @@ Le Module de Gestion des Clés assure la génération, le stockage et la gestion
 
 \subsubsection{Hiérarchie des clés (Configuration Standard)}
 
-\textbf{Clé racine :} Stockée dans la mémoire flash de l'ESP32 avec protection software, cette clé sert à dériver les autres clés en utilisant des fonctions de dérivation standard (HKDF).
+\textbf{Clé racine~:} Stockée dans la mémoire flash de l'ESP32 avec protection logicielle, cette clé sert à dériver les autres clés en utilisant des fonctions de dérivation standard (HKDF).
 
-\textbf{Clés d'intégrité dérivées :} Utilisées pour les calculs de hash SHA-256 et la vérification d'intégrité, dérivées de la clé racine selon un processus cryptographique standardisé.
+\textbf{Clés d'intégrité dérivées~:} Utilisées pour les calculs de hash SHA-256 et la vérification d'intégrité, dérivées de la clé racine selon un processus cryptographique standardisé.
 
-\textbf{Clés de signature :} Utilisées pour signer les événements de sécurité et les rapports d'état, renouvelées périodiquement selon une politique de rotation configurable.
+\textbf{Clés de signature~:} Utilisées pour signer les événements de sécurité et les rapports d'état, renouvelées périodiquement selon une politique de rotation configurable.
 
-\textbf{Clés de communication :} Utilisées pour les communications sécurisées, gérées selon des protocoles cryptographiques établis.
+\textbf{Clés de communication~:} Utilisées pour les communications sécurisées, gérées selon des protocoles cryptographiques établis.
 
 \subsubsection{Protocoles de gestion (Configuration Standard)}
 
-\textbf{Génération sécurisée :} Utilisation du générateur de nombres aléatoires de mbedTLS pour assurer une entropie suffisante des clés.
+\textbf{Génération sécurisée~:} Utilisation du générateur de nombres aléatoires de mbedTLS pour assurer une entropie suffisante des clés.
 
-\textbf{Stockage sécurisé :} Les clés sensibles sont stockées dans la mémoire flash avec protection software, implémentant les meilleures pratiques de gestion de clés.
+\textbf{Stockage sécurisé~:} Les clés sensibles sont stockées dans la mémoire flash avec protection logicielle, implémentant les meilleures pratiques de gestion de clés.
 
-\textbf{Rotation périodique :} Mécanisme de rotation des clés configurable pour minimiser l'impact d'une compromission potentielle.
+\textbf{Rotation périodique~:} Mécanisme de rotation des clés configurable pour minimiser l'impact d'une compromission potentielle.
 
-\subsubsection{Protection matérielle avancée (Configuration Expert - Conçue)}
+\subsubsection{Protection matérielle avancée (Configuration Expert -- Conçue)}
 
-La Configuration Expert spécifie des mécanismes de protection renforcée :
+La Configuration Expert spécifie des mécanismes de protection renforcée~:
 
-\textbf{Stockage eFuse :} Utilisation des eFuse de l'ESP32 pour un stockage immuable et sécurisé des clés critiques.
+\textbf{Stockage eFuse~:} Utilisation des eFuse de l'ESP32 pour un stockage immuable et sécurisé des clés critiques.
 
-\textbf{Chiffrement flash :} Chiffrement du contenu de la mémoire flash pour protéger les clés et données sensibles.
+\textbf{Chiffrement flash~:} Chiffrement du contenu de la mémoire flash pour protéger les clés et données sensibles.
 
-\textbf{Secure Boot matériel :} Implémentation du Secure Boot v2 de l'ESP32 pour une chaîne de confiance matérielle renforcée.
+\textbf{Secure Boot matériel~:} Implémentation du Secure Boot v2 de l'ESP32 pour une chaîne de confiance matérielle renforcée.
 
 \section{Protocoles de sécurité}
 
@@ -149,7 +149,7 @@ La Configuration Expert spécifie des mécanismes de protection renforcée :
 Le protocole de démarrage sécurisé de SecureIoT-VIF établit une chaîne de confiance robuste tout en minimisant l'overhead pour les dispositifs contraints.
 
 \begin{algorithm}
-\caption{Protocole de démarrage sécurisé - Configuration Standard}
+\caption{Protocole de démarrage sécurisé -- Configuration Standard}
 \label{alg:secure-boot}
 \begin{algorithmic}[1]
 \State \textbf{Initialisation cryptographique}
@@ -187,7 +187,7 @@ Le protocole de démarrage sécurisé de SecureIoT-VIF établit une chaîne de c
 La vérification périodique représente une innovation technique majeure de SecureIoT-VIF, permettant la détection de modifications post-démarrage.
 
 \begin{algorithm}
-\caption{Protocole de vérification périodique - Configuration Standard}
+\caption{Protocole de vérification périodique -- Configuration Standard}
 \label{alg:periodic-verification}
 \begin{algorithmic}[1]
 \State \textbf{Initialisation}
@@ -219,7 +219,7 @@ La vérification périodique représente une innovation technique majeure de Sec
 Le protocole de détection d'anomalies implémente des mécanismes de surveillance comportementale pour identifier les activités suspectes.
 
 \begin{algorithm}
-\caption{Protocole de détection d'anomalies par seuils - Configuration Standard}
+\caption{Protocole de détection d'anomalies par seuils -- Configuration Standard}
 \label{alg:anomaly-detection}
 \begin{algorithmic}[1]
 \State \textbf{Collecte des métriques}
@@ -260,31 +260,31 @@ Le protocole de détection d'anomalies implémente des mécanismes de surveillan
 
 \subsubsection{Utilisation efficace de mbedTLS}
 
-SecureIoT-VIF optimise l'utilisation de la bibliothèque mbedTLS pour la Configuration Standard :
+SecureIoT-VIF optimise l'utilisation de la bibliothèque mbedTLS pour la Configuration Standard~:
 
-\textbf{Signatures numériques :} ECDSA P-256 via mbedTLS pour les signatures et vérifications, Ed25519 pour la compatibilité moderne, avec logging détaillé des opérations.
+\textbf{Signatures numériques~:} ECDSA P-256 via mbedTLS pour les signatures et vérifications, Ed25519 pour la compatibilité moderne, avec logging détaillé des opérations.
 
-\textbf{Fonctions de hachage :} SHA-256 via mbedTLS pour les calculs d'intégrité, BLAKE2s pour les opérations spécialisées, avec traçabilité complète des opérations.
+\textbf{Fonctions de hachage~:} SHA-256 via mbedTLS pour les calculs d'intégrité, BLAKE2s pour les opérations spécialisées, avec traçabilité complète des opérations.
 
-\textbf{Chiffrement symétrique :} AES-256 via mbedTLS pour les communications sécurisées, ChaCha20-Poly1305 pour des performances optimisées, avec interfaces de monitoring.
+\textbf{Chiffrement symétrique~:} AES-256 via mbedTLS pour les communications sécurisées, ChaCha20-Poly1305 pour des performances optimisées, avec interfaces de monitoring.
 
 \subsubsection{Optimisations algorithmiques}
 
-\textbf{Calculs optimisés :} Utilisation d'algorithmes optimisés pour l'ESP32, exploitant les caractéristiques de l'architecture ARM Cortex-M pour maximiser les performances.
+\textbf{Calculs optimisés~:} Utilisation d'algorithmes optimisés pour l'ESP32, exploitant les caractéristiques de l'architecture ARM pour maximiser les performances.
 
-\textbf{Gestion mémoire efficace :} Algorithmes de hachage en streaming optimisés pour minimiser l'empreinte mémoire RAM, permettant le traitement de firmwares volumineux.
+\textbf{Gestion mémoire efficace~:} Algorithmes de hachage en streaming optimisés pour minimiser l'empreinte mémoire RAM, permettant le traitement de firmwares volumineux.
 
-\textbf{Instrumentation de performance :} Mesures précises des temps d'exécution et de la consommation des ressources pour l'analyse et l'optimisation.
+\textbf{Instrumentation de performance~:} Mesures précises des temps d'exécution et de la consommation des ressources pour l'analyse et l'optimisation continue.
 
 \subsection{Optimisations énergétiques}
 
 \subsubsection{Gestion adaptative de la puissance}
 
-\textbf{Ordonnancement adaptatif :} Ajustement dynamique de la fréquence de vérification en fonction de l'état de la batterie et des contraintes énergétiques.
+\textbf{Ordonnancement adaptatif~:} Ajustement dynamique de la fréquence de vérification en fonction de l'état de la batterie et des contraintes énergétiques.
 
-\textbf{Modes de veille intelligents :} Suspension coordonnée des vérifications non critiques pendant les périodes d'inactivité, réduction de la consommation énergétique jusqu'à 40~\%.
+\textbf{Modes de veille intelligents~:} Suspension coordonnée des vérifications non critiques pendant les périodes d'inactivité, réduction de la consommation énergétique jusqu'à 40~\%.
 
-\textbf{Optimisation des communications :} Agrégation des messages de logging et utilisation intelligente des modes d'économie d'énergie pour réduire la consommation radio.
+\textbf{Optimisation des communications~:} Agrégation des messages de logging et utilisation intelligente des modes d'économie d'énergie pour réduire la consommation radio.
 
 \section{Adaptation aux contraintes IoT}
 
@@ -292,23 +292,23 @@ SecureIoT-VIF optimise l'utilisation de la bibliothèque mbedTLS pour la Configu
 
 \subsubsection{Adaptation dynamique}
 
-SecureIoT-VIF implémente des mécanismes d'adaptation pour fonctionner efficacement sur des plateformes à ressources contraintes :
+SecureIoT-VIF implémente des mécanismes d'adaptation pour fonctionner efficacement sur des plateformes à ressources contraintes~:
 
-\textbf{Profilage des ressources :} Évaluation automatique des ressources disponibles (CPU, RAM, Flash) au démarrage avec adaptation des paramètres de sécurité.
+\textbf{Profilage des ressources~:} Évaluation automatique des ressources disponibles (CPU, RAM, Flash) au démarrage avec adaptation des paramètres de sécurité.
 
-\textbf{Configuration adaptative :} Ajustement automatique des paramètres de sécurité en fonction des ressources disponibles, optimisant l'équilibre sécurité/performance.
+\textbf{Configuration adaptative~:} Ajustement automatique des paramètres de sécurité en fonction des ressources disponibles, optimisant l'équilibre sécurité/performance.
 
-\textbf{Dégradation gracieuse :} Réduction progressive des fonctionnalités de sécurité en cas de contraintes sévères, maintenant un niveau de protection minimal tout en assurant la disponibilité du système.
+\textbf{Dégradation gracieuse~:} Réduction progressive des fonctionnalités de sécurité en cas de contraintes sévères, maintenant un niveau de protection minimal tout en assurant la disponibilité du système.
 
 \subsection{Compatibilité multi-plateforme}
 
 \subsubsection{Abstraction matérielle}
 
-\textbf{Couche d'abstraction cryptographique :} Interface standardisée pour accéder aux capacités cryptographiques de différentes plateformes (ESP32, ARM Cortex-M, RISC-V).
+\textbf{Couche d'abstraction cryptographique~:} Interface standardisée pour accéder aux capacités cryptographiques de différentes plateformes (ESP32, ARM Cortex-M, RISC-V).
 
-\textbf{Abstraction des primitives :} API unifiée pour les opérations cryptographiques s'adaptant aux différentes implémentations de mbedTLS disponibles.
+\textbf{Abstraction des primitives~:} API unifiée pour les opérations cryptographiques s'adaptant aux différentes implémentations de mbedTLS disponibles.
 
-\textbf{Abstraction du système d'exploitation :} Compatibilité avec FreeRTOS, Zephyr, Linux embarqué, et autres systèmes d'exploitation temps réel.
+\textbf{Abstraction du système d'exploitation~:} Compatibilité avec FreeRTOS, Zephyr, Linux embarqué, et autres systèmes d'exploitation temps réel.
 
 \section{Sécurité du framework}
 
@@ -316,42 +316,42 @@ SecureIoT-VIF implémente des mécanismes d'adaptation pour fonctionner efficace
 
 \subsubsection{Résistance aux attaques}
 
-SecureIoT-VIF est conçu pour résister aux principales menaces identifiées dans l'analyse des menaces (Chapitre 3) :
+SecureIoT-VIF est conçu pour résister aux principales menaces identifiées dans l'analyse des menaces (Chapitre~3)~:
 
-\textbf{Attaques par injection de malware :} La vérification périodique détecte les modifications de firmware avec un délai maximal de 5 minutes, permettant une réponse rapide aux compromissions.
+\textbf{Attaques par injection de malware~:} La vérification périodique détecte les modifications de firmware avec un délai maximal de 5~minutes, permettant une réponse rapide aux compromissions.
 
-\textbf{Attaques par modification de données :} Les mécanismes de vérification d'intégrité par blocs permettent de localiser précisément les modifications, facilitant l'analyse forensique.
+\textbf{Attaques par modification de données~:} Les mécanismes de vérification d'intégrité par blocs permettent de localiser précisément les modifications, facilitant l'analyse forensique.
 
-\textbf{Attaques par surcharge de ressources :} La détection par seuils adaptatifs identifie les consommations anormales de ressources, permettant la détection de malwares cryptominers et botnets.
+\textbf{Attaques par surcharge de ressources~:} La détection par seuils adaptatifs identifie les consommations anormales de ressources, permettant la détection de malwares cryptominers et botnets.
 
 \subsubsection{Propriétés de sécurité}
 
-\textbf{Intégrité de base :} Garantie que le firmware n'a pas été modifié de manière non autorisée, vérifiée périodiquement avec granularité professionnelle.
+\textbf{Intégrité~:} Garantie que le firmware n'a pas été modifié de manière non autorisée, vérifiée périodiquement avec une granularité configurable selon les besoins du déploiement.
 
-\textbf{Authenticité professionnelle :} Vérification que le firmware provient d'une source légitime, avec possibilité de traçage pour le déploiement.
+\textbf{Authenticité~:} Vérification que le firmware provient d'une source légitime, établissant une chaîne de confiance depuis le bootloader jusqu'au firmware applicatif.
 
-\textbf{Détectabilité transparente :} Assurance que les modifications malveillantes sont détectées dans un délai raisonnable pour l'expérimentation professionnelle.
+\textbf{Détectabilité~:} Assurance que les modifications malveillantes sont détectées dans un délai configurable, permettant une réponse appropriée aux menaces.
 
-\subsection{Mécanismes de récupération professionnels}
+\subsection{Mécanismes de réponse aux incidents}
 
-\subsubsection{Détection et réponse techniques}
+\subsubsection{Détection et réponse}
 
-\textbf{Détection observable :} Identification des compromissions par analyse comportementale simple et vérification d'intégrité périodique avec logging détaillé pour le déploiement.
+\textbf{Détection d'incidents~:} Identification des compromissions par analyse comportementale et vérification d'intégrité périodique avec logging détaillé pour l'analyse post-incident.
 
-\textbf{Réponse professionnelle configurée :} Actions de réponse configurables permettant l'expérimentation avec différents niveaux de sévérité et types de contre-mesures.
+\textbf{Réponse configurable~:} Actions de réponse configurables incluant l'alerte, l'isolation du dispositif, le redémarrage sécurisé, ou le mode dégradé selon la sévérité de l'incident.
 
-\textbf{Logging professionnel complet :} Enregistrement détaillé de tous les événements de sécurité avec horodatage et contexte pour l'analyse post-incident professionnelle.
+\textbf{Journalisation complète~:} Enregistrement détaillé de tous les événements de sécurité avec horodatage précis et contexte complet pour faciliter l'analyse forensique et l'amélioration continue des mécanismes de détection.
 
 \section{Conclusion}
 
-Ce chapitre a présenté la conception complète de SecureIoT-VIF, notre framework professionnel de vérification d'intégrité pour les firmwares IoT. L'architecture proposée combine plusieurs innovations techniques :
+Ce chapitre a présenté la conception complète de SecureIoT-VIF, notre framework de vérification d'intégrité pour les firmwares IoT. L'architecture proposée combine plusieurs innovations techniques~:
 
 \begin{itemize}
-    \item Une architecture modulaire permettant une intégration progressive de fonctionnalités de sécurité avancées
-    \item L'utilisation efficace de la cryptographie logicielle (mbedTLS) pour des opérations cryptographiques robustes et auditables
-    \item Des mécanismes de vérification d'intégrité au démarrage basés sur des signatures cryptographiques
+    \item Une architecture modulaire à deux configurations permettant une évolution progressive vers des fonctionnalités de sécurité avancées
+    \item L'utilisation efficace de la cryptographie logicielle (mbedTLS) dans la Configuration Standard pour des opérations cryptographiques robustes et auditables
+    \item Des mécanismes de vérification d'intégrité au démarrage et périodiques basés sur des signatures cryptographiques
     \item Un système de détection d'anomalies configurable avec seuils adaptatifs
-    \item Une roadmap claire pour l'évolution vers des fonctionnalités avancées (HSM matériel, vérification temps réel, machine learning adaptatif)
+    \item Une roadmap claire pour l'évolution vers la Configuration Expert avec des fonctionnalités avancées (HSM matériel, vérification temps réel, machine learning adaptatif)
 \end{itemize}
 
-La conception présentée répond aux exigences de sécurité identifiées dans l'analyse des menaces tout en respectant les contraintes de ressources des dispositifs IoT embarqués. L'architecture modulaire permet un déploiement immédiat avec les fonctionnalités actuellement implémentées, tout en établissant les fondations pour des extensions futures. Le chapitre suivant détaille l'implémentation concrète de ces concepts sur la plateforme ESP32, validant la faisabilité pratique de l'approche proposée et démontrant son efficacité pour la sécurisation des firmwares IoT dans des environnements contraints.
+La conception présentée répond aux exigences de sécurité identifiées dans l'analyse des menaces tout en respectant les contraintes de ressources des dispositifs IoT embarqués. L'architecture modulaire permet un déploiement immédiat avec la Configuration Standard implémentée, tout en établissant les fondations pour des extensions futures vers la Configuration Expert. Le chapitre suivant détaille l'implémentation concrète de la Configuration Standard sur la plateforme ESP32, validant la faisabilité pratique de l'approche proposée et démontrant son efficacité pour la sécurisation des firmwares IoT dans des environnements contraints.
