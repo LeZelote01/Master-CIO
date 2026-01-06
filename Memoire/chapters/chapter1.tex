@@ -43,7 +43,7 @@ Les solutions de sécurité existantes présentent plusieurs limitations critiqu
 
 \subsection{Question de recherche principale}
 
-Comment concevoir et implémenter un framework de sécurité pour firmwares IoT qui équilibre efficacement protection robuste, performance acceptable, et praticité de déploiement dans des environnements contraints, tout en offrant une architecture évolutive vers des mécanismes de sécurité avancés ?
+Comment concevoir et implémenter une architecture de sécurité modulaire pour firmwares IoT qui équilibre efficacement protection robuste, performance acceptable et praticité de déploiement dans des environnements contraints, tout en offrant une évolution progressive vers des mécanismes de sécurité avancés ?
 
 \subsection{Questions de recherche spécifiques}
 
@@ -59,7 +59,7 @@ Comment concevoir et implémenter un framework de sécurité pour firmwares IoT 
 
 \subsection{Objectif principal}
 
-L'objectif principal de cette recherche est de concevoir, développer et valider SecureIoT-VIF, un framework professionnel de vérification d'intégrité pour la sécurité des firmwares IoT. Ce framework vise à fournir une protection robuste contre les attaques par compromission de firmware tout en maintenant un overhead acceptable pour les déploiements industriels, avec une architecture évolutive permettant l'intégration future de mécanismes de sécurité avancés.
+L'objectif principal de cette recherche est de concevoir, développer et valider SecureIoT-VIF, une architecture modulaire de vérification d'intégrité pour la sécurité des firmwares IoT. Cette architecture vise à fournir une protection robuste contre les attaques par compromission de firmware tout en maintenant un overhead acceptable, avec deux configurations complémentaires : la \textbf{Configuration Standard} (implémentée et validée expérimentalement) et la \textbf{Configuration Expert} (conçue en détail pour intégrer des mécanismes de sécurité avancés).
 
 \subsection{Objectifs spécifiques}
 
@@ -70,19 +70,20 @@ L'objectif principal de cette recherche est de concevoir, développer et valider
     \item Développer un modèle de menaces adapté aux environnements IoT industriels
 \end{itemize}
 
-\textbf{Objectif 2 : Conception d'une architecture professionnelle}
+\textbf{Objectif 2 : Conception d'une architecture modulaire à deux configurations}
 \begin{itemize}
     \item Développer une architecture de sécurité modulaire et évolutive sur plateforme ESP32
-    \item Concevoir des mécanismes de vérification d'intégrité basés sur la cryptographie mbedTLS
+    \item Concevoir la Configuration Standard avec mécanismes de vérification d'intégrité basés sur la cryptographie mbedTLS
+    \item Concevoir la Configuration Expert avec spécifications détaillées pour mécanismes avancés
     \item Intégrer un système de détection d'anomalies configurable et performant
-    \item Établir une roadmap claire pour l'extension vers des fonctionnalités avancées
+    \item Établir une roadmap claire pour l'évolution de la Configuration Standard vers la Configuration Expert
 \end{itemize}
 
-\textbf{Objectif 3 : Implémentation et optimisation}
+\textbf{Objectif 3 : Implémentation et optimisation de la Configuration Standard}
 \begin{itemize}
-    \item Implémenter SecureIoT-VIF sur plateforme ESP32 avec optimisations performance
+    \item Implémenter la Configuration Standard de SecureIoT-VIF sur plateforme ESP32 avec optimisations performance
     \item Développer une architecture modulaire compatible avec divers types de capteurs IoT
-    \item Valider l'approche avec des capteurs DHT22 (température/humidité) comme cas d'usage
+    \item Valider l'approche avec des capteurs DHT22 (température/humidité) comme cas d'usage représentatif
     \item Optimiser les mécanismes de sécurité pour minimiser l'overhead computationnel et énergétique
 \end{itemize}
 
@@ -108,16 +109,13 @@ Ce travail apporte plusieurs contributions significatives au domaine de la sécu
     \item Méthodologie de validation expérimentale adaptée aux contraintes IoT
 \end{itemize}
 
-\textbf{Contribution technique :} Implémentation de SecureIoT-VIF, un framework professionnel offrant :
+\textbf{Contribution technique :} Double contribution technique avec implémentation et conception :
 \begin{itemize}
-    \item Vérification d'intégrité firmware avec signatures cryptographiques (SHA-256/ECDSA)
-    \item Détection d'anomalies configurable avec seuils adaptatifs
-    \item Architecture modulaire extensible à divers types de capteurs et actionneurs IoT
-    \item Solution validée avec capteurs DHT22 démontrant l'applicabilité à des cas d'usage réels
-    \item Overhead minimal (< 8\%) compatible avec les contraintes industrielles
+    \item \textbf{Configuration Standard (implémentée)} : Vérification d'intégrité firmware avec signatures cryptographiques (SHA-256/ECDSA), détection d'anomalies configurable avec seuils adaptatifs, architecture modulaire extensible, validation avec capteurs DHT22, overhead minimal (< 8\%)
+    \item \textbf{Configuration Expert (conçue)} : Spécifications détaillées pour HSM matériel, vérification temps réel continue, machine learning adaptatif, attestation distante, optimisations avancées
 \end{itemize}
 
-\textbf{Contribution empirique :} Évaluation expérimentale complète sur des scénarios représentatifs, avec analyse comparative des performances, validation de l'efficacité de détection, et démonstration de la faisabilité pratique pour les déploiements industriels.
+\textbf{Contribution empirique :} Évaluation expérimentale complète de la Configuration Standard sur des scénarios représentatifs, avec analyse comparative des performances, validation de l'efficacité de détection, et démonstration de la faisabilité pratique de l'approche.
 
 \section{Approche méthodologique}
 
@@ -125,11 +123,11 @@ Ce travail apporte plusieurs contributions significatives au domaine de la sécu
 
 Cette recherche adopte une approche pragmatique centrée sur l'équilibre entre sécurité, performance et praticité de déploiement. Cette stratégie méthodologique se justifie par :
 
-\textbf{Réalisme industriel :} Une solution de sécurité n'est viable que si elle peut être déployée dans des conditions réelles, avec des contraintes de ressources et de coûts acceptables pour l'industrie.
+\textbf{Réalisme et faisabilité :} Une solution de sécurité n'est viable que si elle peut être déployée dans des conditions réelles, avec des contraintes de ressources acceptables.
 
-\textbf{Architecture évolutive :} La conception modulaire permet une adoption progressive, commençant par des mécanismes de sécurité de base robustes, avec une roadmap claire pour l'intégration de fonctionnalités avancées (HSM matériel, vérification temps réel, machine learning adaptatif).
+\textbf{Architecture modulaire à deux configurations :} La conception à deux niveaux permet une adoption progressive, commençant par la Configuration Standard implémentée et validée, avec une roadmap claire vers la Configuration Expert intégrant des fonctionnalités avancées (HSM matériel, vérification temps réel, machine learning adaptatif).
 
-\textbf{Validation expérimentale rigoureuse :} L'utilisation de capteurs DHT22 pour la validation permet de démontrer l'applicabilité concrète de l'approche sur du matériel réel, tout en confirmant l'extensibilité à d'autres types de capteurs IoT.
+\textbf{Validation expérimentale rigoureuse :} L'utilisation de capteurs DHT22 pour la validation de la Configuration Standard permet de démontrer l'applicabilité concrète de l'approche sur du matériel réel, tout en confirmant l'extensibilité à d'autres types de capteurs IoT.
 
 \textbf{Reproductibilité :} La focalisation sur ESP32, plateforme largement adoptée dans l'industrie IoT, facilite la reproduction et l'adoption de la solution par d'autres organisations et chercheurs.
 
@@ -137,9 +135,9 @@ Cette recherche adopte une approche pragmatique centrée sur l'équilibre entre 
 
 \textbf{Phase 1 - Analyse et état de l'art :} Revue systématique de la littérature scientifique, analyse des solutions commerciales existantes, et identification des lacunes dans les approches actuelles de sécurisation des firmwares IoT.
 
-\textbf{Phase 2 - Conception et modélisation :} Développement du modèle de sécurité hybride, conception de l'architecture du framework, spécification des protocoles de vérification d'intégrité et de détection d'anomalies, et définition de la roadmap d'évolution.
+\textbf{Phase 2 - Conception et modélisation :} Développement du modèle de sécurité hybride, conception de l'architecture du framework à deux configurations, spécification des protocoles de vérification d'intégrité et de détection d'anomalies pour les deux configurations, et définition de la roadmap d'évolution.
 
-\textbf{Phase 3 - Implémentation et optimisation :} Implémentation complète du framework sur ESP32, développement des mécanismes de cryptographie mbedTLS, intégration du système de détection d'anomalies, et optimisations pour minimiser l'overhead.
+\textbf{Phase 3 - Implémentation et optimisation :} Implémentation complète de la Configuration Standard sur ESP32, développement des mécanismes de cryptographie mbedTLS, intégration du système de détection d'anomalies, optimisations pour minimiser l'overhead, et conception détaillée de la Configuration Expert.
 
 \textbf{Phase 4 - Évaluation expérimentale :} Tests de sécurité sur scénarios d'attaques représentatifs, mesures de performance (overhead computationnel, impact énergétique), validation avec capteurs DHT22, et comparaison avec l'état de l'art.
 
@@ -153,11 +151,11 @@ Ce mémoire est organisé en sept chapitres :
 
 \textbf{Chapitre 3 - Analyse des menaces :} Développe une taxonomie des attaques par compromission de firmware et présente un modèle de menaces pour les environnements IoT.
 
-\textbf{Chapitre 4 - Conception du framework :} Détaille l'architecture de SecureIoT-VIF, les mécanismes de sécurité proposés, et la roadmap d'évolution vers des fonctionnalités avancées.
+\textbf{Chapitre 4 - Conception du framework :} Détaille l'architecture de SecureIoT-VIF avec ses deux configurations complémentaires, les mécanismes de sécurité proposés pour chaque configuration, et la roadmap d'évolution de la Configuration Standard vers la Configuration Expert.
 
-\textbf{Chapitre 5 - Implémentation :} Présente l'implémentation du framework sur ESP32, les optimisations réalisées, et la validation avec capteurs DHT22.
+\textbf{Chapitre 5 - Implémentation :} Présente l'implémentation détaillée de la Configuration Standard sur ESP32, les optimisations réalisées, la validation avec capteurs DHT22, et les spécifications détaillées de la Configuration Expert.
 
-\textbf{Chapitre 6 - Évaluation et résultats :} Analyse les résultats de l'évaluation expérimentale et présente la validation de l'efficacité de l'approche.
+\textbf{Chapitre 6 - Évaluation et résultats :} Analyse les résultats de l'évaluation expérimentale de la Configuration Standard, présente la validation de l'efficacité de l'approche, et discute l'analyse comparative théorique de la Configuration Expert.
 
 \textbf{Chapitre 7 - Conclusion et perspectives :} Synthétise les contributions, discute les limitations, et propose des directions pour les évolutions futures.
 
@@ -167,26 +165,28 @@ Ce mémoire est organisé en sept chapitres :
 
 Cette recherche se concentre sur :
 
-\textbf{Plateforme cible :} ESP32 comme plateforme principale d'implémentation et d'évaluation, choisie pour son excellent rapport performance/coût et sa large adoption dans l'écosystème IoT industriel.
+\textbf{Plateforme cible :} ESP32 comme plateforme principale d'implémentation et d'évaluation de la Configuration Standard, choisie pour son excellent rapport performance/coût et sa large adoption dans l'écosystème IoT.
 
-\textbf{Mécanismes de sécurité implémentés :} Vérification d'intégrité au démarrage avec cryptographie mbedTLS, détection d'anomalies par seuils configurables, et architecture modulaire extensible.
+\textbf{Mécanismes de sécurité implémentés (Configuration Standard) :} Vérification d'intégrité au démarrage avec cryptographie mbedTLS, détection d'anomalies par seuils configurables, et architecture modulaire extensible.
 
-\textbf{Validation expérimentale :} Capteurs DHT22 (température/humidité) utilisés pour la validation et la démonstration de l'efficacité, avec architecture extensible à d'autres types de capteurs IoT.
+\textbf{Mécanismes de sécurité conçus (Configuration Expert) :} Spécifications détaillées pour HSM matériel, vérification temps réel continue, machine learning adaptatif, et attestation distante.
 
-\textbf{Scénarios d'attaque :} Attaques par compromission de firmware représentatives des menaces actuelles dans les environnements IoT industriels.
+\textbf{Validation expérimentale :} Capteurs DHT22 (température/humidité) utilisés pour la validation de la Configuration Standard et la démonstration de l'efficacité de l'approche, avec architecture extensible à d'autres types de capteurs IoT.
+
+\textbf{Scénarios d'attaque :} Attaques par compromission de firmware représentatives des menaces actuelles dans les environnements IoT.
 
 \subsection{Extensions futures envisagées}
 
-L'architecture modulaire de SecureIoT-VIF établit les fondations pour des extensions futures :
+L'architecture modulaire de SecureIoT-VIF, avec sa Configuration Expert conçue en détail, établit les fondations pour des implémentations futures :
 
-\textbf{HSM matériel :} Intégration de modules de sécurité matériels (Hardware Security Modules) pour renforcer la protection cryptographique et améliorer les performances des opérations sensibles.
+\textbf{HSM matériel :} La Configuration Expert spécifie l'intégration de modules de sécurité matériels (Hardware Security Modules) pour renforcer la protection cryptographique et améliorer les performances des opérations sensibles.
 
-\textbf{Vérification temps réel :} Extension vers des mécanismes de vérification d'intégrité continue pendant l'exécution, permettant la détection précoce des compromissions runtime.
+\textbf{Vérification temps réel :} Extension vers des mécanismes de vérification d'intégrité continue pendant l'exécution, permettant la détection précoce des compromissions runtime, comme spécifié dans la Configuration Expert.
 
-\textbf{Machine learning adaptatif :} Intégration d'algorithmes d'apprentissage automatique pour une détection d'anomalies plus sophistiquée et adaptative.
+\textbf{Machine learning adaptatif :} Intégration d'algorithmes d'apprentissage automatique pour une détection d'anomalies plus sophistiquée et adaptative, détaillée dans les spécifications de la Configuration Expert.
 
-\textbf{Attestation distante :} Implémentation de protocoles d'attestation permettant la vérification de l'intégrité des dispositifs à distance.
+\textbf{Attestation distante :} Implémentation de protocoles d'attestation permettant la vérification de l'intégrité des dispositifs à distance, comme conçu dans la Configuration Expert.
 
-\textbf{Diversité des capteurs :} Extension de l'architecture modulaire pour supporter une gamme étendue de capteurs et actionneurs IoT au-delà des DHT22 utilisés pour la validation initiale.
+\textbf{Diversité des capteurs :} Extension de l'architecture modulaire pour supporter une gamme étendue de capteurs et actionneurs IoT au-delà des DHT22 utilisés pour la validation initiale de la Configuration Standard.
 
-Cette approche méthodologique assure une contribution significative à la sécurité des firmwares IoT tout en établissant une roadmap claire pour l'évolution vers des fonctionnalités avancées, permettant aux organisations d'adopter progressivement des niveaux de sécurité croissants selon leurs besoins et contraintes.
+Cette approche méthodologique assure une contribution significative à la sécurité des firmwares IoT tout en établissant une roadmap claire pour l'évolution de la Configuration Standard vers la Configuration Expert, permettant une adoption progressive de niveaux de sécurité croissants.
