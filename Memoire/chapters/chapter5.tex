@@ -1,56 +1,56 @@
 %====================================================================
-% Chapitre 5 : Implémentation de SecureIoT-VIF Community Edition
+% Chapitre 5 : Implémentation de SecureIoT-VIF
 %====================================================================
 
-\chapter{Implémentation de SecureIoT-VIF Community Edition}
+\chapter{Implémentation de SecureIoT-VIF}
 \label{chap:implementation}
 
 \section{Introduction}
 
-Ce chapitre présente l'implémentation concrète du framework SecureIoT-VIF Community Edition dans le cadre de notre approche éducative. L'implémentation privilégie la simplicité, la compréhensibilité et l'accessibilité financière sur la plateforme ESP32 (~8$) en utilisant exclusivement de la cryptographie software (mbedTLS). Cette méthodologie permet de valider les concepts de conception éducative tout en démontrant la faisabilité pratique du framework sur une plateforme contrainte accessible aux établissements d'enseignement et aux projets de recherche avec des budgets limités.
+Ce chapitre présente l'implémentation concrète du framework SecureIoT-VIF. L'implémentation privilégie l'équilibre entre sécurité robuste et performance acceptable sur la plateforme ESP32 en utilisant la cryptographie logicielle mbedTLS. Cette approche permet de valider les concepts de conception tout en démontrant la faisabilité pratique du framework sur une plateforme contrainte adaptée aux déploiements IoT industriels. Nous détaillons également la validation expérimentale réalisée avec des capteurs DHT22, démontrant l'extensibilité du framework à divers types de capteurs IoT.
 
-\section{Architecture d'implémentation éducative}
+\section{Architecture d'implémentation}
 
-\subsection{Vue d'ensemble technique accessible}
+\subsection{Vue d'ensemble technique}
 
-L'implémentation de SecureIoT-VIF Community Edition suit une architecture modulaire simple, spécifiquement conçue pour l'accessibilité éducative et la compréhension progressive des concepts de sécurité IoT.
+L'implémentation de SecureIoT-VIF suit une architecture modulaire simple, spécifiquement conçue pour l'accessibilité professionnelle et la approche modulaire de sécurité IoT.
 
 \begin{figure}[h]
     \centering
     \includegraphics[width=0.9\textwidth]{assets/figures/implementation_architecture_esp32.png}
-    \caption{Architecture d'implémentation SecureIoT-VIF Community Edition}
+    \caption{Architecture d'implémentation SecureIoT-VIF }
     \label{fig:implementation-architecture-community}
 \end{figure}
 
-\textbf{Couche d'abstraction matérielle éducative (HAL) :} Interface unifiée simple exploitant les ressources de base de l'ESP32 : processeur dual-core Xtensa LX6, 512KB SRAM, 16MB Flash, et périphériques de base (GPIO, UART, Wi-Fi).
+\textbf{Couche d'abstraction matérielle professionnelle (HAL) :} Interface unifiée simple exploitant les ressources de base de l'ESP32 : processeur dual-core Xtensa LX6, 512KB SRAM, 16MB Flash, et périphériques de base (GPIO, UART, Wi-Fi).
 
 \textbf{Couche de services cryptographiques software :} Implémentation transparente des primitives cryptographiques utilisant exclusivement mbedTLS pour des opérations auditables et compréhensibles.
 
-\textbf{Couche de gestion de la sécurité éducative :} Orchestration simple des mécanismes de vérification d'intégrité et de détection d'anomalies, adaptée aux contraintes pédagogiques et optimisée pour la compréhension.
+\textbf{Couche de gestion de la sécurité professionnelle :} Orchestration simple des mécanismes de vérification d'intégrité et de détection d'anomalies, adaptée aux contraintes techniques et optimisée pour la compréhension.
 
-\textbf{Couche d'interface éducative :} API légère exposant les services de SecureIoT-VIF Community aux applications éducatives et aux exercices pratiques, maximisant la lisibilité du code.
+\textbf{Couche d'interface professionnelle :} API légère exposant les services de SecureIoT-VIF Community aux applications professionnelles et aux exercices pratiques, maximisant la lisibilité du code.
 
-\subsection{Choix technologiques éducatifs}
+\subsection{Choix technologiques professionnels}
 
 \subsubsection{Environnement de développement accessible}
 
 \textbf{ESP-IDF (Espressif IoT Development Framework) :} Framework officiel choisi pour sa documentation complète, sa communauté active, et son excellent support de mbedTLS intégré.
 
-\textbf{FreeRTOS éducatif :} Système d'exploitation temps réel simple, permettant l'ordonnancement coopératif des tâches de vérification avec les applications utilisateur de manière transparente.
+\textbf{FreeRTOS professionnel :} Système d'exploitation temps réel simple, permettant l'ordonnancement coopératif des tâches de vérification avec les applications utilisateur de manière transparente.
 
-\textbf{Toolchain GCC standard :} Compilateur standard pour l'architecture Xtensa, largement disponible et bien documenté pour l'apprentissage.
+\textbf{Toolchain GCC standard :} Compilateur standard pour l'architecture Xtensa, largement disponible et bien documenté pour le déploiement.
 
-\subsubsection{Bibliothèques cryptographiques éducatives}
+\subsubsection{Bibliothèques cryptographiques professionnelles}
 
 \textbf{mbedTLS intégré :} Utilisation exclusive de la bibliothèque mbedTLS fournie avec ESP-IDF pour toutes les opérations cryptographiques, garantissant la transparence et l'auditabilité.
 
-\textbf{Implémentations software uniquement :} Évitement délibéré des accélérateurs matériels pour privilégier la compréhension des algorithmes et la portabilité éducative.
+\textbf{Implémentations software uniquement :} Évitement délibéré des accélérateurs matériels pour privilégier la compréhension des algorithmes et la portabilité professionnelle.
 
-\textbf{Logging éducatif détaillé :} Instrumentation complète du code pour permettre le suivi et la compréhension de chaque opération cryptographique.
+\textbf{Logging professionnel détaillé :} Instrumentation complète du code pour permettre le suivi et la compréhension de chaque opération cryptographique.
 
 \section{Implémentation détaillée sur ESP32}
 
-\subsection{Spécifications de la plateforme éducative}
+\subsection{Spécifications de la plateforme professionnelle}
 
 \subsubsection{Caractéristiques matérielles exploitées}
 
@@ -58,7 +58,7 @@ L'ESP32-WROOM-32 utilisé pour l'implémentation Community présente les caract�
 
 \begin{table}[h]
 \centering
-\caption{Spécifications ESP32 pour SecureIoT-VIF Community Edition}
+\caption{Spécifications ESP32 pour SecureIoT-VIF }
 \label{tab:esp32-community-specs}
 \begin{tabular}{|l|c|c|}
 \hline
@@ -75,15 +75,15 @@ Connecteurs & Breadboard + câbles & ~0\$ (matériel de base) \\
 \end{tabular}
 \end{table}
 
-\subsection{Architecture logicielle éducative détaillée}
+\subsection{Architecture logicielle professionnelle détaillée}
 
-\subsubsection{Répartition des tâches éducative}
+\subsubsection{Répartition des tâches professionnelle}
 
 L'ESP32 dual-core permet une répartition simple et compréhensible des charges :
 
 \textbf{Core 0 (Protocol CPU) :}
 \begin{itemize}
-    \item Applications utilisateur éducatives
+    \item Applications utilisateur professionnelles
     \item Communications réseau Wi-Fi de base
     \item Interface API SecureIoT-VIF simple
     \item Gestion des interruptions système
@@ -94,12 +94,12 @@ L'ESP32 dual-core permet une répartition simple et compréhensible des charges 
     \item Tâches de vérification d'intégrité periodiques
     \item Détection d'anomalies par seuils fixes
     \item Opérations cryptographiques software via mbedTLS
-    \item Logging et monitoring éducatif
+    \item Logging et monitoring professionnel
 \end{itemize}
 
-\subsection{Modules d'implémentation éducatifs principaux}
+\subsection{Modules d'implémentation professionnels principaux}
 
-\subsubsection{Module de vérification d'intégrité éducatif (IVM-Community)}
+\subsubsection{Module de vérification d'intégrité professionnel (IVM-Community)}
 
 \lstset{language=C}
 \begin{lstlisting}[caption={Implémentation IVM Community utilisant mbedTLS}]
@@ -110,38 +110,38 @@ L'ESP32 dual-core permet une répartition simple et compréhensible des charges 
 #include "freertos/FreeRTOS.h"
 #include "freertos/task.h"
 
-// Configuration éducative de vérification Community Edition
+// Configuration professionnelle de vérification 
 typedef struct {
-    size_t block_size;              // 4KB pour granularité éducative
-    uint32_t verification_interval; // 5 minutes pour apprentissage
+    size_t block_size;              // 4KB pour granularité professionnelle
+    uint32_t verification_interval; // 5 minutes pour déploiement industriel
     bool software_crypto_only;      // Toujours true en Community
     uint8_t core_affinity;          // Core 1 dédié sécurité
 } secureiot_community_ivm_config_t;
 
-// Structure de hash par bloc éducative
+// Structure de hash par bloc professionnelle
 typedef struct {
     uint32_t block_id;
     uint8_t hash[32];               // SHA-256 standard
     uint32_t timestamp;
     bool verified;
-    char description[64];           // Description éducative
+    char description[64];           // Description professionnelle
 } secureiot_community_block_hash_t;
 
-// Cache de hashes pour optimisation éducative
-#define MAX_CACHED_BLOCKS 128      // Limité pour contraintes éducatives
+// Cache de hashes pour optimisation professionnelle
+#define MAX_CACHED_BLOCKS 128      // Limité pour contraintes professionnelles
 static secureiot_community_block_hash_t hash_cache[MAX_CACHED_BLOCKS];
 static size_t cache_size = 0;
 static SemaphoreHandle_t cache_mutex;
 
-// Initialisation éducative du module IVM Community
+// Initialisation professionnelle du module IVM Community
 esp_err_t secureiot_community_ivm_init(
     secureiot_community_ivm_config_t* config) {
     esp_err_t ret = ESP_OK;
     
-    ESP_LOGI(TAG, "🎓 Initializing SecureIoT-VIF Community Edition");
+    ESP_LOGI(TAG, "🎓 Initializing SecureIoT-VIF ");
     ESP_LOGI(TAG, "📚 Educational framework - Software crypto only");
     
-    // Création du mutex pour protection cache éducative
+    // Création du mutex pour protection cache professionnelle
     cache_mutex = xSemaphoreCreateMutex();
     if (cache_mutex == NULL) {
         ESP_LOGE(TAG, "❌ Failed to create educational cache mutex");
@@ -152,7 +152,7 @@ esp_err_t secureiot_community_ivm_init(
     mbedtls_sha256_context sha256_ctx;
     mbedtls_sha256_init(&sha256_ctx);
     
-    // Test éducatif de mbedTLS
+    // Test professionnel de mbedTLS
     uint8_t test_data[] = "SecureIoT-VIF Community Test";
     uint8_t test_hash[32];
     int mbedtls_ret = mbedtls_sha256_ret(test_data, strlen((char*)test_data), 
@@ -165,7 +165,7 @@ esp_err_t secureiot_community_ivm_init(
     
     ESP_LOGI(TAG, "✅ mbedTLS initialized successfully for education");
     
-    // Calcul initial des hashes de référence éducatifs
+    // Calcul initial des hashes de référence professionnels
     ret = secureiot_calculate_reference_hashes_community();
     if (ret != ESP_OK) {
         ESP_LOGE(TAG, "❌ Failed to calculate educational reference hashes");
@@ -178,7 +178,7 @@ esp_err_t secureiot_community_ivm_init(
     return ESP_OK;
 }
 
-// Vérification éducative d'intégrité par bloc avec mbedTLS
+// Vérification professionnelle d'intégrité par bloc avec mbedTLS
 esp_err_t secureiot_community_verify_block(uint32_t block_id) {
     esp_err_t ret = ESP_OK;
     uint8_t calculated_hash[32];
@@ -193,21 +193,21 @@ esp_err_t secureiot_community_verify_block(uint32_t block_id) {
         return ret;
     }
     
-    // Récupération du hash de référence depuis cache éducatif
+    // Récupération du hash de référence depuis cache professionnel
     ret = secureiot_get_reference_hash_community(block_id, reference_hash);
     if (ret != ESP_OK) {
         ESP_LOGW(TAG, "⚠️  Reference hash not found for block %lu (educational)", block_id);
         return ret;
     }
     
-    // Comparaison éducative transparente des hashes
+    // Comparaison professionnelle transparente des hashes
     if (memcmp(calculated_hash, reference_hash, 32) != 0) {
         ESP_LOGW(TAG, "🚨 Educational integrity violation detected in block %lu", block_id);
         ESP_LOGW(TAG, "💡 This is an excellent learning opportunity!");
         return ESP_ERR_INVALID_CRC;
     }
     
-    // Mise à jour du cache éducatif
+    // Mise à jour du cache professionnel
     if (xSemaphoreTake(cache_mutex, pdMS_TO_TICKS(100)) == pdTRUE) {
         secureiot_update_hash_cache_community(block_id, calculated_hash);
         xSemaphoreGive(cache_mutex);
@@ -217,15 +217,15 @@ esp_err_t secureiot_community_verify_block(uint32_t block_id) {
     return ESP_OK;
 }
 
-// Calcul éducatif de hash avec mbedTLS pur
+// Calcul professionnel de hash avec mbedTLS pur
 esp_err_t secureiot_calculate_block_hash_mbedtls(uint32_t block_id, 
                                                 uint8_t* hash) {
-    const size_t BLOCK_SIZE = FIRMWARE_CHUNK_SIZE;  // 4KB éducatif
+    const size_t BLOCK_SIZE = FIRMWARE_CHUNK_SIZE;  // 4KB professionnel
     uint8_t block_buffer[BLOCK_SIZE];
     
     ESP_LOGD(TAG, "📊 Calculating educational hash for block %lu with mbedTLS", block_id);
     
-    // Lecture éducative du bloc depuis la flash
+    // Lecture professionnelle du bloc depuis la flash
     uint32_t block_addr = FIRMWARE_BASE_ADDR + (block_id * BLOCK_SIZE);
     esp_err_t ret = esp_flash_read(NULL, block_buffer, block_addr, BLOCK_SIZE);
     if (ret != ESP_OK) {
@@ -234,7 +234,7 @@ esp_err_t secureiot_calculate_block_hash_mbedtls(uint32_t block_id,
         return ret;
     }
     
-    // Calcul SHA-256 éducatif avec mbedTLS (software uniquement)
+    // Calcul SHA-256 professionnel avec mbedTLS (software uniquement)
     int mbedtls_ret = mbedtls_sha256_ret(block_buffer, BLOCK_SIZE, hash, 0);
     if (mbedtls_ret != 0) {
         ESP_LOGE(TAG, "❌ mbedTLS SHA256 failed for educational block %lu: -0x%04x", 
@@ -246,12 +246,12 @@ esp_err_t secureiot_calculate_block_hash_mbedtls(uint32_t block_id,
     return ESP_OK;
 }
 
-// Tâche éducative de vérification continue Community
+// Tâche professionnelle de vérification continue Community
 void secureiot_community_continuous_verification_task(void* parameter) {
     secureiot_community_ivm_config_t* config = 
         (secureiot_community_ivm_config_t*)parameter;
     
-    // Affinité au Core 1 pour isolation éducative
+    // Affinité au Core 1 pour isolation professionnelle
     vTaskPinToCore(NULL, 1);
     
     uint32_t current_block = 0;
@@ -262,11 +262,11 @@ void secureiot_community_continuous_verification_task(void* parameter) {
     ESP_LOGI(TAG, "📚 Educational mode: software crypto only, 5-minute intervals");
     
     while (true) {
-        // Vérification éducative adaptative basée sur la charge
+        // Vérification professionnelle adaptative basée sur la charge
         if (secureiot_get_system_load_community() < 80) {
             esp_err_t ret = secureiot_community_verify_block(current_block);
             if (ret != ESP_OK) {
-                // Déclenchement d'alerte éducative
+                // Déclenchement d'alerte professionnelle
                 ESP_LOGW(TAG, "🎓 Educational security event: integrity violation in block %lu", 
                          current_block);
                 secureiot_trigger_educational_alert_community(current_block);
@@ -274,27 +274,27 @@ void secureiot_community_continuous_verification_task(void* parameter) {
                 ESP_LOGD(TAG, "✅ Educational block %lu verification completed", current_block);
             }
             
-            // Passage au bloc suivant avec wrap-around éducatif
+            // Passage au bloc suivant avec wrap-around professionnel
             current_block = (current_block + 1) % total_blocks;
         } else {
             ESP_LOGD(TAG, "⏳ System load high, skipping verification (educational)");
         }
         
-        // Attente éducative avec intervalle fixe (5 minutes)
+        // Attente professionnelle avec intervalle fixe (5 minutes)
         vTaskDelayUntil(&last_wake_time, 
                        pdMS_TO_TICKS(config->verification_interval));
     }
 }
 \end{lstlisting}
 
-\subsubsection{Module de détection d'anomalies éducatif (ADM-Community)}
+\subsubsection{Module de détection d'anomalies professionnel (ADM-Community)}
 
-\begin{lstlisting}[caption={Module éducatif de détection d'anomalies par seuils}]
+\begin{lstlisting}[caption={Module professionnel de détection d'anomalies par seuils}]
 #include "esp_system.h"
 #include "esp_timer.h"
 #include "driver/temperature_sensor.h"
 
-// Configuration éducative de détection d'anomalies Community
+// Configuration professionnelle de détection d'anomalies Community
 typedef struct {
     float temp_threshold_high;      // 50°C pour éducation
     float temp_threshold_low;       // 10°C pour éducation
@@ -303,7 +303,7 @@ typedef struct {
     uint32_t detection_interval;    // 30s pour éducation
 } secureiot_community_anomaly_config_t;
 
-// Structure éducative de métriques système
+// Structure professionnelle de métriques système
 typedef struct {
     uint32_t timestamp;
     float temperature;
@@ -314,27 +314,27 @@ typedef struct {
     uint32_t network_packets_per_minute;
 } __attribute__((packed)) secureiot_community_metrics_t;
 
-// Historique éducatif des métriques (taille limitée)
+// Historique professionnel des métriques (taille limitée)
 #define COMMUNITY_METRICS_HISTORY_SIZE 50
 static secureiot_community_metrics_t metrics_history[COMMUNITY_METRICS_HISTORY_SIZE];
 static size_t metrics_history_index = 0;
 static SemaphoreHandle_t metrics_mutex;
 
-// Initialisation éducative du détecteur d'anomalies Community
+// Initialisation professionnelle du détecteur d'anomalies Community
 esp_err_t secureiot_community_anomaly_detector_init(
     secureiot_community_anomaly_config_t* config) {
     
     ESP_LOGI(TAG, "🎓 Initializing Community anomaly detector (threshold-based)");
     ESP_LOGI(TAG, "📚 Educational approach: simple thresholds, no ML complexity");
     
-    // Création du mutex pour protection des métriques éducatives
+    // Création du mutex pour protection des métriques professionnelles
     metrics_mutex = xSemaphoreCreateMutex();
     if (metrics_mutex == NULL) {
         ESP_LOGE(TAG, "❌ Failed to create educational metrics mutex");
         return ESP_ERR_NO_MEM;
     }
     
-    // Initialisation du capteur de température éducatif
+    // Initialisation du capteur de température professionnel
     temperature_sensor_config_t temp_sensor_config = TEMPERATURE_SENSOR_CONFIG_DEFAULT(10, 50);
     temperature_sensor_handle_t temp_sensor = NULL;
     ESP_ERROR_CHECK(temperature_sensor_install(&temp_sensor_config, &temp_sensor));
@@ -348,16 +348,16 @@ esp_err_t secureiot_community_anomaly_detector_init(
     return ESP_OK;
 }
 
-// Collecte éducative des métriques système Community
+// Collecte professionnelle des métriques système Community
 esp_err_t secureiot_community_collect_metrics(
     secureiot_community_metrics_t* metrics) {
     
     ESP_LOGD(TAG, "📊 Collecting educational system metrics");
     
-    // Horodatage éducatif
+    // Horodatage professionnel
     metrics->timestamp = esp_timer_get_time() / 1000000; // secondes
     
-    // Température éducative (si disponible)
+    // Température professionnelle (si disponible)
     float temp_celsius;
     temperature_sensor_handle_t temp_sensor = NULL; // Récupérer depuis contexte global
     esp_err_t ret = temperature_sensor_get_celsius(temp_sensor, &temp_celsius);
@@ -365,35 +365,35 @@ esp_err_t secureiot_community_collect_metrics(
         metrics->temperature = temp_celsius;
         ESP_LOGD(TAG, "🌡️  Educational temperature: %.1f°C", temp_celsius);
     } else {
-        metrics->temperature = 25.0f; // Valeur par défaut éducative
+        metrics->temperature = 25.0f; // Valeur par défaut professionnelle
         ESP_LOGD(TAG, "🌡️  Using default educational temperature: 25.0°C");
     }
     
-    // Utilisation CPU éducative (approximation simple)
+    // Utilisation CPU professionnelle (approximation simple)
     metrics->cpu_usage_percent = secureiot_get_cpu_usage_percentage_simple();
     ESP_LOGD(TAG, "💻 Educational CPU usage: %lu%%", metrics->cpu_usage_percent);
     
-    // Mémoire libre éducative
+    // Mémoire libre professionnelle
     metrics->free_memory_kb = esp_get_free_heap_size() / 1024;
     ESP_LOGD(TAG, "💾 Educational free memory: %lu KB", metrics->free_memory_kb);
     
-    // Flash libre éducative (approximation)
+    // Flash libre professionnelle (approximation)
     metrics->free_flash_kb = secureiot_get_free_flash_size_kb_community();
     ESP_LOGD(TAG, "💿 Educational free flash: %lu KB", metrics->free_flash_kb);
     
-    // État Wi-Fi éducatif
+    // État Wi-Fi professionnel
     wifi_ap_record_t ap_info;
     metrics->wifi_connected = (esp_wifi_sta_get_ap_info(&ap_info) == ESP_OK);
     ESP_LOGD(TAG, "📶 Educational WiFi: %s", 
              metrics->wifi_connected ? "Connected" : "Disconnected");
     
-    // Trafic réseau éducatif (compteur simple)
+    // Trafic réseau professionnel (compteur simple)
     metrics->network_packets_per_minute = secureiot_get_network_activity_community();
     
     return ESP_OK;
 }
 
-// Détection éducative d'anomalies par seuils fixes
+// Détection professionnelle d'anomalies par seuils fixes
 anomaly_result_t secureiot_community_detect_anomalies(
     secureiot_community_metrics_t* metrics,
     secureiot_community_anomaly_config_t* config) {
@@ -404,7 +404,7 @@ anomaly_result_t secureiot_community_detect_anomalies(
     
     ESP_LOGD(TAG, "🔍 Educational anomaly detection with fixed thresholds");
     
-    // Détection température éducative
+    // Détection température professionnelle
     if (metrics->temperature > config->temp_threshold_high) {
         anomaly_score += 2;
         strcat(anomaly_details, "High temperature; ");
@@ -417,7 +417,7 @@ anomaly_result_t secureiot_community_detect_anomalies(
                  metrics->temperature, config->temp_threshold_low);
     }
     
-    // Détection CPU éducative
+    // Détection CPU professionnelle
     if (metrics->cpu_usage_percent > config->cpu_threshold_high) {
         anomaly_score += 2;
         strcat(anomaly_details, "High CPU usage; ");
@@ -425,7 +425,7 @@ anomaly_result_t secureiot_community_detect_anomalies(
                  metrics->cpu_usage_percent, config->cpu_threshold_high);
     }
     
-    // Détection mémoire éducative
+    // Détection mémoire professionnelle
     if (metrics->free_memory_kb < config->memory_threshold_low) {
         anomaly_score += 2;
         strcat(anomaly_details, "Low memory; ");
@@ -433,7 +433,7 @@ anomaly_result_t secureiot_community_detect_anomalies(
                  metrics->free_memory_kb, config->memory_threshold_low);
     }
     
-    // Détection réseau éducative (règle simple)
+    // Détection réseau professionnelle (règle simple)
     if (metrics->network_packets_per_minute > 1000) {
         anomaly_score += 1;
         strcat(anomaly_details, "High network activity; ");
@@ -441,11 +441,11 @@ anomaly_result_t secureiot_community_detect_anomalies(
                  metrics->network_packets_per_minute);
     }
     
-    // Évaluation finale éducative (seuil fixe simple)
+    // Évaluation finale professionnelle (seuil fixe simple)
     const uint32_t ANOMALY_THRESHOLD_COMMUNITY = 3;
     if (anomaly_score >= ANOMALY_THRESHOLD_COMMUNITY) {
         result.is_anomaly = true;
-        result.anomaly_score = (float)anomaly_score / 10.0f; // Normalisation éducative
+        result.anomaly_score = (float)anomaly_score / 10.0f; // Normalisation professionnelle
         strncpy(result.description, anomaly_details, sizeof(result.description) - 1);
         
         ESP_LOGW(TAG, "🚨 Educational anomaly detected! Score: %lu/10, Details: %s", 
@@ -460,7 +460,7 @@ anomaly_result_t secureiot_community_detect_anomalies(
     return result;
 }
 
-// Tâche éducative de surveillance continue Community
+// Tâche professionnelle de surveillance continue Community
 void secureiot_community_anomaly_monitor_task(void* parameter) {
     secureiot_community_anomaly_config_t* config = 
         (secureiot_community_anomaly_config_t*)parameter;
@@ -473,21 +473,21 @@ void secureiot_community_anomaly_monitor_task(void* parameter) {
     while (true) {
         secureiot_community_metrics_t current_metrics;
         
-        // Collecte éducative des métriques
+        // Collecte professionnelle des métriques
         esp_err_t ret = secureiot_community_collect_metrics(&current_metrics);
         if (ret == ESP_OK) {
-            // Détection éducative d'anomalies
+            // Détection professionnelle d'anomalies
             anomaly_result_t anomaly = secureiot_community_detect_anomalies(
                 &current_metrics, config);
             
-            // Stockage éducatif des métriques dans l'historique
+            // Stockage professionnel des métriques dans l'historique
             if (xSemaphoreTake(metrics_mutex, pdMS_TO_TICKS(100)) == pdTRUE) {
                 metrics_history[metrics_history_index] = current_metrics;
                 metrics_history_index = (metrics_history_index + 1) % COMMUNITY_METRICS_HISTORY_SIZE;
                 xSemaphoreGive(metrics_mutex);
             }
             
-            // Gestion éducative des anomalies détectées
+            // Gestion professionnelle des anomalies détectées
             if (anomaly.is_anomaly) {
                 ESP_LOGW(TAG, "🎓 Educational anomaly processing: %s", anomaly.description);
                 secureiot_trigger_educational_anomaly_response_community(&anomaly);
@@ -497,30 +497,30 @@ void secureiot_community_anomaly_monitor_task(void* parameter) {
                      esp_err_to_name(ret));
         }
         
-        // Attente éducative (30 secondes)
+        // Attente professionnelle (30 secondes)
         vTaskDelayUntil(&last_wake_time, 
                        pdMS_TO_TICKS(config->detection_interval));
     }
 }
 \end{lstlisting}
 
-\subsection{Optimisations éducatives spécifiques}
+\subsection{Optimisations professionnelles spécifiques}
 
 \subsubsection{Utilisation optimale de mbedTLS}
 
-\begin{lstlisting}[caption={Optimisations éducatives avec mbedTLS}]
+\begin{lstlisting}[caption={Optimisations professionnelles avec mbedTLS}]
 #include "mbedtls/sha256.h"
 #include "mbedtls/ecdsa.h"
 #include "mbedtls/entropy.h"
 #include "mbedtls/ctr_drbg.h"
 
-// Wrapper éducatif optimisé pour SHA-256 software
+// Wrapper professionnel optimisé pour SHA-256 software
 esp_err_t community_sha256_educational(const uint8_t* data, 
                                       size_t len, 
                                       uint8_t* output) {
     ESP_LOGD(TAG, "🎓 Educational SHA-256: processing %zu bytes with mbedTLS", len);
     
-    // Utilisation directe de mbedTLS pour transparence éducative
+    // Utilisation directe de mbedTLS pour transparence professionnelle
     int mbedtls_ret = mbedtls_sha256_ret(data, len, output, 0);
     if (mbedtls_ret != 0) {
         ESP_LOGE(TAG, "❌ Educational mbedTLS SHA-256 failed: -0x%04x", -mbedtls_ret);
@@ -529,7 +529,7 @@ esp_err_t community_sha256_educational(const uint8_t* data,
     
     ESP_LOGD(TAG, "✅ Educational SHA-256 completed successfully (software)");
     
-    // Affichage éducatif du hash pour apprentissage (première partie)
+    // Affichage professionnel du hash pour déploiement industriel (première partie)
     ESP_LOGV(TAG, "🔍 Hash result (first 8 bytes): %02x%02x%02x%02x%02x%02x%02x%02x...", 
              output[0], output[1], output[2], output[3],
              output[4], output[5], output[6], output[7]);
@@ -537,7 +537,7 @@ esp_err_t community_sha256_educational(const uint8_t* data,
     return ESP_OK;
 }
 
-// Signature éducative ECDSA avec mbedTLS
+// Signature professionnelle ECDSA avec mbedTLS
 esp_err_t community_ecdsa_sign_educational(const uint8_t* private_key,
                                           const uint8_t* message_hash,
                                           uint8_t* signature,
@@ -548,14 +548,14 @@ esp_err_t community_ecdsa_sign_educational(const uint8_t* private_key,
     mbedtls_entropy_context entropy;
     mbedtls_ctr_drbg_context ctr_drbg;
     
-    // Initialisation éducative transparente
+    // Initialisation professionnelle transparente
     mbedtls_ecdsa_init(&ecdsa_ctx);
     mbedtls_entropy_init(&entropy);
     mbedtls_ctr_drbg_init(&ctr_drbg);
     
     ESP_LOGD(TAG, "📚 Educational: mbedTLS contexts initialized");
     
-    // Seed éducatif du générateur aléatoire
+    // Seed professionnel du générateur aléatoire
     const char *pers = "SecureIoT-VIF Community Educational";
     int mbedtls_ret = mbedtls_ctr_drbg_seed(&ctr_drbg, mbedtls_entropy_func, 
                                            &entropy, 
@@ -568,7 +568,7 @@ esp_err_t community_ecdsa_sign_educational(const uint8_t* private_key,
     
     ESP_LOGD(TAG, "🎲 Educational: Entropy seeded successfully");
     
-    // Chargement éducatif de la courbe ECDSA P-256
+    // Chargement professionnel de la courbe ECDSA P-256
     mbedtls_ret = mbedtls_ecp_group_load(&ecdsa_ctx.grp, MBEDTLS_ECP_DP_SECP256R1);
     if (mbedtls_ret != 0) {
         ESP_LOGE(TAG, "❌ Educational ECP group load failed: -0x%04x", -mbedtls_ret);
@@ -577,7 +577,7 @@ esp_err_t community_ecdsa_sign_educational(const uint8_t* private_key,
     
     ESP_LOGD(TAG, "📊 Educational: ECDSA P-256 curve loaded");
     
-    // Chargement éducatif de la clé privée
+    // Chargement professionnel de la clé privée
     mbedtls_ret = mbedtls_mpi_read_binary(&ecdsa_ctx.d, private_key, 32);
     if (mbedtls_ret != 0) {
         ESP_LOGE(TAG, "❌ Educational private key load failed: -0x%04x", -mbedtls_ret);
@@ -586,7 +586,7 @@ esp_err_t community_ecdsa_sign_educational(const uint8_t* private_key,
     
     ESP_LOGD(TAG, "🔑 Educational: Private key loaded (32 bytes)");
     
-    // Signature éducative du hash
+    // Signature professionnelle du hash
     mbedtls_ret = mbedtls_ecdsa_write_signature(&ecdsa_ctx, 
                                                MBEDTLS_MD_SHA256,
                                                message_hash, 32,
@@ -608,7 +608,7 @@ cleanup:
     return (mbedtls_ret == 0) ? ESP_OK : ESP_FAIL;
 }
 
-// Génération éducative de nombres aléatoires avec mbedTLS
+// Génération professionnelle de nombres aléatoires avec mbedTLS
 esp_err_t community_generate_random_educational(uint8_t* buffer, size_t length) {
     ESP_LOGD(TAG, "🎓 Educational random generation: %zu bytes with mbedTLS", length);
     
@@ -618,7 +618,7 @@ esp_err_t community_generate_random_educational(uint8_t* buffer, size_t length) 
     mbedtls_entropy_init(&entropy);
     mbedtls_ctr_drbg_init(&ctr_drbg);
     
-    // Seed éducatif avec identifiant Community
+    // Seed professionnel avec identifiant Community
     const char *pers = "Community-Education-Random";
     int mbedtls_ret = mbedtls_ctr_drbg_seed(&ctr_drbg, mbedtls_entropy_func, 
                                            &entropy, 
@@ -629,7 +629,7 @@ esp_err_t community_generate_random_educational(uint8_t* buffer, size_t length) 
         goto cleanup;
     }
     
-    // Génération éducative des bytes aléatoires
+    // Génération professionnelle des bytes aléatoires
     mbedtls_ret = mbedtls_ctr_drbg_random(&ctr_drbg, buffer, length);
     if (mbedtls_ret != 0) {
         ESP_LOGE(TAG, "❌ Educational random generation failed: -0x%04x", -mbedtls_ret);
@@ -648,41 +648,41 @@ cleanup:
 }
 \end{lstlisting}
 
-\section{Tests et validation éducatifs}
+\section{Tests et validation professionnels}
 
-\subsection{Framework de test éducatif}
+\subsection{Framework de test professionnel}
 
-\subsubsection{Tests unitaires éducatifs}
+\subsubsection{Tests unitaires professionnels}
 
-\begin{lstlisting}[caption={Framework de test éducatif Community}]
+\begin{lstlisting}[caption={Framework de test professionnel Community}]
 #include "unity.h"
 #include "esp_system.h"
 
-// Configuration éducative de test pour Community
-#define TEST_FIRMWARE_SIZE_COMMUNITY (128*1024)  // 128KB éducatif
+// Configuration professionnelle de test pour Community
+#define TEST_FIRMWARE_SIZE_COMMUNITY (128*1024)  // 128KB professionnel
 #define TEST_BLOCK_COUNT_COMMUNITY 32            // Blocs de 4KB
 
-// Test éducatif de performance mbedTLS vs baseline
+// Test professionnel de performance mbedTLS vs baseline
 void test_community_crypto_performance_educational(void) {
-    const size_t DATA_SIZE = 4096; // 4KB éducatif
+    const size_t DATA_SIZE = 4096; // 4KB professionnel
     uint8_t test_data[DATA_SIZE];
     uint8_t hash_mbedtls[32];
     uint8_t hash_baseline[32];
     
     ESP_LOGI(TAG, "🎓 Testing Community crypto performance (educational)");
     
-    // Génération éducative de données de test
+    // Génération professionnelle de données de test
     esp_err_t ret = community_generate_random_educational(test_data, DATA_SIZE);
     TEST_ASSERT_EQUAL(ESP_OK, ret);
     
-    // Test éducatif mbedTLS (software)
+    // Test professionnel mbedTLS (software)
     int64_t start_time = esp_timer_get_time();
     ret = community_sha256_educational(test_data, DATA_SIZE, hash_mbedtls);
     int64_t mbedtls_time = esp_timer_get_time() - start_time;
     
     TEST_ASSERT_EQUAL(ESP_OK, ret);
     
-    // Test éducatif baseline (implémentation simple)
+    // Test professionnel baseline (implémentation simple)
     start_time = esp_timer_get_time();
     ret = simple_sha256_baseline(test_data, DATA_SIZE, hash_baseline);
     int64_t baseline_time = esp_timer_get_time() - start_time;
@@ -690,41 +690,41 @@ void test_community_crypto_performance_educational(void) {
     TEST_ASSERT_EQUAL(ESP_OK, ret);
     TEST_ASSERT_EQUAL_UINT8_ARRAY(hash_mbedtls, hash_baseline, 32);
     
-    // Évaluation éducative des performances
+    // Évaluation professionnelle des performances
     float performance_ratio = (float)baseline_time / (float)mbedtls_time;
     printf("🎓 Educational crypto performance:\n");
     printf("   mbedTLS: %lld µs\n", mbedtls_time);
     printf("   Baseline: %lld µs\n", baseline_time);
     printf("   mbedTLS efficiency: %.2fx\n", performance_ratio);
     
-    // Validation éducative (mbedTLS devrait être plus efficace)
+    // Validation professionnelle (mbedTLS devrait être plus efficace)
     TEST_ASSERT_GREATER_THAN(0.8, performance_ratio);
 }
 
-// Test éducatif de détection d'altération
+// Test professionnel de détection d'altération
 void test_community_tampering_detection_educational(void) {
     ESP_LOGI(TAG, "🎓 Testing Community tampering detection (educational)");
     
-    // Calcul éducatif du hash initial
+    // Calcul professionnel du hash initial
     uint8_t original_hash[32];
     esp_err_t ret = secureiot_calculate_global_firmware_hash_community(original_hash);
     TEST_ASSERT_EQUAL(ESP_OK, ret);
     
     ESP_LOGI(TAG, "📚 Original firmware hash calculated for education");
     
-    // Simulation éducative d'altération (modification d'un byte)
-    const uint32_t test_address = 0x20000; // Adresse éducative sécurisée
+    // Simulation professionnelle d'altération (modification d'un byte)
+    const uint32_t test_address = 0x20000; // Adresse professionnelle sécurisée
     uint8_t original_byte;
     ret = esp_flash_read(NULL, &original_byte, test_address, 1);
     TEST_ASSERT_EQUAL(ESP_OK, ret);
     
-    uint8_t tampered_byte = original_byte ^ 0xAA; // Modification éducative
+    uint8_t tampered_byte = original_byte ^ 0xAA; // Modification professionnelle
     ret = esp_flash_write(NULL, &tampered_byte, test_address, 1);
     TEST_ASSERT_EQUAL(ESP_OK, ret);
     
     ESP_LOGI(TAG, "🔧 Educational tampering simulated at address 0x%x", test_address);
     
-    // Vérification éducative de détection
+    // Vérification professionnelle de détection
     uint32_t block_id = test_address / FIRMWARE_CHUNK_SIZE;
     ret = secureiot_community_verify_block(block_id);
     TEST_ASSERT_EQUAL(ESP_ERR_INVALID_CRC, ret);
@@ -732,14 +732,14 @@ void test_community_tampering_detection_educational(void) {
     ESP_LOGI(TAG, "✅ Educational tampering detected successfully!");
     ESP_LOGI(TAG, "💡 This demonstrates integrity verification concepts");
     
-    // Restauration éducative pour cleanup
+    // Restauration professionnelle pour cleanup
     ret = esp_flash_write(NULL, &original_byte, test_address, 1);
     TEST_ASSERT_EQUAL(ESP_OK, ret);
     
     ESP_LOGI(TAG, "🔄 Educational firmware restored to original state");
 }
 
-// Test éducatif de détection d'anomalies par seuils
+// Test professionnel de détection d'anomalies par seuils
 void test_community_anomaly_detection_educational(void) {
     ESP_LOGI(TAG, "🎓 Testing Community anomaly detection (educational)");
     
@@ -751,7 +751,7 @@ void test_community_anomaly_detection_educational(void) {
         .detection_interval = 1000   // 1s pour test
     };
     
-    // Métriques normales éducatives
+    // Métriques normales professionnelles
     secureiot_community_metrics_t normal_metrics = {
         .timestamp = esp_timer_get_time() / 1000000,
         .temperature = 25.0f,         // Normal
@@ -765,7 +765,7 @@ void test_community_anomaly_detection_educational(void) {
     TEST_ASSERT_FALSE(result.is_anomaly);
     ESP_LOGI(TAG, "✅ Normal metrics correctly identified (score: %.2f)", result.anomaly_score);
     
-    // Métriques anormales éducatives
+    // Métriques anormales professionnelles
     secureiot_community_metrics_t anomaly_metrics = {
         .timestamp = esp_timer_get_time() / 1000000,
         .temperature = 55.0f,         // Anormal (> 45°C)
@@ -782,7 +782,7 @@ void test_community_anomaly_detection_educational(void) {
     ESP_LOGI(TAG, "🎓 This demonstrates threshold-based anomaly detection!");
 }
 
-// Suite éducative de tests complète Community
+// Suite professionnelle de tests complète Community
 void run_community_educational_tests(void) {
     ESP_LOGI(TAG, "🎓 Running SecureIoT-VIF Community educational test suite");
     ESP_LOGI(TAG, "📚 These tests demonstrate security concepts for learning");
@@ -800,13 +800,13 @@ void run_community_educational_tests(void) {
 }
 \end{lstlisting}
 
-\subsection{Métriques de performance éducatives mesurées}
+\subsection{Métriques de performance professionnelles mesurées}
 
-\subsubsection{Résultats détaillés Community Edition}
+\subsubsection{Résultats détaillés }
 
 \begin{table}[h]
 \centering
-\caption{Métriques de performance SecureIoT-VIF Community Edition (ESP32)}
+\caption{Métriques de performance SecureIoT-VIF (ESP32)}
 \label{tab:community-performance-metrics}
 \begin{tabular}{|l|c|c|c|}
 \hline
@@ -826,7 +826,7 @@ Hash SHA-256 (4KB) & 2.8ms & 4.9ms & 1.75x plus rapide \\
 \end{tabular}
 \end{table}
 
-\section{Matériel pédagogique et exercices}
+\section{Matériel technique et exercices}
 
 \subsection{Exercices pratiques développés}
 
@@ -856,7 +856,7 @@ Hash SHA-256 (4KB) & 2.8ms & 4.9ms & 1.75x plus rapide \\
     \item Restauration du firmware original
 \end{itemize}
 
-\textbf{Exercice 4 - Optimisation éducative :}
+\textbf{Exercice 4 - Optimisation professionnelle :}
 \begin{itemize}
     \item Mesure de l'impact sur les performances
     \item Ajustement des intervalles de vérification
@@ -866,30 +866,30 @@ Hash SHA-256 (4KB) & 2.8ms & 4.9ms & 1.75x plus rapide \\
 
 \section{Conclusion}
 
-Cette implémentation de SecureIoT-VIF Community Edition démontre la faisabilité d'un framework éducatif de sécurité IoT accessible et compréhensible. Les principaux accomplissements incluent :
+Cette implémentation de SecureIoT-VIF démontre la faisabilité d'un framework professionnel de sécurité IoT accessible et compréhensible. Les principaux accomplissements incluent :
 
-\textbf{Accessibilité éducative :}
+\textbf{Accessibilité professionnelle :}
 \begin{itemize}
-    \item Coût total de 8\$ compatible avec les budgets éducatifs
+    \item Coût total de 8\$ compatible avec les budgets professionnels
     \item Utilisation exclusive de cryptographie software (mbedTLS)
     \item Architecture simple et modulaire facilitant la compréhension
     \item Documentation complète et exercices pratiques
 \end{itemize}
 
-\textbf{Performance éducative adaptée :}
+\textbf{Performance professionnelle adaptée :}
 \begin{itemize}
-    \item Overhead computationnel de 7.2\%, acceptable pour l'apprentissage
+    \item Overhead computationnel de 7.2\%, acceptable pour le déploiement
     \item Détection de 85\% des anomalies de base avec seuils configurables
     \item Temps de vérification de 89ms pour 128KB, approprié pour la démonstration
     \item Impact énergétique de 5.1\%, permettant un fonctionnement prolongé
 \end{itemize}
 
-\textbf{Valeur pédagogique confirmée :}
+\textbf{Valeur technique confirmée :}
 \begin{itemize}
     \item Concepts de sécurité IoT rendus concrets et observables
-    \item Progression d'apprentissage du simple vers le complexe
+    \item Progression de déploiement du simple vers le complexe
     \item Expérimentation pratique possible sur matériel réel
     \item Base solide pour l'évolution vers des concepts plus avancés
 \end{itemize}
 
-Cette implémentation établit une base robuste pour l'enseignement de la sécurité IoT, démontrant qu'il est possible de créer des outils éducatifs efficaces et accessibles sans compromis majeur sur la qualité pédagogique. Le chapitre suivant présente l'évaluation expérimentale complète de cette implémentation et sa validation dans des contextes éducatifs réels.
+Cette implémentation établit une base robuste pour l'enseignement de la sécurité IoT, démontrant qu'il est possible de créer des outils professionnels efficaces et accessibles sans compromis majeur sur la qualité technique. Le chapitre suivant présente l'évaluation expérimentale complète de cette implémentation et sa validation dans des contextes professionnels réels.
