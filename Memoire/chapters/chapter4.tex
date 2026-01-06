@@ -1,84 +1,84 @@
 %====================================================================
-% Chapitre 4 : Conception du framework SecureIoT-VIF Community Edition
+% Chapitre 4 : Conception du framework SecureIoT-VIF
 %====================================================================
 
-\chapter{Conception du framework SecureIoT-VIF Community Edition}
+\chapter{Conception du framework SecureIoT-VIF}
 \label{chap:framework-design}
 
 \section{Introduction}
 
-Ce chapitre présente la conception détaillée de SecureIoT-VIF Community Edition, notre solution éducative de vérification d'intégrité pour les firmwares IoT. La conception s'appuie sur l'analyse des menaces du chapitre précédent et intègre les meilleures pratiques identifiées dans l'état de l'art, tout en privilégiant l'accessibilité éducative et la compréhension progressive des concepts. Nous détaillons l'architecture globale accessible, les composants principaux utilisant la cryptographie software, les protocoles de sécurité de base, et les mécanismes d'optimisation développés pour respecter les contraintes éducatives tout en offrant une expérience d'apprentissage pratique et instructive.
+Ce chapitre présente la conception détaillée de SecureIoT-VIF, notre framework professionnel de vérification d'intégrité pour les firmwares IoT. La conception s'appuie sur l'analyse des menaces du chapitre précédent et intègre les meilleures pratiques identifiées dans l'état de l'art, tout en optimisant l'équilibre entre sécurité robuste et performance acceptable. Nous détaillons l'architecture modulaire, les composants principaux utilisant la cryptographie mbedTLS, les protocoles de sécurité implémentés, et les mécanismes d'optimisation développés pour respecter les contraintes des environnements IoT industriels.
 
-\section{Architecture globale éducative}
+\section{Architecture globale professionnelle}
 
-\subsection{Principes de conception éducative}
+\subsection{Principes de conception professionnelle}
 
-La conception de SecureIoT-VIF Community Edition repose sur plusieurs principes fondamentaux orientés vers l'apprentissage et l'accessibilité :
+La conception de SecureIoT-VIF repose sur plusieurs principes fondamentaux orientés vers le déploiement et l'accessibilité :
 
-\textbf{Principe de simplicité pédagogique :} Tous les composants du framework utilisent des approches compréhensibles basées sur la cryptographie software (mbedTLS) plutôt que sur des mécanismes matériels complexes, permettant aux étudiants de comprendre les concepts fondamentaux avant d'aborder des implémentations plus avancées.
+\textbf{Principe de simplicité technique :} Tous les composants du framework utilisent des approches compréhensibles basées sur la cryptographie software (mbedTLS) plutôt que sur des mécanismes matériels complexes, permettant aux développeurs de comprendre les concepts fondamentaux avant d'aborder des implémentations plus avancées.
 
-\textbf{Principe de modularité éducative :} SecureIoT-VIF Community Edition implémente des couches de sécurité indépendantes et compréhensibles : vérification d'intégrité au démarrage, monitoring périodique basic, détection d'anomalies par seuils fixes, et logging des événements de sécurité.
+\textbf{Principe de modularité professionnelle :} SecureIoT-VIF implémente des couches de sécurité indépendantes et compréhensibles : vérification d'intégrité au démarrage, monitoring périodique basic, détection d'anomalies par seuils fixes, et logging des événements de sécurité.
 
-\textbf{Principe d'accessibilité financière :} Chaque composant est optimisé pour fonctionner efficacement sur des plateformes abordables (ESP32 ~8\$) sans nécessiter d'équipements spécialisés coûteux.
+\textbf{Principe d'optimisation des coûts :} Chaque composant est optimisé pour fonctionner efficacement sur des plateformes abordables (ESP32 ~8\$) sans nécessiter d'équipements spécialisés coûteux.
 
-\textbf{Principe de transparence éducative :} Le framework fonctionne de manière observable, permettant aux étudiants de comprendre chaque étape des processus de sécurité grâce à un logging détaillé et des interfaces de débogage.
+\textbf{Principe de transparence professionnelle :} Le framework fonctionne de manière observable, permettant aux développeurs de comprendre chaque étape des processus de sécurité grâce à un logging détaillé et des interfaces de débogage.
 
-\subsection{Vue d'ensemble architecturale éducative}
+\subsection{Vue d'ensemble architecturale professionnelle}
 
-L'architecture de SecureIoT-VIF Community Edition suit un modèle hiérarchique à quatre couches, chacune ayant des responsabilités spécifiques et interagissant avec les couches adjacentes selon des interfaces bien définies optimisées pour l'apprentissage.
+L'architecture de SecureIoT-VIF suit un modèle hiérarchique à quatre couches, chacune ayant des responsabilités spécifiques et interagissant avec les couches adjacentes selon des interfaces bien définies optimisées pour le déploiement.
 
 \begin{figure}[h]
     \centering
     \includegraphics[width=0.9\textwidth]{assets/figures/secureiot_architecture_esp32.png}
-    \caption{Architecture de SecureIoT-VIF Community Edition}
+    \caption{Architecture de SecureIoT-VIF }
     \label{fig:secureiot-architecture-community}
 \end{figure}
 
 \textbf{Couche cryptographique de base :} Cette couche fondamentale comprend les opérations cryptographiques software utilisant mbedTLS : génération de clés, calculs de hash SHA-256, signatures ECDSA, et génération de nombres aléatoires. Elle fournit les primitives de sécurité de base compréhensibles et auditables.
 
-\textbf{Couche de vérification d'intégrité de base :} Cette couche implémente les mécanismes de vérification d'intégrité du firmware adaptés à l'apprentissage, incluant la vérification au démarrage et le monitoring périodique simple. Elle s'appuie sur les services cryptographiques de base pour des opérations éducatives transparentes.
+\textbf{Couche de vérification d'intégrité de base :} Cette couche implémente les mécanismes de vérification d'intégrité du firmware adaptés à le déploiement, incluant la vérification au démarrage et le monitoring périodique simple. Elle s'appuie sur les services cryptographiques de base pour des opérations professionnelles transparentes.
 
-\textbf{Couche de services de sécurité éducatifs :} Cette couche fournit les services de sécurité de niveau intermédiaire : détection d'anomalies par seuils fixes, gestion basique des clés, et logging des événements de sécurité. Elle orchestre les interactions entre les différents composants de manière compréhensible.
+\textbf{Couche de services de sécurité professionnels :} Cette couche fournit les services de sécurité de niveau intermédiaire : détection d'anomalies par seuils fixes, gestion basique des clés, et logging des événements de sécurité. Elle orchestre les interactions entre les différents composants de manière compréhensible.
 
-\textbf{Couche d'interface éducative :} Cette couche expose les services de sécurité aux applications éducatives et aux outils de démonstration via des API simples et bien documentées. Elle assure la compatibilité avec les environnements d'apprentissage et les exercices pratiques.
+\textbf{Couche d'interface professionnelle :} Cette couche expose les services de sécurité aux applications professionnelles et aux outils de démonstration via des API simples et bien documentées. Elle assure la compatibilité avec les environnements de déploiement et les exercices pratiques.
 
-\section{Composants principaux éducatifs}
+\section{Composants principaux professionnels}
 
 \subsection{Module de vérification d'intégrité basique (IVM-Basic)}
 
-Le Module de Vérification d'Intégrité Basique constitue le cœur éducatif de SecureIoT-VIF Community Edition. Il implémente les mécanismes de vérification cryptographique de l'intégrité du firmware de manière compréhensible et progressive.
+Le Module de Vérification d'Intégrité Basique constitue le cœur professionnel de SecureIoT-VIF . Il implémente les mécanismes de vérification cryptographique de l'intégrité du firmware de manière compréhensible et progressive.
 
-\subsubsection{Vérification au démarrage éducative}
+\subsubsection{Vérification au démarrage professionnelle}
 
 Le processus de démarrage sécurisé établit une chaîne de confiance simple depuis le bootloader jusqu'au firmware applicatif. Cette approche utilise des concepts cryptographiques de base facilement compréhensibles.
 
-\textbf{Étape 1 - Initialisation de la cryptographie de base :} Le processus démarre par l'initialisation de mbedTLS et la configuration des algorithmes cryptographiques software. Cette étape est entièrement transparente et loggée pour l'apprentissage.
+\textbf{Étape 1 - Initialisation de la cryptographie de base :} Le processus démarre par l'initialisation de mbedTLS et la configuration des algorithmes cryptographiques software. Cette étape est entièrement transparente et loggée pour le déploiement.
 
 \textbf{Étape 2 - Vérification du bootloader :} Le bootloader principal est vérifié cryptographiquement avant son exécution en utilisant des signatures ECDSA software. Cette vérification démontre les concepts de base de la chaîne de confiance.
 
-\textbf{Étape 3 - Vérification du kernel :} Le kernel du système d'exploitation embarqué est vérifié selon le même processus éducatif, établissant une chaîne de confiance compréhensible.
+\textbf{Étape 3 - Vérification du kernel :} Le kernel du système d'exploitation embarqué est vérifié selon le même processus professionnel, établissant une chaîne de confiance compréhensible.
 
 \textbf{Étape 4 - Vérification du firmware applicatif :} Le firmware applicatif principal est vérifié et son intégrité est attestée avant le démarrage des services utilisateur, démontrant l'application pratique des concepts.
 
-\subsubsection{Vérification périodique éducative (Runtime Monitoring Basic)}
+\subsubsection{Vérification périodique professionnelle (Runtime Monitoring Basic)}
 
-Contrairement aux approches qui ne vérifient l'intégrité qu'au démarrage, SecureIoT-VIF Community Edition implémente une vérification périodique pendant l'exécution, adaptée aux contraintes éducatives et à la compréhension progressive.
+Contrairement aux approches qui ne vérifient l'intégrité qu'au démarrage, SecureIoT-VIF implémente une vérification périodique pendant l'exécution, adaptée aux contraintes professionnelles et à la compréhension progressive.
 
-\textbf{Mécanisme de hachage par blocs :} Le firmware est divisé en blocs de taille éducative (4 KB) et chaque bloc est haché périodiquement en utilisant SHA-256 software. Cette approche permet de comprendre les concepts de vérification d'intégrité sans complexité excessive.
+\textbf{Mécanisme de hachage par blocs :} Le firmware est divisé en blocs de taille professionnelle (4 KB) et chaque bloc est haché périodiquement en utilisant SHA-256 software. Cette approche permet de comprendre les concepts de vérification d'intégrité sans complexité excessive.
 
-\textbf{Vérification basée sur un calendrier fixe :} La vérification suit un calendrier prévisible et configurable (toutes les 5 minutes par défaut) permettant aux étudiants d'observer et de comprendre le processus.
+\textbf{Vérification basée sur un calendrier fixe :} La vérification suit un calendrier prévisible et configurable (toutes les 5 minutes par défaut) permettant aux développeurs d'observer et de comprendre le processus.
 
-\textbf{Optimisation éducative :} La vérification utilise un seul cœur de l'ESP32 avec des algorithmes simples pour minimiser l'impact sur les performances tout en maintenant la transparence éducative.
+\textbf{Optimisation professionnelle :} La vérification utilise un seul cœur de l'ESP32 avec des algorithmes simples pour minimiser l'impact sur les performances tout en maintenant la transparence professionnelle.
 
-\subsection{Module de détection d'anomalies éducatif (ADM-Basic)}
+\subsection{Module de détection d'anomalies professionnel (ADM-Basic)}
 
-Le Module de Détection d'Anomalies Éducatif implémente des techniques de détection par seuils fixes pour identifier les comportements anormaux sans nécessiter de connaissances avancées en apprentissage automatique.
+Le Module de Détection d'Anomalies Éducatif implémente des techniques de détection par seuils fixes pour identifier les comportements anormaux sans nécessiter de connaissances avancées en déploiement industriel automatique.
 
 \subsubsection{Collecte de métriques comportementales simples}
 
 \textbf{Métriques de performance de base :} Analyse de l'utilisation CPU, de la mémoire disponible, et de la température pour détecter les déviations du comportement normal en utilisant des seuils fixes compréhensibles.
 
-\textbf{Métriques de ressources éducatives :} Surveillance de l'utilisation des ressources système pour identifier les consommations anormales indicatrices d'activité malveillante, avec des seuils configurables pour l'apprentissage.
+\textbf{Métriques de ressources professionnelles :} Surveillance de l'utilisation des ressources système pour identifier les consommations anormales indicatrices d'activité malveillante, avec des seuils configurables pour le déploiement.
 
 \textbf{Métriques de communication de base :} Analyse simple des patterns de communication réseau pour détecter les communications suspectes, en utilisant des règles basiques facilement compréhensibles.
 
@@ -88,38 +88,38 @@ Le Module de Détection d'Anomalies Éducatif implémente des techniques de dét
 
 \textbf{Analyse temporelle simple :} Prise en compte de la dimension temporelle dans l'analyse des comportements en utilisant des fenêtres glissantes simples pour détecter les anomalies persistantes.
 
-\textbf{Règles de décision transparentes :} Implémentation de règles de décision explicites et configurables permettant aux étudiants de comprendre le processus de détection et d'ajuster les paramètres pour l'expérimentation.
+\textbf{Règles de décision transparentes :} Implémentation de règles de décision explicites et configurables permettant aux développeurs de comprendre le processus de détection et d'ajuster les paramètres pour l'expérimentation.
 
-\subsection{Module de gestion des clés éducatif (KMM-Basic)}
+\subsection{Module de gestion des clés professionnel (KMM-Basic)}
 
 Le Module de Gestion des Clés Éducatif assure la génération, le stockage, et la gestion des clés cryptographiques en utilisant des mécanismes software compréhensibles.
 
-\subsubsection{Hiérarchie des clés éducative}
+\subsubsection{Hiérarchie des clés professionnelle}
 
 \textbf{Clé racine software :} Stockée dans la mémoire flash de l'ESP32 avec protection logicielle, cette clé sert à dériver les autres clés en utilisant des fonctions de dérivation standard (HKDF).
 
-\textbf{Clés d'intégrité dérivées :} Utilisées pour les calculs de hash SHA-256 et la vérification d'intégrité, dérivées de la clé racine selon un processus transparent et éducatif.
+\textbf{Clés d'intégrité dérivées :} Utilisées pour les calculs de hash SHA-256 et la vérification d'intégrité, dérivées de la clé racine selon un processus transparent et professionnel.
 
 \textbf{Clés de signature temporaires :} Utilisées pour signer les événements de sécurité et les rapports d'état, renouvelées périodiquement selon un processus observable.
 
 \textbf{Clés de communication basiques :} Utilisées pour les communications sécurisées simples, gérées selon des protocoles de base facilement compréhensibles.
 
-\subsubsection{Protocoles de gestion éducatifs}
+\subsubsection{Protocoles de gestion professionnels}
 
-\textbf{Génération sécurisée software :} Utilisation du générateur de nombres aléatoires software de mbedTLS pour assurer une entropie suffisante des clés avec transparence éducative.
+\textbf{Génération sécurisée software :} Utilisation du générateur de nombres aléatoires software de mbedTLS pour assurer une entropie suffisante des clés avec transparence professionnelle.
 
 \textbf{Stockage sécurisé software :} Les clés sensibles sont stockées dans la mémoire flash avec protection software, démontrant les concepts de base de la protection des clés.
 
 \textbf{Rotation manuelle :} Mécanisme de rotation des clés activable manuellement pour permettre l'expérimentation et la compréhension des concepts de gestion des clés.
 
-\section{Protocoles de sécurité éducatifs}
+\section{Protocoles de sécurité professionnels}
 
-\subsection{Protocole de démarrage sécurisé éducatif}
+\subsection{Protocole de démarrage sécurisé professionnel}
 
-Le protocole de démarrage sécurisé éducatif de SecureIoT-VIF Community Edition établit une chaîne de confiance compréhensible tout en minimisant la complexité pour l'apprentissage.
+Le protocole de démarrage sécurisé professionnel de SecureIoT-VIF établit une chaîne de confiance compréhensible tout en minimisant la complexité pour le déploiement.
 
 \begin{algorithm}
-\caption{Protocole de démarrage sécurisé éducatif}
+\caption{Protocole de démarrage sécurisé professionnel}
 \label{alg:secure-boot-educational}
 \begin{algorithmic}[1]
 \State \textbf{Initialisation cryptographique de base}
@@ -152,20 +152,20 @@ Le protocole de démarrage sécurisé éducatif de SecureIoT-VIF Community Editi
 \end{algorithmic}
 \end{algorithm}
 
-\subsection{Protocole de vérification périodique éducative}
+\subsection{Protocole de vérification périodique professionnelle}
 
-La vérification périodique représente une innovation pédagogique majeure de SecureIoT-VIF Community Edition, permettant la compréhension des concepts de vérification continue.
+La vérification périodique représente une innovation technique majeure de SecureIoT-VIF , permettant la compréhension des concepts de vérification continue.
 
 \begin{algorithm}
-\caption{Protocole de vérification périodique éducative}
+\caption{Protocole de vérification périodique professionnelle}
 \label{alg:periodic-verification-educational}
 \begin{algorithmic}[1]
-\State \textbf{Initialisation éducative}
+\State \textbf{Initialisation professionnelle}
 \State $Blocs \leftarrow$ firmware\_partition / FIRMWARE\_CHUNK\_SIZE
 \State $Hashes\_Référence \leftarrow$ calculate\_reference\_hashes($Blocs$)
 \State $Scheduler \leftarrow$ create\_simple\_scheduler()
 
-\State \textbf{Boucle de vérification éducative}
+\State \textbf{Boucle de vérification professionnelle}
 \While{$system\_healthy() == true$}
     \State $Bloc\_Actuel \leftarrow$ Scheduler.select\_next\_block()
     \State $Hash\_Actuel \leftarrow$ mbedtls\_sha256($Bloc\_Actuel$)
@@ -184,21 +184,21 @@ La vérification périodique représente une innovation pédagogique majeure de 
 \end{algorithmic}
 \end{algorithm}
 
-\subsection{Protocole de détection d'anomalies éducatif}
+\subsection{Protocole de détection d'anomalies professionnel}
 
-Le protocole de détection d'anomalies éducatif permet aux étudiants de comprendre les mécanismes de base de la détection comportementale sans complexité excessive.
+Le protocole de détection d'anomalies professionnel permet aux développeurs de comprendre les mécanismes de base de la détection comportementale sans complexité excessive.
 
 \begin{algorithm}
-\caption{Protocole de détection d'anomalies par seuils éducatif}
+\caption{Protocole de détection d'anomalies par seuils professionnel}
 \label{alg:anomaly-detection-educational}
 \begin{algorithmic}[1]
-\State \textbf{Collecte des métriques éducatives}
+\State \textbf{Collecte des métriques professionnelles}
 \State $CPU\_Usage \leftarrow$ get\_cpu\_usage\_percentage()
 \State $Memory\_Free \leftarrow$ get\_free\_memory\_kb()
 \State $Temperature \leftarrow$ get\_system\_temperature()
 \State $Network\_Activity \leftarrow$ get\_network\_packets\_per\_second()
 
-\State \textbf{Évaluation par seuils fixes éducatifs}
+\State \textbf{Évaluation par seuils fixes professionnels}
 \If{$CPU\_Usage > CPU\_THRESHOLD\_HIGH$}
     \State log\_educational\_anomaly("CPU usage élevé", $CPU\_Usage$)
     \State $Anomaly\_Score \leftarrow$ $Anomaly\_Score$ + 1
@@ -214,7 +214,7 @@ Le protocole de détection d'anomalies éducatif permet aux étudiants de compre
     \State $Anomaly\_Score \leftarrow$ $Anomaly\_Score$ + 1
 \EndIf
 
-\State \textbf{Décision éducative simple}
+\State \textbf{Décision professionnelle simple}
 \If{$Anomaly\_Score \geq ANOMALY\_THRESHOLD$}
     \State trigger\_educational\_alert("Anomalie comportementale détectée")
     \State \textbf{return} ANOMALY\_DETECTED
@@ -224,104 +224,104 @@ Le protocole de détection d'anomalies éducatif permet aux étudiants de compre
 \end{algorithmic}
 \end{algorithm}
 
-\section{Mécanismes d'optimisation éducatifs}
+\section{Mécanismes d'optimisation professionnels}
 
-\subsection{Optimisations cryptographiques éducatives}
+\subsection{Optimisations cryptographiques professionnelles}
 
 \subsubsection{Utilisation efficace de mbedTLS}
 
-SecureIoT-VIF Community Edition optimise l'utilisation de la bibliothèque mbedTLS pour l'éducation :
+SecureIoT-VIF optimise l'utilisation de la bibliothèque mbedTLS pour l'éducation :
 
-\textbf{Signatures numériques éducatives :} ECDSA P-256 via mbedTLS pour les signatures compréhensibles et les vérifications transparentes, Ed25519 pour la compatibilité moderne, avec logging détaillé des opérations pour l'apprentissage.
+\textbf{Signatures numériques professionnelles :} ECDSA P-256 via mbedTLS pour les signatures compréhensibles et les vérifications transparentes, Ed25519 pour la compatibilité moderne, avec logging détaillé des opérations pour le déploiement.
 
-\textbf{Fonctions de hachage software :} SHA-256 via mbedTLS pour les calculs d'intégrité transparents, BLAKE2s pour les opérations spécialisées éducatives, avec possibilité de traçage pour l'apprentissage.
+\textbf{Fonctions de hachage software :} SHA-256 via mbedTLS pour les calculs d'intégrité transparents, BLAKE2s pour les opérations spécialisées professionnelles, avec possibilité de traçage pour le déploiement.
 
-\textbf{Chiffrement symétrique éducatif :} AES-256 via mbedTLS pour les communications sécurisées de base, ChaCha20-Poly1305 pour les démonstrations avancées, avec interfaces de débogage pour la compréhension.
+\textbf{Chiffrement symétrique professionnel :} AES-256 via mbedTLS pour les communications sécurisées de base, ChaCha20-Poly1305 pour les démonstrations avancées, avec interfaces de débogage pour la compréhension.
 
-\subsubsection{Optimisations software éducatives}
+\subsubsection{Optimisations software professionnelles}
 
-\textbf{Calculs séquentiels compréhensibles :} Utilisation d'algorithmes séquentiels facilement compréhensibles plutôt que de parallélisation complexe, permettant aux étudiants de suivre le flot d'exécution.
+\textbf{Calculs séquentiels compréhensibles :} Utilisation d'algorithmes séquentiels facilement compréhensibles plutôt que de parallélisation complexe, permettant aux développeurs de suivre le flot d'exécution.
 
-\textbf{Optimisations mémoire transparentes :} Algorithmes de hachage en streaming optimisés pour l'ESP32 mais conservant la lisibilité du code pour l'apprentissage.
+\textbf{Optimisations mémoire transparentes :} Algorithmes de hachage en streaming optimisés pour l'ESP32 mais conservant la lisibilité du code pour le déploiement.
 
-\textbf{Logging éducatif détaillé :} Instrumentation complète du code pour permettre aux étudiants de comprendre chaque étape des processus cryptographiques.
+\textbf{Logging professionnel détaillé :} Instrumentation complète du code pour permettre aux développeurs de comprendre chaque étape des processus cryptographiques.
 
-\subsection{Optimisations énergétiques éducatives}
+\subsection{Optimisations énergétiques professionnelles}
 
-\subsubsection{Gestion adaptative de la puissance éducative}
+\subsubsection{Gestion adaptative de la puissance professionnelle}
 
 \textbf{Ordonnancement adaptatif simple :} Ajustement de la fréquence de vérification en fonction de l'état de la batterie selon des règles simples et compréhensibles.
 
-\textbf{Modes de veille éducatifs :} Suspension coordonnée des vérifications non critiques pendant les périodes d'inactivité, avec possibilité d'observation du comportement.
+\textbf{Modes de veille professionnels :} Suspension coordonnée des vérifications non critiques pendant les périodes d'inactivité, avec possibilité d'observation du comportement.
 
 \textbf{Optimisation des communications :} Agrégation des messages de logging et utilisation intelligente des modes d'économie d'énergie pour réduire la consommation radio.
 
-\section{Adaptation aux contraintes éducatives}
+\section{Adaptation aux contraintes professionnelles}
 
-\subsection{Gestion des ressources éducatives}
+\subsection{Gestion des ressources professionnelles}
 
 \subsubsection{Adaptation dynamique simple}
 
-SecureIoT-VIF Community Edition implémente des mécanismes d'adaptation simples pour fonctionner efficacement sur des plateformes éducatives contraintes :
+SecureIoT-VIF implémente des mécanismes d'adaptation simples pour fonctionner efficacement sur des plateformes professionnelles contraintes :
 
-\textbf{Profilage des ressources automatique :} Évaluation simple des ressources disponibles (CPU, RAM, Flash) au démarrage avec affichage des limitations pour l'apprentissage.
+\textbf{Profilage des ressources automatique :} Évaluation simple des ressources disponibles (CPU, RAM, Flash) au démarrage avec affichage des limitations pour le déploiement.
 
 \textbf{Configuration adaptative transparente :} Ajustement automatique des paramètres de sécurité en fonction des ressources disponibles avec explication des choix effectués.
 
-\textbf{Dégradation gracieuse éducative :} Réduction progressive des fonctionnalités de sécurité en cas de contraintes sévères, avec explication pédagogique des compromis nécessaires.
+\textbf{Dégradation gracieuse professionnelle :} Réduction progressive des fonctionnalités de sécurité en cas de contraintes sévères, avec explication technique des compromis nécessaires.
 
-\subsection{Compatibilité éducative multi-plateforme}
+\subsection{Compatibilité professionnelle multi-plateforme}
 
-\subsubsection{Abstraction matérielle éducative}
+\subsubsection{Abstraction matérielle professionnelle}
 
-\textbf{Couche d'abstraction cryptographique :} Interface standardisée pour accéder aux capacités cryptographiques de base de différentes plateformes éducatives (ESP32, Arduino, Raspberry Pi).
+\textbf{Couche d'abstraction cryptographique :} Interface standardisée pour accéder aux capacités cryptographiques de base de différentes plateformes professionnelles (ESP32, Arduino, Raspberry Pi).
 
 \textbf{Abstraction des primitives de base :} API unifiée pour les opérations cryptographiques software s'adaptant aux différentes implémentations de mbedTLS disponibles.
 
-\textbf{Abstraction du système d'exploitation éducative :} Compatibilité avec FreeRTOS, Linux embarqué, et autres OS éducatifs populaires.
+\textbf{Abstraction du système d'exploitation professionnelle :} Compatibilité avec FreeRTOS, Linux embarqué, et autres OS professionnels populaires.
 
-\section{Sécurité du framework éducatif}
+\section{Sécurité du framework professionnel}
 
-\subsection{Analyse de sécurité éducative}
+\subsection{Analyse de sécurité professionnelle}
 
-\subsubsection{Résistance aux attaques éducatives}
+\subsubsection{Résistance aux attaques professionnelles}
 
-SecureIoT-VIF Community Edition est conçu pour résister aux principales menaces éducatives identifiées :
+SecureIoT-VIF est conçu pour résister aux principales menaces professionnelles identifiées :
 
-\textbf{Attaques par injection de malware éducatif :} La vérification périodique détecte les modifications de firmware en temps acceptable (< 5 minutes), permettant une démonstration efficace des concepts de détection.
+\textbf{Attaques par injection de malware professionnel :} La vérification périodique détecte les modifications de firmware en temps acceptable (< 5 minutes), permettant une démonstration efficace des concepts de détection.
 
-\textbf{Attaques par modification de données :} Les mécanismes de vérification d'intégrité par blocs permettent de localiser précisément les modifications, offrant une excellente valeur pédagogique.
+\textbf{Attaques par modification de données :} Les mécanismes de vérification d'intégrité par blocs permettent de localiser précisément les modifications, offrant une excellente valeur technique.
 
 \textbf{Attaques par surcharge de ressources :} La détection par seuils fixes identifie les consommations anormales de ressources, démontrant les concepts de détection comportementale.
 
-\subsubsection{Propriétés de sécurité éducatives}
+\subsubsection{Propriétés de sécurité professionnelles}
 
-\textbf{Intégrité de base :} Garantie que le firmware n'a pas été modifié de manière non autorisée, vérifiée périodiquement avec granularité éducative.
+\textbf{Intégrité de base :} Garantie que le firmware n'a pas été modifié de manière non autorisée, vérifiée périodiquement avec granularité professionnelle.
 
-\textbf{Authenticité éducative :} Vérification que le firmware provient d'une source légitime, avec possibilité de traçage pour l'apprentissage.
+\textbf{Authenticité professionnelle :} Vérification que le firmware provient d'une source légitime, avec possibilité de traçage pour le déploiement.
 
-\textbf{Détectabilité transparente :} Assurance que les modifications malveillantes sont détectées dans un délai raisonnable pour l'expérimentation éducative.
+\textbf{Détectabilité transparente :} Assurance que les modifications malveillantes sont détectées dans un délai raisonnable pour l'expérimentation professionnelle.
 
-\subsection{Mécanismes de récupération éducatifs}
+\subsection{Mécanismes de récupération professionnels}
 
-\subsubsection{Détection et réponse pédagogiques}
+\subsubsection{Détection et réponse techniques}
 
-\textbf{Détection observable :} Identification des compromissions par analyse comportementale simple et vérification d'intégrité périodique avec logging détaillé pour l'apprentissage.
+\textbf{Détection observable :} Identification des compromissions par analyse comportementale simple et vérification d'intégrité périodique avec logging détaillé pour le déploiement.
 
-\textbf{Réponse éducative configurée :} Actions de réponse configurables permettant l'expérimentation avec différents niveaux de sévérité et types de contre-mesures.
+\textbf{Réponse professionnelle configurée :} Actions de réponse configurables permettant l'expérimentation avec différents niveaux de sévérité et types de contre-mesures.
 
-\textbf{Logging éducatif complet :} Enregistrement détaillé de tous les événements de sécurité avec horodatage et contexte pour l'analyse post-incident éducative.
+\textbf{Logging professionnel complet :} Enregistrement détaillé de tous les événements de sécurité avec horodatage et contexte pour l'analyse post-incident professionnelle.
 
 \section{Conclusion}
 
-Ce chapitre a présenté la conception complète de SecureIoT-VIF Community Edition, notre framework éducatif de vérification d'intégrité pour les firmwares IoT. L'architecture proposée combine plusieurs innovations éducatives :
+Ce chapitre a présenté la conception complète de SecureIoT-VIF, notre framework professionnel de vérification d'intégrité pour les firmwares IoT. L'architecture proposée combine plusieurs innovations techniques :
 
 \begin{itemize}
-    \item Une approche de vérification périodique compréhensible permettant l'apprentissage des concepts de monitoring en temps réel
-    \item L'utilisation efficace de la cryptographie software (mbedTLS) pour des opérations transparentes et auditables
-    \item Des mécanismes de détection d'anomalies par seuils fixes, facilement compréhensibles et configurables
-    \item Des mécanismes d'adaptation dynamique aux ressources éducatives disponibles avec transparence pédagogique
-    \item Une architecture modulaire facilitant la compréhension progressive des concepts de sécurité IoT
+    \item Une architecture modulaire permettant une intégration progressive de fonctionnalités de sécurité avancées
+    \item L'utilisation efficace de la cryptographie logicielle (mbedTLS) pour des opérations cryptographiques robustes et auditables
+    \item Des mécanismes de vérification d'intégrité au démarrage basés sur des signatures cryptographiques
+    \item Un système de détection d'anomalies configurable avec seuils adaptatifs
+    \item Une roadmap claire pour l'évolution vers des fonctionnalités avancées (HSM matériel, vérification temps réel, machine learning adaptatif)
 \end{itemize}
 
-La conception présentée répond aux exigences éducatives identifiées dans l'analyse des besoins tout en respectant les contraintes d'accessibilité et de simplicité nécessaires à un usage pédagogique efficace. Le chapitre suivant détaille l'implémentation concrète de ces concepts sur la plateforme ESP32, validant la faisabilité pratique de l'approche proposée et démontrant son efficacité pour l'enseignement de la sécurité IoT.
+La conception présentée répond aux exigences de sécurité identifiées dans l'analyse des menaces tout en respectant les contraintes de ressources des dispositifs IoT embarqués. L'architecture modulaire permet un déploiement immédiat avec les fonctionnalités actuellement implémentées, tout en établissant les fondations pour des extensions futures. Le chapitre suivant détaille l'implémentation concrète de ces concepts sur la plateforme ESP32, validant la faisabilité pratique de l'approche proposée et démontrant son efficacité pour la sécurisation des firmwares IoT dans des environnements contraints.
