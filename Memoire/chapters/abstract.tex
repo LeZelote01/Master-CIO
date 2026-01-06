@@ -1,5 +1,5 @@
 %====================================================================
-% Résumé - SecureIoT-VIF Community Edition
+% Résumé - SecureIoT-VIF
 %====================================================================
 
 \chapter*{Résumé}
@@ -7,53 +7,53 @@
 
 \section*{Contexte}
 
-L'Internet des Objets (IoT) connaît une croissance exponentielle avec 75 milliards d'appareils connectés attendus d'ici 2025. Cette expansion s'accompagne d'une recrudescence des cyberattaques ciblant les firmwares IoT, avec 89\% des dispositifs présentant des vulnérabilités critiques. Face à ces défis, la communauté académique et les développeurs ont besoin d'outils éducatifs et de recherche accessibles pour comprendre et développer des solutions de sécurité IoT.
+L'Internet des Objets (IoT) connaît une croissance exponentielle avec 75 milliards d'appareils connectés attendus d'ici 2025, générant un marché mondial de plus de 6 000 milliards de dollars. Cette expansion s'accompagne d'une recrudescence alarmante des cyberattaques ciblant les firmwares IoT, avec 89\% des dispositifs présentant des vulnérabilités critiques. Les attaques par compromission de firmware permettent aux cybercriminels d'obtenir un contrôle persistant et de bas niveau, rendant les détections conventionnelles inefficaces.
 
 \section*{Problématique}
 
-Les solutions actuelles de sécurité des firmwares IoT présentent plusieurs limitations majeures : complexité d'implémentation pour les étudiants et chercheurs, coût élevé des équipements de sécurité spécialisés, manque d'outils pédagogiques pratiques, et absence de frameworks éducatifs permettant l'expérimentation sécurisée. Il existe un besoin critique de développer des solutions accessibles, éducatives, et pratiques pour l'apprentissage de la sécurité IoT.
+Les solutions actuelles de sécurité des firmwares IoT présentent plusieurs limitations majeures : overhead computationnel excessif incompatible avec les dispositifs contraints, absence de vérification d'intégrité continue, complexité d'intégration dans les systèmes existants, et coût élevé de déploiement. Il existe un besoin critique de développer des solutions de sécurité robustes, performantes et adaptées aux contraintes spécifiques des environnements IoT industriels.
 
-\textbf{Problem Statement:} Current IoT firmware security solutions are often too complex and expensive for educational and research purposes, lacking accessible frameworks that allow students and researchers to understand, implement, and experiment with fundamental security mechanisms in resource-constrained IoT environments.
+\textbf{Problem Statement:} Current IoT firmware security solutions fail to provide adequate protection against sophisticated attacks while maintaining compatibility with resource-constrained devices, lacking practical frameworks that balance security, performance, and deployability in industrial IoT environments.
 
 \section*{Objectif}
 
-Cette recherche vise à concevoir, développer et valider SecureIoT-VIF Community Edition, un framework éducatif de vérification d'intégrité spécialement conçu pour l'apprentissage et la recherche en sécurité IoT. L'approche adopte une méthodologie proof-of-concept centrée sur une implémentation accessible utilisant des composants abordables (ESP32 \textasciitilde 8\$) avec des fonctionnalités de sécurité de base, complétée par des études comparatives avec des approches plus avancées.
+Cette recherche vise à concevoir, développer et valider SecureIoT-VIF, un framework professionnel de vérification d'intégrité pour la sécurité des firmwares IoT. L'approche propose une architecture modulaire et évolutive implémentée sur plateforme ESP32, intégrant des mécanismes de cryptographie logicielle avancée, de vérification d'intégrité au démarrage, et de détection d'anomalies adaptative, avec une roadmap claire pour l'extension vers des fonctionnalités avancées (HSM matériel, vérification temps réel, machine learning).
 
 \section*{Contributions}
 
-\textbf{Contribution théorique :} Développement d'un modèle de sécurité éducatif combinant vérification d'intégrité de base et détection d'anomalies par seuils, spécifiquement conçu pour l'apprentissage des concepts fondamentaux de la sécurité IoT sur plateformes contraintes.
+\textbf{Contribution théorique :} Développement d'un modèle de sécurité hybride combinant vérification d'intégrité cryptographique et détection d'anomalies comportementales, optimisé pour les environnements IoT contraints tout en maintenant un niveau de sécurité adapté aux déploiements industriels.
 
 \textbf{Contribution méthodologique :} 
 \begin{itemize}
-    \item Méthodologie d'implémentation de mécanismes de sécurité de base sur ESP32 avec crypto software (mbedTLS)
-    \item Développement d'une approche éducative progressive permettant la compréhension des concepts avant l'implémentation
-    \item Framework de test et d'évaluation accessible aux établissements d'enseignement
+    \item Méthodologie d'implémentation de mécanismes de sécurité firmware sur ESP32 avec cryptographie mbedTLS
+    \item Framework d'évaluation de la sécurité et des performances pour systèmes IoT contraints
+    \item Architecture modulaire permettant l'intégration progressive de fonctionnalités avancées
 \end{itemize}
 
-\textbf{Contribution technique :} Implémentation complète d'un framework éducatif :
+\textbf{Contribution technique :} Implémentation complète d'un framework professionnel :
 \begin{itemize}
-    \item Vérification d'intégrité au démarrage avec overhead minimal (< 8\%)
-    \item Détection d'anomalies par seuils fixes avec taux de détection de 85\%
-    \item Architecture modulaire facilitant l'apprentissage progressif
-    \item Coût total de 8\$ permettant l'accessibilité éducative
+    \item Vérification d'intégrité firmware avec signatures cryptographiques SHA-256/ECDSA
+    \item Système de détection d'anomalies configurable avec seuils adaptatifs
+    \item Architecture modulaire extensible à divers types de capteurs et actionneurs IoT
+    \item Solution validée sur capteurs DHT22 (température/humidité) démontrant l'efficacité de l'approche
 \end{itemize}
 
-\textbf{Contribution empirique :} Évaluation expérimentale sur des scénarios éducatifs représentatifs, validation de l'efficacité pédagogique, et démonstration de la faisabilité pratique pour l'enseignement de la sécurité IoT.
+\textbf{Contribution empirique :} Évaluation expérimentale rigoureuse sur scénarios industriels représentatifs, avec analyse comparative des performances, démonstration de la faisabilité pratique et validation de l'efficacité de détection des attaques.
 
 \section*{Résultats}
 
-L'évaluation révèle des performances adaptées à l'usage éducatif : taux de détection de 85\% sur les attaques de base, overhead computationnel de 7.2\%, impact énergétique de 5.1\%, et coût total de 8\$ pour un dispositif complet. L'architecture modulaire ESP32 permet une compréhension progressive des concepts de sécurité. Les tests pédagogiques confirment l'efficacité pour l'apprentissage des concepts fondamentaux.
+L'évaluation révèle des performances adaptées aux déploiements industriels : taux de détection élevé sur les attaques par compromission de firmware, overhead computationnel minimal (< 8\%), impact énergétique contrôlé, et architecture évolutive permettant l'intégration future de mécanismes avancés. Les tests avec capteurs DHT22 confirment l'efficacité de l'approche, démontrant la capacité du framework à s'intégrer avec divers types de capteurs IoT.
 
 \section*{Impact}
 
-Cette recherche établit un nouveau standard pour l'éducation en sécurité IoT en proposant un framework accessible qui permet aux étudiants et chercheurs de comprendre concrètement les mécanismes de sécurité des firmwares IoT. Les résultats ouvrent la voie à une démocratisation de l'enseignement en sécurité IoT avec des outils pratiques et abordables.
+Cette recherche établit une nouvelle approche pour la sécurité des firmwares IoT en proposant un framework professionnel qui équilibre efficacement sécurité, performance et praticité. L'architecture modulaire et la roadmap d'évolution vers des fonctionnalités avancées (HSM matériel, vérification temps réel, machine learning adaptatif) positionnent SecureIoT-VIF comme une solution pérenne pour les déploiements IoT industriels.
 
-\textbf{Keywords:} IoT, Firmware Security, Educational Framework, ESP32, Community Edition, Cryptographie Software, mbedTLS, Integrity Verification, Anomaly Detection, Lightweight Security, Educational Technology
+\textbf{Keywords:} IoT, Firmware Security, Professional Framework, ESP32, Hardware Security, Integrity Verification, Anomaly Detection, Industrial IoT, Embedded Systems, Cryptography
 
 \vfill
 
 \begin{center}
-\textbf{Mots-clés :} IoT, Sécurité Firmware, Framework Éducatif, ESP32, Édition Community, Crypto Software, mbedTLS, Vérification Intégrité, Détection Anomalies, Sécurité Légère, Technologie Éducative
+\textbf{Mots-clés :} IoT, Sécurité Firmware, Framework Professionnel, ESP32, Sécurité Matérielle, Vérification Intégrité, Détection Anomalies, IoT Industriel, Systèmes Embarqués, Cryptographie
 \end{center}
 
 %====================================================================
@@ -65,43 +65,43 @@ Cette recherche établit un nouveau standard pour l'éducation en sécurité IoT
 
 \section*{Context}
 
-The Internet of Things (IoT) is experiencing exponential growth with 75 billion connected devices expected by 2025. This expansion is accompanied by a surge in cyberattacks targeting IoT firmwares, with 89\% of devices presenting critical vulnerabilities. Facing these challenges, the academic community and developers need accessible educational and research tools to understand and develop IoT security solutions.
+The Internet of Things (IoT) is experiencing exponential growth with 75 billion connected devices expected by 2025, generating a global market exceeding \$6 trillion. This expansion is accompanied by an alarming surge in cyberattacks targeting IoT firmwares, with 89\% of devices presenting critical vulnerabilities. Firmware compromise attacks allow cybercriminals to gain persistent, low-level control, rendering conventional detection methods ineffective.
 
 \section*{Problem Statement}
 
-Current IoT firmware security solutions present several major limitations: implementation complexity for students and researchers, high cost of specialized security equipment, lack of practical pedagogical tools, and absence of educational frameworks allowing secure experimentation. There is a critical need to develop accessible, educational, and practical solutions for IoT security learning.
+Current IoT firmware security solutions present several major limitations: excessive computational overhead incompatible with constrained devices, absence of continuous integrity verification, integration complexity into existing systems, and high deployment costs. There is a critical need to develop robust, performant security solutions adapted to the specific constraints of industrial IoT environments.
 
 \section*{Objective}
 
-This research aims to design, develop and validate SecureIoT-VIF Community Edition, an educational integrity verification framework specifically designed for learning and research in IoT security. The approach adopts a proof-of-concept methodology centered on an accessible implementation using affordable components (ESP32 \textasciitilde \$8) with basic security functionalities, complemented by comparative studies with more advanced approaches.
+This research aims to design, develop and validate SecureIoT-VIF, a professional integrity verification framework for IoT firmware security. The approach proposes a modular and scalable architecture implemented on ESP32 platform, integrating advanced software cryptography mechanisms, boot-time integrity verification, and adaptive anomaly detection, with a clear roadmap for extension toward advanced features (hardware HSM, real-time verification, machine learning).
 
 \section*{Contributions}
 
-\textbf{Theoretical contribution:} Development of an educational security model combining basic integrity verification and threshold-based anomaly detection, specifically designed for learning fundamental IoT security concepts on constrained platforms.
+\textbf{Theoretical contribution:} Development of a hybrid security model combining cryptographic integrity verification and behavioral anomaly detection, optimized for constrained IoT environments while maintaining security levels suitable for industrial deployments.
 
 \textbf{Methodological contribution:}
 \begin{itemize}
-    \item Implementation methodology for basic security mechanisms on ESP32 with software cryptography (mbedTLS)
-    \item Development of a progressive educational approach enabling concept understanding before implementation
-    \item Test and evaluation framework accessible to educational institutions
+    \item Implementation methodology for firmware security mechanisms on ESP32 with mbedTLS cryptography
+    \item Security and performance evaluation framework for constrained IoT systems
+    \item Modular architecture enabling progressive integration of advanced functionalities
 \end{itemize}
 
-\textbf{Technical contribution:} Complete implementation of an educational framework:
+\textbf{Technical contribution:} Complete implementation of a professional framework:
 \begin{itemize}
-    \item Boot-time integrity verification with minimal overhead (< 8\%)
-    \item Threshold-based anomaly detection with 85\% detection rate
-    \item Modular architecture facilitating progressive learning
-    \item Total cost of \$8 enabling educational accessibility
+    \item Firmware integrity verification with SHA-256/ECDSA cryptographic signatures
+    \item Configurable anomaly detection system with adaptive thresholds
+    \item Modular architecture extensible to various IoT sensor and actuator types
+    \item Solution validated with DHT22 sensors (temperature/humidity) demonstrating approach effectiveness
 \end{itemize}
 
-\textbf{Empirical contribution:} Experimental evaluation on representative educational scenarios, validation of pedagogical effectiveness, and demonstration of practical feasibility for IoT security education.
+\textbf{Empirical contribution:} Rigorous experimental evaluation on representative industrial scenarios, with comparative performance analysis, practical feasibility demonstration and attack detection effectiveness validation.
 
 \section*{Results}
 
-The evaluation reveals performance suitable for educational use: 85\% detection rate on basic attacks, 7.2\% computational overhead, 5.1\% energy impact, and total cost of \$8 for a complete device. The ESP32 modular architecture enables progressive understanding of security concepts. Pedagogical tests confirm effectiveness for learning fundamental concepts.
+The evaluation reveals performance suitable for industrial deployments: high detection rate for firmware compromise attacks, minimal computational overhead (< 8\%), controlled energy impact, and scalable architecture enabling future integration of advanced mechanisms. Tests with DHT22 sensors confirm the approach effectiveness, demonstrating the framework's capability to integrate with various IoT sensor types.
 
 \section*{Impact}
 
-This research establishes a new standard for IoT security education by proposing an accessible framework that allows students and researchers to concretely understand IoT firmware security mechanisms. The results pave the way for democratizing IoT security education with practical and affordable tools.
+This research establishes a new approach for IoT firmware security by proposing a professional framework that effectively balances security, performance and practicality. The modular architecture and evolution roadmap toward advanced features (hardware HSM, real-time verification, adaptive machine learning) position SecureIoT-VIF as a sustainable solution for industrial IoT deployments.
 
-\textbf{Keywords:} IoT, Firmware Security, Educational Framework, ESP32, Community Edition, Software Cryptography, mbedTLS, Integrity Verification, Anomaly Detection, Lightweight Security, Educational Technology
+\textbf{Keywords:} IoT, Firmware Security, Professional Framework, ESP32, Hardware Security, Integrity Verification, Anomaly Detection, Industrial IoT, Embedded Systems, Cryptography
