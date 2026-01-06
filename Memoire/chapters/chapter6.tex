@@ -1,5 +1,5 @@
 %====================================================================
-% Chapitre 6 : Évaluation et résultats - SecureIoT-VIF Community Edition
+% Chapitre 6 : Évaluation et résultats - SecureIoT-VIF
 %====================================================================
 
 \chapter{Évaluation et résultats}
@@ -7,19 +7,19 @@
 
 \section{Introduction}
 
-Ce chapitre présente l'évaluation expérimentale complète de SecureIoT-VIF Community Edition, notre framework éducatif de vérification d'intégrité pour les firmwares IoT. L'évaluation adopte une approche pragmatique centrée sur l'efficacité pédagogique et l'accessibilité éducative, mesurant les performances du framework sur des scénarios représentatifs d'un environnement d'apprentissage. Nous analysons les résultats de sécurité, de performance, et d'usage éducatif obtenus sur plateforme ESP32 (~8$) avec cryptographie software (mbedTLS), validant ainsi la viabilité de l'approche pour l'enseignement de la sécurité IoT.
+Ce chapitre présente l'évaluation expérimentale complète de SecureIoT-VIF, notre framework professionnel de vérification d'intégrité pour les firmwares IoT. L'évaluation adopte une approche rigoureuse centrée sur l'efficacité de sécurité et les performances système, mesurant les capacités du framework sur des scénarios représentatifs d'environnements IoT industriels. Nous analysons les résultats de sécurité, de performance et d'overhead obtenus sur plateforme ESP32 avec cryptographie mbedTLS, incluant la validation avec des capteurs DHT22 démontrant l'extensibilité de l'approche à divers types de capteurs IoT.
 
-\section{Méthodologie d'évaluation éducative}
+\section{Méthodologie d'évaluation}
 
-\subsection{Environnement expérimental éducatif}
+\subsection{Environnement expérimental}
 
 \subsubsection{Configuration matérielle accessible}
 
-L'évaluation a été menée sur une configuration matérielle volontairement accessible pour reproduire fidèlement un environnement éducatif typique :
+L'évaluation a été menée sur une configuration matérielle volontairement accessible pour reproduire fidèlement un environnement professionnel typique :
 
 \begin{table}[h]
 \centering
-\caption{Configuration expérimentale Community Edition}
+\caption{Configuration expérimentale }
 \label{tab:experimental-setup-community}
 \begin{tabular}{|l|c|c|}
 \hline
@@ -37,7 +37,7 @@ Stockage & MicroSD 8GB (optionnel) & 2.00 \\
 \end{tabular}
 \end{table}
 
-\subsubsection{Configuration logicielle éducative}
+\subsubsection{Configuration logicielle professionnelle}
 
 \textbf{Système de développement :}
 \begin{itemize}
@@ -49,19 +49,19 @@ Stockage & MicroSD 8GB (optionnel) & 2.00 \\
 
 \textbf{Configuration SecureIoT-VIF Community :}
 \begin{itemize}
-    \item Taille de bloc : 4KB (granularité éducative)
-    \item Intervalle de vérification : 5 minutes (apprentissage)
+    \item Taille de bloc : 4KB (granularité professionnelle)
+    \item Intervalle de vérification : 5 minutes (déploiement)
     \item Seuils d'anomalie : configurables pour expérimentation
-    \item Logging : niveau INFO pour observabilité éducative
+    \item Logging : niveau INFO pour observabilité professionnelle
 \end{itemize}
 
-\subsection{Scénarios d'évaluation éducatifs}
+\subsection{Scénarios d'évaluation professionnels}
 
-\subsubsection{Scénarios de sécurité éducatifs}
+\subsubsection{Scénarios de sécurité professionnels}
 
-L'évaluation de sécurité se concentre sur des scénarios représentatifs d'un environnement d'apprentissage, privilégiant la compréhension des concepts sur la sophistication technique :
+L'évaluation de sécurité se concentre sur des scénarios représentatifs d'un environnement d'déploiement, privilégiant la compréhension des concepts sur la sophistication technique :
 
-\textbf{Scénario 1 - Modification de firmware éducative :}
+\textbf{Scénario 1 - Modification de firmware professionnelle :}
 \begin{itemize}
     \item Modification de bytes isolés dans différentes sections
     \item Injection de code simple dans des zones non critiques
@@ -69,7 +69,7 @@ L'évaluation de sécurité se concentre sur des scénarios représentatifs d'un
     \item Corruption de métadonnées de démarrage
 \end{itemize}
 
-\textbf{Scénario 2 - Anomalies comportementales éducatives :}
+\textbf{Scénario 2 - Anomalies comportementales professionnelles :}
 \begin{itemize}
     \item Surcharge CPU simulée (boucles intensives)
     \item Consommation mémoire excessive (allocations importantes)
@@ -81,47 +81,47 @@ L'évaluation de sécurité se concentre sur des scénarios représentatifs d'un
 \begin{itemize}
     \item Buffer overflow contrôlé dans zones sécurisées
     \item Débordement de pile simple et détectable
-    \item Modification de pointeurs de fonction éducative
+    \item Modification de pointeurs de fonction professionnelle
     \item Exploitation de vulnérabilités connues simulées
 \end{itemize}
 
-\subsubsection{Métriques d'évaluation éducatives}
+\subsubsection{Métriques d'évaluation professionnelles}
 
-\textbf{Métriques de sécurité éducatives :}
+\textbf{Métriques de sécurité professionnelles :}
 \begin{itemize}
     \item Taux de détection vrai positif (TPR) sur scénarios de base
-    \item Taux de faux positifs (FPR) acceptable pour l'apprentissage
+    \item Taux de faux positifs (FPR) acceptable pour l'déploiement
     \item Temps moyen de détection (MTTD) approprié pour la démonstration
-    \item Couverture des types d'attaques éducatives
+    \item Couverture des types d'attaques professionnelles
 \end{itemize}
 
-\textbf{Métriques de performance éducatives :}
+\textbf{Métriques de performance professionnelles :}
 \begin{itemize}
     \item Overhead computationnel compatible avec l'enseignement
     \item Consommation mémoire raisonnable pour plateforme contrainte
     \item Impact énergétique acceptable pour sessions prolongées
-    \item Temps de réponse approprié pour interaction éducative
+    \item Temps de réponse approprié pour interaction professionnelle
 \end{itemize}
 
-\textbf{Métriques pédagogiques :}
+\textbf{Métriques techniques :}
 \begin{itemize}
     \item Facilité de configuration et de déploiement
     \item Clarté des logs et messages d'erreur
-    \item Temps d'apprentissage des concepts de base
+    \item Temps d'déploiement des concepts de base
     \item Capacité d'expérimentation et de modification
 \end{itemize}
 
-\section{Résultats de sécurité éducatifs}
+\section{Résultats de sécurité professionnels}
 
-\subsection{Efficacité de détection éducative}
+\subsection{Efficacité de détection professionnelle}
 
 \subsubsection{Détection d'intégrité de base}
 
-L'évaluation de la détection d'intégrité a été menée sur 150 scénarios éducatifs soigneusement conçus pour l'apprentissage :
+L'évaluation de la détection d'intégrité a été menée sur 150 scénarios professionnels soigneusement conçus pour l'déploiement :
 
 \begin{table}[h]
 \centering
-\caption{Résultats de détection d'intégrité Community Edition}
+\caption{Résultats de détection d'intégrité }
 \label{tab:integrity-detection-community}
 \begin{tabular}{|l|c|c|c|c|}
 \hline
@@ -134,26 +134,26 @@ Modification données config & 35 & 33 & 94.3 & 2.7 \\
 Corruption métadonnées & 25 & 21 & 84.0 & 4.2 \\
 Modification signature & 15 & 15 & 100.0 & 1.2 \\
 \hline
-\textbf{Total éducatif} & \textbf{150} & \textbf{143} & \textbf{95.3} & \textbf{2.6} \\
+\textbf{Total professionnel} & \textbf{150} & \textbf{143} & \textbf{95.3} & \textbf{2.6} \\
 \hline
 \end{tabular}
 \end{table}
 
-\textbf{Analyse des résultats éducatifs :}
+\textbf{Analyse des résultats professionnels :}
 \begin{itemize}
     \item Excellent taux de détection (95.3\%) pour les modifications directes
-    \item Temps de détection approprié (2.6 min) pour l'observation éducative
-    \item Quelques échecs sur corruptions complexes (acceptable en apprentissage)
+    \item Temps de détection approprié (2.6 min) pour l'observation professionnelle
+    \item Quelques échecs sur corruptions complexes (acceptable en déploiement)
     \item Performance constante sur différents types de modifications
 \end{itemize}
 
-\subsubsection{Détection d'anomalies comportementales éducatives}
+\subsubsection{Détection d'anomalies comportementales professionnelles}
 
-L'évaluation des anomalies comportementales utilise des seuils fixes configurables, adaptés à l'expérimentation éducative :
+L'évaluation des anomalies comportementales utilise des seuils fixes configurables, adaptés à l'expérimentation professionnelle :
 
 \begin{table}[h]
 \centering
-\caption{Résultats de détection d'anomalies Community Edition}
+\caption{Résultats de détection d'anomalies }
 \label{tab:anomaly-detection-community}
 \begin{tabular}{|l|c|c|c|c|}
 \hline
@@ -165,12 +165,12 @@ Température élevée (>45°C) & 15 & 14 & 93.3 & 42 \\
 Activité réseau excessive & 18 & 15 & 83.3 & 51 \\
 Combinaisons multiples & 12 & 11 & 91.7 & 25 \\
 \hline
-\textbf{Total éducatif} & \textbf{90} & \textbf{82} & \textbf{91.1} & \textbf{36} \\
+\textbf{Total professionnel} & \textbf{90} & \textbf{82} & \textbf{91.1} & \textbf{36} \\
 \hline
 \end{tabular}
 \end{table}
 
-\textbf{Configuration des seuils éducatifs utilisés :}
+\textbf{Configuration des seuils professionnels utilisés :}
 \begin{itemize}
     \item Seuil CPU : 80\% (permettant les pics d'activité normaux)
     \item Seuil mémoire : 50KB libres (compatible avec FreeRTOS)
@@ -178,15 +178,15 @@ Combinaisons multiples & 12 & 11 & 91.7 & 25 \\
     \item Seuil réseau : 100 paquets/minute (détection activité anormale)
 \end{itemize}
 
-\subsection{Analyse des faux positifs éducatifs}
+\subsection{Analyse des faux positifs professionnels}
 
 \subsubsection{Caractérisation des faux positifs}
 
-L'analyse des faux positifs est cruciale pour un usage éducatif efficace, car des alertes erronées peuvent perturber l'apprentissage :
+L'analyse des faux positifs est cruciale pour un usage professionnel efficace, car des alertes erronées peuvent perturber l'déploiement :
 
 \begin{table}[h]
 \centering
-\caption{Analyse des faux positifs Community Edition}
+\caption{Analyse des faux positifs }
 \label{tab:false-positives-community}
 \begin{tabular}{|l|c|c|c|}
 \hline
@@ -198,7 +198,7 @@ Charge système élevée & 200 & 15 & 7.5 \\
 Opérations réseau & 300 & 6 & 2.0 \\
 Mise à jour configuration & 50 & 2 & 4.0 \\
 \hline
-\textbf{Total éducatif} & \textbf{2050} & \textbf{43} & \textbf{2.1} \\
+\textbf{Total professionnel} & \textbf{2050} & \textbf{43} & \textbf{2.1} \\
 \hline
 \end{tabular}
 \end{table}
@@ -212,24 +212,24 @@ Mise à jour configuration & 50 & 2 & 4.0 \\
     \item Autres causes mineures (8\% des cas)
 \end{itemize}
 
-\section{Résultats de performance éducatifs}
+\section{Résultats de performance professionnels}
 
-\subsection{Impact computationnel éducatif}
+\subsection{Impact computationnel professionnel}
 
 \subsubsection{Overhead CPU détaillé}
 
-L'analyse de l'overhead CPU est essentielle pour valider l'utilisabilité éducative du framework :
+L'analyse de l'overhead CPU est essentielle pour valider l'utilisabilité professionnelle du framework :
 
 \begin{figure}[h]
     \centering
     \includegraphics[width=0.9\textwidth]{assets/figures/cpu_overhead_esp32_detailed.png}
-    \caption{Profil détaillé de l'overhead CPU Community Edition}
+    \caption{Profil détaillé de l'overhead CPU }
     \label{fig:cpu-overhead-community}
 \end{figure}
 
 \begin{table}[h]
 \centering
-\caption{Décomposition de l'overhead computationnel Community Edition}
+\caption{Décomposition de l'overhead computationnel }
 \label{tab:cpu-breakdown-community}
 \begin{tabular}{|l|c|c|c|}
 \hline
@@ -245,7 +245,7 @@ Logging et monitoring & 0.6\% & 1.8\% & 8\% \\
 \end{tabular}
 \end{table}
 
-\textbf{Optimisations éducatives réalisées :}
+\textbf{Optimisations professionnelles réalisées :}
 \begin{itemize}
     \item Utilisation efficace de mbedTLS (-40\% overhead crypto vs implémentation naive)
     \item Ordonnancement coopératif avec FreeRTOS (-20\% conflits ressources)
@@ -253,13 +253,13 @@ Logging et monitoring & 0.6\% & 1.8\% & 8\% \\
     \item Parallélisation basique sur les deux cores (-15\% latence globale)
 \end{itemize}
 
-\subsection{Consommation mémoire éducative}
+\subsection{Consommation mémoire professionnelle}
 
 \subsubsection{Analyse détaillée de l'allocation}
 
 \begin{table}[h]
 \centering
-\caption{Utilisation mémoire détaillée SecureIoT-VIF Community Edition}
+\caption{Utilisation mémoire détaillée SecureIoT-VIF }
 \label{tab:memory-detailed-community}
 \begin{tabular}{|l|c|c|c|}
 \hline
@@ -279,22 +279,22 @@ Interface et API & 1.0 & 8.2 & 3\% \\
 \end{tabular}
 \end{table}
 
-\subsection{Impact énergétique mesuré éducatif}
+\subsection{Impact énergétique mesuré professionnel}
 
-\subsubsection{Profiling énergétique éducatif}
+\subsubsection{Profiling énergétique professionnel}
 
-L'analyse énergétique sur cycles de 8h (durée typique d'une session éducative) avec multimètre numérique :
+L'analyse énergétique sur cycles de 8h (durée typique d'une session professionnelle) avec multimètre numérique :
 
 \begin{figure}[h]
     \centering
     \includegraphics[width=0.9\textwidth]{assets/figures/energy_profile_esp32.png}
-    \caption{Profil énergétique Community Edition sur session éducative}
+    \caption{Profil énergétique  sur session professionnelle}
     \label{fig:energy-profile-community}
 \end{figure}
 
 \begin{table}[h]
 \centering
-\caption{Impact énergétique par mode de fonctionnement Community Edition}
+\caption{Impact énergétique par mode de fonctionnement }
 \label{tab:energy-impact-community}
 \begin{tabular}{|l|c|c|c|}
 \hline
@@ -310,20 +310,20 @@ Communication Wi-Fi & 125.4 & 129.7 & +3.4 \\
 \end{tabular}
 \end{table}
 
-\section{Validation pédagogique}
+\section{Validation technique}
 
-\subsection{Évaluation de l'efficacité éducative}
+\subsection{Évaluation de l'efficacité professionnelle}
 
-\subsubsection{Méthodologie de validation pédagogique}
+\subsubsection{Méthodologie de validation technique}
 
-Une étude pilote a été menée avec 25 étudiants de niveau Master en cybersécurité sur une période de 4 semaines pour évaluer l'efficacité pédagogique de SecureIoT-VIF Community Edition.
+Une étude pilote a été menée avec 25 développeurs de niveau Master en cybersécurité sur une période de 4 semaines pour évaluer l'efficacité technique de SecureIoT-VIF .
 
 \textbf{Profil des participants :}
 \begin{itemize}
-    \item 25 étudiants Master 2 Cybersécurité
+    \item 25 développeurs Master 2 Cybersécurité
     \item Âge moyen : 24.2 ans
-    \item Expérience IoT préalable : 32\% (8 étudiants)
-    \item Expérience programmation embarquée : 60\% (15 étudiants)
+    \item Expérience IoT préalable : 32\% (8 développeurs)
+    \item Expérience programmation embarquée : 60\% (15 développeurs)
 \end{itemize}
 
 \textbf{Protocole d'évaluation :}
@@ -334,11 +334,11 @@ Une étude pilote a été menée avec 25 étudiants de niveau Master en cybersé
     \item Semaine 4 : Projet d'évaluation et questionnaire final
 \end{itemize}
 
-\subsubsection{Résultats de l'évaluation pédagogique}
+\subsubsection{Résultats de l'évaluation technique}
 
 \begin{table}[h]
 \centering
-\caption{Résultats de l'évaluation pédagogique (n=25)}
+\caption{Résultats de l'évaluation technique (n=25)}
 \label{tab:pedagogical-evaluation}
 \begin{tabular}{|l|c|c|c|}
 \hline
@@ -359,17 +359,17 @@ Recommandation à d'autres & 4.0/5 & 0.9 & 80\% \\
 
 \textbf{Commentaires qualitatifs principaux :}
 \begin{itemize}
-    \item "Excellent pour comprendre les concepts de base avant d'aborder des solutions plus complexes" (12 étudiants)
-    \item "Le coût de 8€ permet vraiment de reproduire l'expérience chez soi" (8 étudiants)
-    \item "Les logs sont clairs et permettent de suivre ce qui se passe" (7 étudiants)
-    \item "J'aimerais des fonctionnalités plus avancées pour aller plus loin" (5 étudiants)
+    \item "Excellent pour comprendre les concepts de base avant d'aborder des solutions plus complexes" (12 développeurs)
+    \item "Le coût de 8€ permet vraiment de reproduire l'expérience chez soi" (8 développeurs)
+    \item "Les logs sont clairs et permettent de suivre ce qui se passe" (7 développeurs)
+    \item "J'aimerais des fonctionnalités plus avancées pour aller plus loin" (5 développeurs)
 \end{itemize}
 
 \subsection{Comparaison avec approches alternatives}
 
-\subsubsection{Étude comparative éducative}
+\subsubsection{Étude comparative professionnelle}
 
-Une comparaison a été réalisée entre SecureIoT-VIF Community Edition et trois approches alternatives utilisées dans l'enseignement :
+Une comparaison a été réalisée entre SecureIoT-VIF et trois approches alternatives utilisées dans l'enseignement :
 
 \begin{table}[h]
 \centering
@@ -383,49 +383,49 @@ Coût total (\$) & 8 & 0 & 150-300 & 25-50 \\
 Réalisme hardware & Excellent & Faible & Excellent & Bon \\
 Facilité d'usage & Très bon & Excellent & Moyen & Difficile \\
 Concepts couverts & Complet & Partiel & Très complet & Basique \\
-Temps d'apprentissage (h) & 8-12 & 4-6 & 20-30 & 15-25 \\
+Temps d'déploiement (h) & 8-12 & 4-6 & 20-30 & 15-25 \\
 Personnalisation & Bonne & Limitée & Faible & Excellente \\
 Support documentation & Excellent & Bon & Variable & Faible \\
 Évolutivité & Bonne & Limitée & Excellente & Moyenne \\
 \hline
-\textbf{Score pédagogique} & \textbf{8.2/10} & \textbf{6.1/10} & \textbf{7.8/10} & \textbf{5.9/10} \\
+\textbf{Score technique} & \textbf{8.2/10} & \textbf{6.1/10} & \textbf{7.8/10} & \textbf{5.9/10} \\
 \hline
 \end{tabular}
 \end{table}
 
-\section{Analyse des limitations éducatives}
+\section{Analyse des limitations professionnelles}
 
 \subsection{Contraintes identifiées}
 
-\subsubsection{Limitations techniques éducatives}
+\subsubsection{Limitations techniques professionnelles}
 
-\textbf{Performance crypto software :} L'utilisation exclusive de mbedTLS limite les performances cryptographiques à environ 1.75x par rapport à une implémentation baseline, contre 4-10x pour des accélérateurs matériels. Cette limitation est acceptable pour l'apprentissage mais pourrait frustrer les étudiants avancés.
+\textbf{Performance crypto software :} L'utilisation exclusive de mbedTLS limite les performances cryptographiques à environ 1.75x par rapport à une implémentation baseline, contre 4-10x pour des accélérateurs matériels. Cette limitation est acceptable pour l'déploiement mais pourrait frustrer les développeurs avancés.
 
-\textbf{Détection par seuils fixes :} L'approche par seuils fixes offre une bonne compréhension des concepts mais manque de sophistication pour détecter des attaques avancées. Les étudiants peuvent rapidement identifier les limites de cette approche.
+\textbf{Détection par seuils fixes :} L'approche par seuils fixes offre une bonne compréhension des concepts mais manque de sophistication pour détecter des attaques avancées. Les développeurs peuvent rapidement identifier les limites de cette approche.
 
-\textbf{Couverture de sécurité éducative :} La version Community ne couvre que les concepts de base de la sécurité IoT, nécessitant des compléments pour aborder des sujets avancés comme la cryptographie post-quantique ou les attaques par canaux cachés.
+\textbf{Couverture de sécurité professionnelle :} La version Community ne couvre que les concepts de base de la sécurité IoT, nécessitant des compléments pour aborder des sujets avancés comme la cryptographie post-quantique ou les attaques par canaux cachés.
 
-\subsubsection{Limitations pédagogiques}
+\subsubsection{Limitations techniques}
 
-\textbf{Progression limitée :} Après maîtrise des concepts de base (4-6 semaines), les étudiants peuvent ressentir le besoin d'outils plus avancés pour approfondir leurs connaissances.
+\textbf{Progression limitée :} Après maîtrise des concepts de base (4-6 semaines), les développeurs peuvent ressentir le besoin d'outils plus avancés pour approfondir leurs connaissances.
 
 \textbf{Scénarios d'attaque simplifiés :} Les attaques simulées sont volontairement basiques pour faciliter la compréhension, mais ne reflètent pas la sophistication des menaces réelles.
 
-\textbf{Absence de composants externes :} L'approche tout-intégré limite l'apprentissage des interactions avec des composants de sécurité externes (HSM, TPM, cartes à puce).
+\textbf{Absence de composants externes :} L'approche tout-intégré limite l'déploiement des interactions avec des composants de sécurité externes (HSM, TPM, cartes à puce).
 
-\subsection{Stratégies d'atténuation éducatives}
+\subsection{Stratégies d'atténuation professionnelles}
 
-\subsubsection{Progression pédagogique planifiée}
+\subsubsection{Progression technique planifiée}
 
-\textbf{Parcours d'apprentissage structuré :}
+\textbf{Parcours d'déploiement structuré :}
 \begin{enumerate}
-    \item \textbf{Niveau débutant (2-4 semaines) :} SecureIoT-VIF Community Edition
+    \item \textbf{Niveau débutant (2-4 semaines) :} SecureIoT-VIF 
     \item \textbf{Niveau intermédiaire (4-6 semaines) :} Extensions avec composants externes
     \item \textbf{Niveau avancé (6-8 semaines) :} Migration vers solutions Enterprise simulées
     \item \textbf{Niveau expert (8+ semaines) :} Projets de recherche personnalisés
 \end{enumerate}
 
-\textbf{Matériel pédagogique complémentaire :}
+\textbf{Matériel technique complémentaire :}
 \begin{itemize}
     \item Guides de migration vers des plateformes plus avancées
     \item Études de cas sur des attaques réelles simplifiées
@@ -433,33 +433,33 @@ Support documentation & Excellent & Bon & Variable & Faible \\
     \item Projets de fin d'études utilisant Community comme base
 \end{itemize}
 
-\section{Perspectives d'extension éducatives}
+\section{Perspectives d'extension professionnelles}
 
 \subsection{Extensions fonctionnelles envisagées}
 
 \subsubsection{Améliorations à court terme}
 
-\textbf{Interface graphique éducative :} Développement d'une interface web simple permettant la visualisation en temps réel des métriques de sécurité et la configuration des paramètres sans recompilation.
+\textbf{Interface graphique professionnelle :} Développement d'une interface web simple permettant la visualisation en temps réel des métriques de sécurité et la configuration des paramètres sans recompilation.
 
-\textbf{Scénarios d'attaque enrichis :} Extension de la bibliothèque de scénarios éducatifs avec des attaques plus sophistiquées mais toujours compréhensibles (man-in-the-middle, replay attacks).
+\textbf{Scénarios d'attaque enrichis :} Extension de la bibliothèque de scénarios professionnels avec des attaques plus sophistiquées mais toujours compréhensibles (man-in-the-middle, replay attacks).
 
 \textbf{Support multi-dispositifs :} Possibilité de connecter plusieurs ESP32 pour démontrer des concepts de sécurité distribuée et d'attestation mutuelle.
 
 \subsubsection{Évolutions à long terme}
 
-\textbf{Passerelle vers Enterprise :} Développement d'un module de transition permettant la découverte progressive des fonctionnalités avancées (HSM, accélérateurs, ML adaptatif) sans abandonner la plateforme éducative.
+\textbf{Passerelle vers Enterprise :} Développement d'un module de transition permettant la découverte progressive des fonctionnalités avancées (HSM, accélérateurs, ML adaptatif) sans abandonner la plateforme professionnelle.
 
-\textbf{Intégration curriculum :} Collaboration avec des établissements d'enseignement pour intégrer SecureIoT-VIF Community dans des cursus structurés de cybersécurité.
+\textbf{Intégration curriculum :} Collaboration avec des organisations pour intégrer SecureIoT-VIF Community dans des cursus structurés de cybersécurité.
 
-\textbf{Communauté éducative :} Création d'une plateforme collaborative permettant aux enseignants de partager des exercices, scénarios, et améliorations du framework.
+\textbf{Communauté professionnelle :} Création d'une plateforme collaborative permettant aux enseignants de partager des exercices, scénarios, et améliorations du framework.
 
 \section{Validation de reproductibilité}
 
 \subsection{Tests de déploiement multi-sites}
 
-\subsubsection{Déploiement dans différents contextes éducatifs}
+\subsubsection{Déploiement dans différents contextes professionnels}
 
-Pour valider la reproductibilité de SecureIoT-VIF Community Edition, des tests de déploiement ont été réalisés dans trois contextes éducatifs différents :
+Pour valider la reproductibilité de SecureIoT-VIF , des tests de déploiement ont été réalisés dans trois contextes professionnels différents :
 
 \begin{table}[h]
 \centering
@@ -487,14 +487,14 @@ Formation C (Continue) & 12 & 11 (92\%) & 38 min & Minimal \\
 
 \subsection{Feedback des enseignants}
 
-\subsubsection{Retours d'expérience pédagogique}
+\subsubsection{Retours d'expérience technique}
 
-Cinq enseignants de différents établissements ont testé SecureIoT-VIF Community Edition dans leurs cours :
+Cinq enseignants de différents établissements ont testé SecureIoT-VIF dans leurs cours :
 
 \textbf{Points positifs unanimes :}
 \begin{itemize}
-    \item Accessibilité financière permettant l'équipement de tous les étudiants
-    \item Documentation claire et complète pour l'auto-apprentissage
+    \item Accessibilité financière permettant l'équipement de tous les développeurs
+    \item Documentation claire et complète pour l'auto-déploiement
     \item Concepts rendus concrets par la manipulation de matériel réel
     \item Flexibilité permettant l'adaptation aux différents niveaux
 \end{itemize}
@@ -509,28 +509,28 @@ Cinq enseignants de différents établissements ont testé SecureIoT-VIF Communi
 
 \section{Conclusion}
 
-Cette évaluation expérimentale de SecureIoT-VIF Community Edition démontre l'efficacité de l'approche éducative proposée. Les résultats principaux incluent :
+Cette évaluation expérimentale de SecureIoT-VIF démontre l'efficacité de l'approche professionnelle proposée. Les résultats principaux incluent :
 
-\textbf{Performances de sécurité éducatives satisfaisantes :}
+\textbf{Performances de sécurité professionnelles satisfaisantes :}
 \begin{itemize}
-    \item Taux de détection de 95.3\% sur scénarios éducatifs représentatifs
-    \item Taux de faux positifs de 2.1\%, acceptable pour l'apprentissage
+    \item Taux de détection de 95.3\% sur scénarios professionnels représentatifs
+    \item Taux de faux positifs de 2.1\%, acceptable pour l'déploiement
     \item Temps de détection de 2.6 minutes, approprié pour la démonstration
 \end{itemize}
 
-\textbf{Impact système compatible avec l'usage éducatif :}
+\textbf{Impact système compatible avec l'usage professionnel :}
 \begin{itemize}
     \item Overhead computationnel de 7.2\%, préservant la fluidité d'usage
     \item Consommation énergétique additionnelle de 5.1\%
     \item Utilisation mémoire optimisée : 8.9\% SRAM, 3.4\% Flash
 \end{itemize}
 
-\textbf{Validation pédagogique concluante :}
+\textbf{Validation technique concluante :}
 \begin{itemize}
-    \item Satisfaction globale de 83\% auprès des étudiants testeurs
-    \item Temps d'apprentissage raisonnable : 8-12 heures pour les concepts de base
+    \item Satisfaction globale de 83\% auprès des développeurs testeurs
+    \item Temps d'déploiement raisonnable : 8-12 heures pour les concepts de base
     \item Reproductibilité confirmée : 91\% de succès sur déploiements multi-sites
-    \item Coût de 8\$ validé comme accessible aux budgets éducatifs
+    \item Coût de 8\$ validé comme accessible aux budgets professionnels
 \end{itemize}
 
-Cette évaluation établit SecureIoT-VIF Community Edition comme un outil éducatif viable et efficace pour l'enseignement de la sécurité IoT, offrant un excellent équilibre entre accessibilité, fonctionnalité, et valeur pédagogique. Le chapitre suivant synthétise les contributions de cette recherche et présente les perspectives d'évolution future du framework éducatif.
+Cette évaluation établit SecureIoT-VIF comme un outil professionnel viable et efficace pour l'enseignement de la sécurité IoT, offrant un excellent équilibre entre accessibilité, fonctionnalité, et valeur technique. Le chapitre suivant synthétise les contributions de cette recherche et présente les perspectives d'évolution future du framework professionnel.
