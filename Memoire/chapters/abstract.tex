@@ -17,43 +17,41 @@ Les solutions actuelles de sécurité des firmwares IoT présentent plusieurs li
 
 \section*{Objectif}
 
-Cette recherche vise à concevoir, développer et valider SecureIoT-VIF, un framework professionnel de vérification d'intégrité pour la sécurité des firmwares IoT. L'approche propose une architecture modulaire et évolutive implémentée sur plateforme ESP32, intégrant des mécanismes de cryptographie logicielle avancée, de vérification d'intégrité au démarrage, et de détection d'anomalies adaptative, avec une roadmap claire pour l'extension vers des fonctionnalités avancées (HSM matériel, vérification temps réel, machine learning).
+Cette recherche vise à concevoir, développer et valider SecureIoT-VIF, un framework modulaire de vérification d'intégrité pour la sécurité des firmwares IoT. L'approche propose une architecture évolutive à deux configurations implémentée sur plateforme ESP32 : la \textbf{Configuration Standard}, implémentée et validée expérimentalement, intégrant des mécanismes de cryptographie logicielle, de vérification d'intégrité au démarrage et de détection d'anomalies configurable ; et la \textbf{Configuration Expert}, conçue en détail pour intégrer des mécanismes avancés (HSM matériel, vérification temps réel, machine learning adaptatif).
 
 \section*{Contributions}
 
-\textbf{Contribution théorique :} Développement d'un modèle de sécurité hybride combinant vérification d'intégrité cryptographique et détection d'anomalies comportementales, optimisé pour les environnements IoT contraints tout en maintenant un niveau de sécurité adapté aux déploiements industriels.
+\textbf{Contribution théorique :} Développement d'un modèle de sécurité hybride combinant vérification d'intégrité cryptographique et détection d'anomalies comportementales, avec une architecture modulaire permettant une évolution progressive de la Configuration Standard vers la Configuration Expert.
 
 \textbf{Contribution méthodologique :} 
 \begin{itemize}
     \item Méthodologie d'implémentation de mécanismes de sécurité firmware sur ESP32 avec cryptographie mbedTLS
     \item Framework d'évaluation de la sécurité et des performances pour systèmes IoT contraints
-    \item Architecture modulaire permettant l'intégration progressive de fonctionnalités avancées
+    \item Architecture modulaire à deux configurations permettant l'intégration progressive de fonctionnalités avancées
 \end{itemize}
 
-\textbf{Contribution technique :} Implémentation complète d'un framework professionnel :
+\textbf{Contribution technique :} Implémentation complète de la Configuration Standard et conception détaillée de la Configuration Expert :
 \begin{itemize}
-    \item Vérification d'intégrité firmware avec signatures cryptographiques SHA-256/ECDSA
-    \item Système de détection d'anomalies configurable avec seuils adaptatifs
-    \item Architecture modulaire extensible à divers types de capteurs et actionneurs IoT
-    \item Solution validée sur capteurs DHT22 (température/humidité) démontrant l'efficacité de l'approche
+    \item \textbf{Configuration Standard (implémentée)} : Vérification d'intégrité firmware avec signatures cryptographiques SHA-256/ECDSA, détection d'anomalies configurable avec seuils adaptatifs, architecture modulaire extensible, validation avec capteurs DHT22
+    \item \textbf{Configuration Expert (conçue)} : Spécifications détaillées pour HSM matériel, vérification temps réel continue, machine learning adaptatif, attestation distante
 \end{itemize}
 
-\textbf{Contribution empirique :} Évaluation expérimentale rigoureuse sur scénarios industriels représentatifs, avec analyse comparative des performances, démonstration de la faisabilité pratique et validation de l'efficacité de détection des attaques.
+\textbf{Contribution empirique :} Évaluation expérimentale rigoureuse de la Configuration Standard sur scénarios représentatifs, avec analyse comparative des performances, démonstration de la faisabilité pratique et validation de l'efficacité de détection des attaques.
 
 \section*{Résultats}
 
-L'évaluation révèle des performances adaptées aux déploiements industriels : taux de détection élevé sur les attaques par compromission de firmware, overhead computationnel minimal (< 8\%), impact énergétique contrôlé, et architecture évolutive permettant l'intégration future de mécanismes avancés. Les tests avec capteurs DHT22 confirment l'efficacité de l'approche, démontrant la capacité du framework à s'intégrer avec divers types de capteurs IoT.
+L'évaluation de la Configuration Standard révèle des performances prometteuses : taux de détection élevé sur les attaques par compromission de firmware, overhead computationnel minimal (< 8\%), impact énergétique contrôlé, et architecture modulaire validée. Les tests avec capteurs DHT22 confirment l'efficacité de l'approche implémentée. La Configuration Expert, conçue en détail, établit une roadmap scientifiquement fondée pour l'intégration future de mécanismes avancés.
 
 \section*{Impact}
 
-Cette recherche établit une nouvelle approche pour la sécurité des firmwares IoT en proposant un framework professionnel qui équilibre efficacement sécurité, performance et praticité. L'architecture modulaire et la roadmap d'évolution vers des fonctionnalités avancées (HSM matériel, vérification temps réel, machine learning adaptatif) positionnent SecureIoT-VIF comme une solution pérenne pour les déploiements IoT industriels.
+Cette recherche établit une nouvelle approche pour la sécurité des firmwares IoT en proposant une architecture modulaire à deux configurations qui équilibre efficacement sécurité, performance et praticité. L'implémentation de la Configuration Standard démontre la faisabilité de l'approche, tandis que la conception détaillée de la Configuration Expert positionne SecureIoT-VIF comme une solution évolutive pour les déploiements IoT.
 
-\textbf{Keywords:} IoT, Firmware Security, Professional Framework, ESP32, Hardware Security, Integrity Verification, Anomaly Detection, Industrial IoT, Embedded Systems, Cryptography
+\textbf{Keywords:} IoT, Firmware Security, Modular Framework, ESP32, Integrity Verification, Anomaly Detection, Embedded Systems, Cryptography, Two-Tier Architecture, Standard Configuration, Expert Configuration
 
 \vfill
 
 \begin{center}
-\textbf{Mots-clés :} IoT, Sécurité Firmware, Framework Professionnel, ESP32, Sécurité Matérielle, Vérification Intégrité, Détection Anomalies, IoT Industriel, Systèmes Embarqués, Cryptographie
+\textbf{Mots-clés :} IoT, Sécurité Firmware, Framework Modulaire, ESP32, Vérification Intégrité, Détection Anomalies, Systèmes Embarqués, Cryptographie, Architecture à Deux Configurations, Configuration Standard, Configuration Expert
 \end{center}
 
 %====================================================================
@@ -73,35 +71,33 @@ Current IoT firmware security solutions present several major limitations: exces
 
 \section*{Objective}
 
-This research aims to design, develop and validate SecureIoT-VIF, a professional integrity verification framework for IoT firmware security. The approach proposes a modular and scalable architecture implemented on ESP32 platform, integrating advanced software cryptography mechanisms, boot-time integrity verification, and adaptive anomaly detection, with a clear roadmap for extension toward advanced features (hardware HSM, real-time verification, machine learning).
+This research aims to design, develop and validate SecureIoT-VIF, a modular integrity verification framework for IoT firmware security. The approach proposes a two-tier scalable architecture implemented on ESP32 platform: the \textbf{Standard Configuration}, implemented and experimentally validated, integrating software cryptography mechanisms, boot-time integrity verification, and configurable anomaly detection; and the \textbf{Expert Configuration}, designed in detail to integrate advanced mechanisms (hardware HSM, real-time verification, adaptive machine learning).
 
 \section*{Contributions}
 
-\textbf{Theoretical contribution:} Development of a hybrid security model combining cryptographic integrity verification and behavioral anomaly detection, optimized for constrained IoT environments while maintaining security levels suitable for industrial deployments.
+\textbf{Theoretical contribution:} Development of a hybrid security model combining cryptographic integrity verification and behavioral anomaly detection, with a modular architecture enabling progressive evolution from Standard Configuration to Expert Configuration.
 
 \textbf{Methodological contribution:}
 \begin{itemize}
     \item Implementation methodology for firmware security mechanisms on ESP32 with mbedTLS cryptography
     \item Security and performance evaluation framework for constrained IoT systems
-    \item Modular architecture enabling progressive integration of advanced functionalities
+    \item Two-tier modular architecture enabling progressive integration of advanced functionalities
 \end{itemize}
 
-\textbf{Technical contribution:} Complete implementation of a professional framework:
+\textbf{Technical contribution:} Complete implementation of Standard Configuration and detailed design of Expert Configuration:
 \begin{itemize}
-    \item Firmware integrity verification with SHA-256/ECDSA cryptographic signatures
-    \item Configurable anomaly detection system with adaptive thresholds
-    \item Modular architecture extensible to various IoT sensor and actuator types
-    \item Solution validated with DHT22 sensors (temperature/humidity) demonstrating approach effectiveness
+    \item \textbf{Standard Configuration (implemented)}: Firmware integrity verification with SHA-256/ECDSA cryptographic signatures, configurable anomaly detection with adaptive thresholds, extensible modular architecture, validation with DHT22 sensors
+    \item \textbf{Expert Configuration (designed)}: Detailed specifications for hardware HSM, continuous real-time verification, adaptive machine learning, remote attestation
 \end{itemize}
 
-\textbf{Empirical contribution:} Rigorous experimental evaluation on representative industrial scenarios, with comparative performance analysis, practical feasibility demonstration and attack detection effectiveness validation.
+\textbf{Empirical contribution:} Rigorous experimental evaluation of Standard Configuration on representative scenarios, with comparative performance analysis, practical feasibility demonstration and attack detection effectiveness validation.
 
 \section*{Results}
 
-The evaluation reveals performance suitable for industrial deployments: high detection rate for firmware compromise attacks, minimal computational overhead (< 8\%), controlled energy impact, and scalable architecture enabling future integration of advanced mechanisms. Tests with DHT22 sensors confirm the approach effectiveness, demonstrating the framework's capability to integrate with various IoT sensor types.
+The evaluation of Standard Configuration reveals promising performance: high detection rate for firmware compromise attacks, minimal computational overhead (< 8\%), controlled energy impact, and validated modular architecture. Tests with DHT22 sensors confirm the effectiveness of the implemented approach. The Expert Configuration, designed in detail, establishes a scientifically grounded roadmap for future integration of advanced mechanisms.
 
 \section*{Impact}
 
-This research establishes a new approach for IoT firmware security by proposing a professional framework that effectively balances security, performance and practicality. The modular architecture and evolution roadmap toward advanced features (hardware HSM, real-time verification, adaptive machine learning) position SecureIoT-VIF as a sustainable solution for industrial IoT deployments.
+This research establishes a new approach for IoT firmware security by proposing a two-tier modular architecture that effectively balances security, performance and practicality. The implementation of Standard Configuration demonstrates the approach feasibility, while the detailed design of Expert Configuration positions SecureIoT-VIF as an evolutionary solution for IoT deployments.
 
-\textbf{Keywords:} IoT, Firmware Security, Professional Framework, ESP32, Hardware Security, Integrity Verification, Anomaly Detection, Industrial IoT, Embedded Systems, Cryptography
+\textbf{Keywords:} IoT, Firmware Security, Modular Framework, ESP32, Integrity Verification, Anomaly Detection, Embedded Systems, Cryptography, Two-Tier Architecture, Standard Configuration, Expert Configuration
