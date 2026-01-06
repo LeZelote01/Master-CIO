@@ -1,5 +1,5 @@
 %====================================================================
-% Chapitre 1 : Introduction - SecureIoT-VIF Community Edition
+% Chapitre 1 : Introduction - SecureIoT-VIF
 %====================================================================
 
 \chapter{Introduction}
@@ -9,177 +9,184 @@
 
 L'Internet des Objets (\ac{IoT}) représente aujourd'hui l'une des révolutions technologiques les plus significatives de notre époque. Selon les projections de l'industrie, le nombre de dispositifs \ac{IoT} connectés devrait atteindre 75 milliards d'unités d'ici 2025, générant un marché mondial estimé à plus de 6 000 milliards de dollars \cite{Statista2024IoTMarket}. Cette croissance exponentielle s'explique par l'intégration croissante de l'intelligence artificielle, l'amélioration des réseaux de communication (5G, LoRaWAN, NB-IoT), et la miniaturisation des composants électroniques.
 
-Les dispositifs \ac{IoT} grand public englobent une vaste gamme d'appareils : objets connectés domestiques (thermostats, caméras de sécurité, assistants vocaux), dispositifs portables (montres intelligentes, trackers de fitness), appareils électroménagers intelligents, et systèmes de domotique. Ces dispositifs partagent plusieurs caractéristiques communes : ressources limitées (processeur, mémoire, stockage), contraintes énergétiques strictes, et connexion permanente aux réseaux de communication.
+Les dispositifs \ac{IoT} industriels et grand public englobent une vaste gamme d'appareils : systèmes de surveillance industrielle, dispositifs médicaux connectés, infrastructures critiques, objets connectés domestiques (thermostats, caméras de sécurité, assistants vocaux), dispositifs portables (montres intelligentes, trackers), et systèmes de domotique avancés. Ces dispositifs partagent plusieurs caractéristiques communes : ressources computationnelles limitées, contraintes énergétiques strictes, et connexion permanente aux réseaux de communication, créant une surface d'attaque étendue.
 
-Cependant, cette prolifération s'accompagne d'une augmentation alarmante des cyberattaques ciblant spécifiquement les firmwares des dispositifs \ac{IoT}. Les recherches récentes de Nino et al. \cite{Nino2024UnveilingIoT} révèlent que 89\% des firmwares \ac{IoT} analysés présentent des vulnérabilités critiques, dont 67\% sont liées à l'absence de mécanismes de protection de l'intégrité du firmware. Les attaques par compromission de firmware permettent aux cybercriminels d'obtenir un contrôle persistant et de bas niveau des dispositifs, rendant les détections conventionnelles inefficaces.
+Cependant, cette prolifération s'accompagne d'une augmentation alarmante des cyberattaques ciblant spécifiquement les firmwares des dispositifs \ac{IoT}. Les recherches récentes de Nino et al. \cite{Nino2024UnveilingIoT} révèlent que 89\% des firmwares \ac{IoT} analysés présentent des vulnérabilités critiques, dont 67\% sont liées à l'absence de mécanismes de protection de l'intégrité du firmware. Les attaques par compromission de firmware permettent aux cybercriminels d'obtenir un contrôle persistant et de bas niveau des dispositifs, rendant les détections conventionnelles inefficaces et compromettant la sécurité globale des systèmes.
 
-\section{Défis éducatifs et de recherche en sécurité IoT}
+\section{Enjeux de sécurité des firmwares IoT}
 
-\subsection{Barrières à l'apprentissage de la sécurité IoT}
+\subsection{Menaces et vulnérabilités critiques}
 
-L'enseignement et la recherche en sécurité IoT font face à plusieurs défis majeurs qui limitent l'accessibilité et l'efficacité pédagogique :
+Les firmwares IoT constituent une cible privilégiée pour les cyberattaquants en raison de plusieurs facteurs :
 
-\textbf{Coût des équipements spécialisés :} Les solutions commerciales de sécurité IoT utilisent souvent des composants coûteux comme des modules de sécurité matériels (HSM) externes, des puces de chiffrement dédiées, ou des équipements de laboratoire spécialisés. Ces coûts, pouvant atteindre plusieurs centaines d'euros par dispositif, représentent une barrière significative pour les établissements d'enseignement et les projets de recherche avec des budgets limités.
+\textbf{Persistance des attaques :} Une fois compromis, un firmware malveillant persiste même après un redémarrage du dispositif, contrairement aux attaques logicielles traditionnelles. Cette caractéristique rend la détection et la remédiation particulièrement complexes.
 
-\textbf{Complexité technique excessive :} Les frameworks de sécurité existants sont généralement conçus pour des applications industrielles critiques, avec des architectures complexes difficiles à comprendre pour les étudiants. Cette complexité masque souvent les concepts fondamentaux, rendant l'apprentissage progressif difficile.
+\textbf{Accès de bas niveau :} Les attaques firmware opèrent au niveau le plus fondamental du système, contournant les mécanismes de sécurité logiciels et obtenant un contrôle total sur le matériel. Cette position privilégiée permet d'intercepter toutes les communications, de manipuler les données capteurs, et de compromettre l'ensemble de l'écosystème IoT.
 
-\textbf{Manque d'outils pédagogiques adaptés :} Il existe peu de ressources éducatives pratiques permettant aux étudiants d'expérimenter concrètement avec les mécanismes de sécurité IoT. La plupart des formations restent théoriques, sans possibilité d'implémentation pratique sur du matériel réel.
+\textbf{Difficultés de détection :} Les mécanismes traditionnels de détection d'intrusion, opérant au niveau applicatif ou système d'exploitation, sont inefficaces contre les compromissions firmware. Les outils de sécurité conventionnels ne peuvent détecter les modifications malveillantes au niveau firmware.
 
-\textbf{Absence de progressivité dans l'apprentissage :} Les solutions existantes ne permettent pas un apprentissage progressif, passant directement des concepts théoriques aux implémentations complexes, sans étapes intermédiaires permettant la consolidation des connaissances.
+\textbf{Sophistication croissante :} Les travaux de recherche récents montrent une évolution significative dans la sophistication des malwares IoT. L'étude de González-Manzano et al. \cite{Gonzalez2024ExploringShifting} révèle une augmentation de 45\% de la complexité des malwares IoT entre 2021 et 2023, avec l'émergence de techniques d'évasion avancées et d'attaques polymorphes.
 
-\subsection{Besoin d'une approche éducative accessible}
+\subsection{Limitations des approches actuelles}
 
-Face à ces défis, la communauté académique exprime un besoin croissant pour des solutions éducatives qui combinent :
-- **Accessibilité financière** : Coût compatible avec les budgets éducatifs
-- **Simplicité pédagogique** : Architecture compréhensible et modulaire
-- **Praticité** : Possibilité d'expérimentation concrète sur matériel réel
-- **Progressivité** : Apprentissage par étapes des concepts de sécurité
+Les solutions de sécurité existantes présentent plusieurs limitations critiques pour la protection des firmwares IoT :
+
+\textbf{Overhead computationnel prohibitif :} Les mécanismes de vérification cryptographique conventionnels peuvent consommer jusqu'à 30\% des ressources disponibles sur un microcontrôleur, impactant significativement les performances et la consommation énergétique \cite{Khan2024EfficiencySecurity}.
+
+\textbf{Vérification limitée au démarrage :} La plupart des solutions commerciales effectuent la vérification d'intégrité uniquement lors du démarrage du dispositif. Cette approche laisse une fenêtre d'opportunité pour les attaques runtime qui modifient le firmware après le démarrage.
+
+\textbf{Manque d'adaptation aux contraintes IoT :} Les solutions de sécurité conçues pour des systèmes traditionnels ne s'adaptent pas efficacement aux contraintes spécifiques des dispositifs IoT (mémoire limitée, puissance de calcul réduite, autonomie énergétique).
+
+\textbf{Complexité d'intégration :} L'intégration de mécanismes de sécurité dans les systèmes IoT existants nécessite souvent des modifications architecturales majeures, augmentant significativement les coûts et les délais de déploiement.
 
 \section{Problématique de recherche}
 
-\subsection{Vulnérabilités des firmwares IoT dans le contexte éducatif}
+\subsection{Question de recherche principale}
 
-Les firmwares des dispositifs \ac{IoT} éducatifs présentent des vulnérabilités spécifiques qui en font d'excellents cas d'étude pour l'apprentissage. Plusieurs études récentes ont mis en évidence l'ampleur de ces vulnérabilités :
+Comment concevoir et implémenter un framework de sécurité pour firmwares IoT qui équilibre efficacement protection robuste, performance acceptable, et praticité de déploiement dans des environnements contraints, tout en offrant une architecture évolutive vers des mécanismes de sécurité avancés ?
 
-\textbf{Composants tiers vulnérables :} L'analyse de Feng et al. \cite{Feng2022OneBadApple} sur 34 136 images de firmware révèle la présence de 584 composants tiers (\ac{TPC}) associés à 128 757 vulnérabilités liées à 429 \ac{CVE}. Cette étude souligne la persistance de vulnérabilités bien connues dans les écosystèmes de firmware, créant des opportunités d'exploitation pour les attaques éducatives simulées.
+\subsection{Questions de recherche spécifiques}
 
-\textbf{Sophistication croissante des malwares :} Les travaux de recherche récents montrent une évolution significative dans la sophistication des malwares IoT. L'étude de González-Manzano et al. \cite{Gonzalez2024ExploringShifting} révèle une augmentation de 45\% de la complexité des malwares IoT entre 2021 et 2023, nécessitant des outils éducatifs adaptés pour comprendre ces évolutions.
+\textbf{Q1 - Architecture de sécurité :} Quelle architecture de sécurité permet d'assurer l'intégrité des firmwares IoT tout en respectant les contraintes de ressources des dispositifs embarqués ?
 
-\textbf{Attaques par manipulation du flot de contrôle :} Les attaques de type \ac{ROP} (Return-Oriented Programming) représentent une menace particulièrement instructive pour l'apprentissage. Christou et al. \cite{Christou2024DAEDALUS} démontrent comment ces attaques peuvent être déployées, offrant d'excellents cas d'étude éducatifs.
+\textbf{Q2 - Mécanismes de vérification :} Quels mécanismes de vérification d'intégrité offrent le meilleur compromis entre efficacité de détection et overhead computationnel pour les plateformes IoT contraintes ?
 
-\subsection{Limitations des solutions existantes pour l'éducation}
+\textbf{Q3 - Détection d'anomalies :} Comment implémenter une détection d'anomalies comportementales efficace sur des dispositifs à ressources limitées, avec une roadmap d'évolution vers des techniques adaptatives avancées ?
 
-Les approches actuelles de sécurisation des firmwares IoT présentent plusieurs limitations pour l'usage éducatif :
-
-\textbf{Overhead computationnel prohibitif :} Les solutions de sécurité traditionnelles, conçues pour des systèmes aux ressources abondantes, introduisent un overhead computationnel et énergétique incompatible avec les contraintes des dispositifs IoT éducatifs. Les mécanismes de vérification cryptographique conventionnels peuvent consommer jusqu'à 30\% des ressources disponibles sur un microcontrôleur de classe ARM Cortex-M \cite{Khan2024EfficiencySecurity}.
-
-\textbf{Absence de vérification temps réel accessible :} La plupart des solutions existantes effectuent la vérification d'intégrité uniquement au démarrage du dispositif, sans permettre aux étudiants de comprendre les mécanismes de vérification continue. Cette limitation pédagogique empêche la compréhension complète des concepts de sécurité runtime.
-
-\textbf{Sous-utilisation des capacités de base :} Les outils éducatifs existants ne permettent pas d'explorer progressivement les capacités de base des microcontrôleurs comme l'ESP32, en commençant par la cryptographie software (mbedTLS) avant d'aborder des concepts plus avancés. Cette approche progressive est pourtant essentielle pour un apprentissage efficace.
+\textbf{Q4 - Évolutivité :} Comment concevoir une architecture modulaire permettant l'intégration progressive de fonctionnalités avancées (HSM matériel, vérification temps réel, machine learning) sans refonte complète du système ?
 
 \section{Objectifs de recherche}
 
 \subsection{Objectif principal}
 
-L'objectif principal de cette recherche est de concevoir, développer et valider SecureIoT-VIF Community Edition, un framework éducatif de vérification d'intégrité spécialement conçu pour l'apprentissage et la recherche en sécurité des firmwares IoT. Ce framework vise à démocratiser l'accès à l'éducation en sécurité IoT en proposant une solution accessible, pratique, et pédagogiquement efficace basée sur des composants abordables (ESP32 \textasciitilde 8\$) et des mécanismes de sécurité de base compréhensibles.
+L'objectif principal de cette recherche est de concevoir, développer et valider SecureIoT-VIF, un framework professionnel de vérification d'intégrité pour la sécurité des firmwares IoT. Ce framework vise à fournir une protection robuste contre les attaques par compromission de firmware tout en maintenant un overhead acceptable pour les déploiements industriels, avec une architecture évolutive permettant l'intégration future de mécanismes de sécurité avancés.
 
 \subsection{Objectifs spécifiques}
 
-\textbf{Objectif 1 : Analyse des menaces éducatives}
+\textbf{Objectif 1 : Analyse des menaces et modélisation}
 \begin{itemize}
-    \item Réaliser une taxonomie des attaques par compromission de firmware adaptée au contexte éducatif
-    \item Identifier les vecteurs d'attaque les plus instructifs pour l'apprentissage
-    \item Évaluer les besoins pédagogiques spécifiques à l'enseignement de la sécurité IoT
+    \item Réaliser une taxonomie complète des attaques par compromission de firmware IoT
+    \item Identifier les vecteurs d'attaque critiques et les vulnérabilités exploitables
+    \item Développer un modèle de menaces adapté aux environnements IoT industriels
 \end{itemize}
 
-\textbf{Objectif 2 : Conception d'une architecture éducative accessible}
+\textbf{Objectif 2 : Conception d'une architecture professionnelle}
 \begin{itemize}
-    \item Développer une architecture de sécurité modulaire utilisant des composants abordables (ESP32)
-    \item Concevoir des mécanismes de vérification d'intégrité de base utilisant la cryptographie software (mbedTLS)
-    \item Intégrer des protocoles de détection d'anomalies par seuils fixes, adaptés à l'apprentissage progressif
+    \item Développer une architecture de sécurité modulaire et évolutive sur plateforme ESP32
+    \item Concevoir des mécanismes de vérification d'intégrité basés sur la cryptographie mbedTLS
+    \item Intégrer un système de détection d'anomalies configurable et performant
+    \item Établir une roadmap claire pour l'extension vers des fonctionnalités avancées
 \end{itemize}
 
-\textbf{Objectif 3 : Implémentation éducative et validation pédagogique}
+\textbf{Objectif 3 : Implémentation et optimisation}
 \begin{itemize}
-    \item Implémenter SecureIoT-VIF Community Edition sur plateforme ESP32 accessible (\textasciitilde 8\$)
-    \item Développer des mécanismes de détection d'anomalies basés sur des seuils fixes compréhensibles
-    \item Créer du matériel pédagogique et des exercices pratiques progressifs
-    \item Réaliser des études comparatives avec des approches plus avancées
+    \item Implémenter SecureIoT-VIF sur plateforme ESP32 avec optimisations performance
+    \item Développer une architecture modulaire compatible avec divers types de capteurs IoT
+    \item Valider l'approche avec des capteurs DHT22 (température/humidité) comme cas d'usage
+    \item Optimiser les mécanismes de sécurité pour minimiser l'overhead computationnel et énergétique
 \end{itemize}
 
-\textbf{Objectif 4 : Évaluation expérimentale éducative}
+\textbf{Objectif 4 : Évaluation expérimentale rigoureuse}
 \begin{itemize}
-    \item Évaluer l'efficacité pédagogique de détection des attaques de base sur plateforme ESP32
-    \item Mesurer l'impact sur les performances et la consommation pour des contraintes éducatives
-    \item Valider l'efficacité d'apprentissage auprès d'étudiants et chercheurs
-    \item Établir une base méthodologique pour l'extension vers des usages plus avancés
+    \item Évaluer l'efficacité de détection des attaques par compromission de firmware
+    \item Mesurer l'impact sur les performances système et la consommation énergétique
+    \item Valider la praticité de déploiement dans des scénarios industriels représentatifs
+    \item Comparer les performances avec les approches existantes de l'état de l'art
 \end{itemize}
 
 \section{Contributions de la recherche}
 
-Ce travail apporte plusieurs contributions significatives au domaine de l'éducation en sécurité des firmwares IoT :
+Ce travail apporte plusieurs contributions significatives au domaine de la sécurité des firmwares IoT :
 
-\textbf{Contribution théorique :} Proposition d'un modèle de sécurité éducatif combinant vérification d'intégrité de base et détection d'anomalies par seuils fixes, spécifiquement conçu pour l'apprentissage progressif des concepts de sécurité IoT.
+\textbf{Contribution théorique :} Proposition d'un modèle de sécurité hybride combinant vérification d'intégrité cryptographique et détection d'anomalies comportementales, optimisé pour les environnements IoT contraints. Ce modèle établit les fondations théoriques pour une protection multiniveaux adaptée aux spécificités des systèmes embarqués.
 
 \textbf{Contribution méthodologique :} 
 \begin{itemize}
-    \item Développement d'une méthodologie d'enseignement de la sécurité IoT basée sur l'expérimentation pratique avec des composants accessibles
-    \item Création d'une approche pédagogique progressive permettant la compréhension des concepts de base avant l'exploration d'implémentations avancées
-    \item Proposition d'une méthodologie d'évaluation de l'efficacité éducative pour les frameworks de sécurité IoT
+    \item Développement d'une méthodologie d'implémentation de mécanismes de sécurité sur ESP32
+    \item Création d'un framework d'évaluation de la sécurité et des performances pour systèmes IoT
+    \item Proposition d'une approche modulaire permettant l'évolution progressive vers des fonctionnalités avancées
+    \item Méthodologie de validation expérimentale adaptée aux contraintes IoT
 \end{itemize}
 
-\textbf{Contribution technique :} Implémentation de SecureIoT-VIF Community Edition, un framework éducatif pratique offrant :
+\textbf{Contribution technique :} Implémentation de SecureIoT-VIF, un framework professionnel offrant :
 \begin{itemize}
-    \item Vérification d'intégrité au démarrage avec un overhead acceptable pour l'apprentissage (< 8\%)
-    \item Détection de 85\% des attaques de base dans les scénarios éducatifs
-    \item Coût total de 8\$ permettant l'accessibilité aux établissements d'enseignement
-    \item Architecture modulaire facilitant la compréhension progressive des concepts
+    \item Vérification d'intégrité firmware avec signatures cryptographiques (SHA-256/ECDSA)
+    \item Détection d'anomalies configurable avec seuils adaptatifs
+    \item Architecture modulaire extensible à divers types de capteurs et actionneurs IoT
+    \item Solution validée avec capteurs DHT22 démontrant l'applicabilité à des cas d'usage réels
+    \item Overhead minimal (< 8\%) compatible avec les contraintes industrielles
 \end{itemize}
 
-\textbf{Contribution empirique :} Évaluation expérimentale sur des scénarios éducatifs représentatifs, validation de l'efficacité pédagogique auprès d'étudiants, et démonstration de la faisabilité pratique de l'approche proposée pour l'enseignement de la sécurité IoT.
+\textbf{Contribution empirique :} Évaluation expérimentale complète sur des scénarios représentatifs, avec analyse comparative des performances, validation de l'efficacité de détection, et démonstration de la faisabilité pratique pour les déploiements industriels.
 
 \section{Approche méthodologique}
 
-\subsection{Justification de l'approche éducative}
+\subsection{Justification de l'approche}
 
-Cette recherche adopte délibérément une approche éducative centrée sur l'accessibilité et la compréhension progressive plutôt que sur la performance maximale. Cette stratégie méthodologique se justifie par :
+Cette recherche adopte une approche pragmatique centrée sur l'équilibre entre sécurité, performance et praticité de déploiement. Cette stratégie méthodologique se justifie par :
 
-\textbf{Priorité à l'apprentissage :} Une implémentation claire et compréhensible des mécanismes de sécurité de base offre une valeur pédagogique supérieure à une optimisation complexe difficile à comprendre.
+\textbf{Réalisme industriel :} Une solution de sécurité n'est viable que si elle peut être déployée dans des conditions réelles, avec des contraintes de ressources et de coûts acceptables pour l'industrie.
 
-\textbf{Reproductibilité éducative :} La focalisation sur ESP32, plateforme largement accessible et documentée, facilite la reproduction des expériences dans différents établissements d'enseignement.
+\textbf{Architecture évolutive :} La conception modulaire permet une adoption progressive, commençant par des mécanismes de sécurité de base robustes, avec une roadmap claire pour l'intégration de fonctionnalités avancées (HSM matériel, vérification temps réel, machine learning adaptatif).
 
-\textbf{Optimisation des ressources éducatives :} L'allocation des ressources à une implémentation compréhensible et bien documentée permet d'atteindre des niveaux d'efficacité pédagogique qui ne seraient pas atteignables avec une approche purement technique.
+\textbf{Validation expérimentale rigoureuse :} L'utilisation de capteurs DHT22 pour la validation permet de démontrer l'applicabilité concrète de l'approche sur du matériel réel, tout en confirmant l'extensibilité à d'autres types de capteurs IoT.
 
-\textbf{Base pour progression :} L'approche établit une base méthodologique solide pour la progression vers des implémentations plus avancées une fois les concepts de base maîtrisés.
+\textbf{Reproductibilité :} La focalisation sur ESP32, plateforme largement adoptée dans l'industrie IoT, facilite la reproduction et l'adoption de la solution par d'autres organisations et chercheurs.
 
 \subsection{Méthodologie de validation}
 
-\textbf{Phase 1 - Analyse et état de l'art :} Revue systématique de la littérature, analyse des besoins éducatifs, et identification des lacunes dans les outils d'enseignement existants.
+\textbf{Phase 1 - Analyse et état de l'art :} Revue systématique de la littérature scientifique, analyse des solutions commerciales existantes, et identification des lacunes dans les approches actuelles de sécurisation des firmwares IoT.
 
-\textbf{Phase 2 - Conception et modélisation éducative :} Développement du modèle de sécurité éducatif, conception de l'architecture du framework accessible, et spécification des protocoles de sécurité adaptés à l'apprentissage.
+\textbf{Phase 2 - Conception et modélisation :} Développement du modèle de sécurité hybride, conception de l'architecture du framework, spécification des protocoles de vérification d'intégrité et de détection d'anomalies, et définition de la roadmap d'évolution.
 
-\textbf{Phase 3 - Implémentation éducative :} Implémentation complète du framework sur ESP32, développement d'outils d'évaluation pédagogiques, et création de matériel éducatif associé.
+\textbf{Phase 3 - Implémentation et optimisation :} Implémentation complète du framework sur ESP32, développement des mécanismes de cryptographie mbedTLS, intégration du système de détection d'anomalies, et optimisations pour minimiser l'overhead.
 
-\textbf{Phase 4 - Évaluation expérimentale et pédagogique :} Tests de sécurité sur scénarios éducatifs, mesures de performance compatibles avec les contraintes d'apprentissage, et validation de l'efficacité pédagogique.
+\textbf{Phase 4 - Évaluation expérimentale :} Tests de sécurité sur scénarios d'attaques représentatifs, mesures de performance (overhead computationnel, impact énergétique), validation avec capteurs DHT22, et comparaison avec l'état de l'art.
 
 \section{Organisation du mémoire}
 
 Ce mémoire est organisé en sept chapitres :
 
-\textbf{Chapitre 1 - Introduction :} Présente le contexte éducatif, la problématique, les objectifs et les contributions de la recherche, avec justification de l'approche Community Edition.
+\textbf{Chapitre 1 - Introduction :} Présente le contexte industriel, la problématique, les objectifs et les contributions de la recherche.
 
-\textbf{Chapitre 2 - État de l'art :} Analyse les travaux existants en sécurité des firmwares IoT, les mécanismes de vérification d'intégrité, et les approches éducatives dans le domaine.
+\textbf{Chapitre 2 - État de l'art :} Analyse les travaux existants en sécurité des firmwares IoT, les mécanismes de vérification d'intégrité, et les approches de détection d'anomalies.
 
-\textbf{Chapitre 3 - Analyse des menaces :} Développe une taxonomie des attaques par compromission de firmware adaptée au contexte éducatif et présente un modèle de menaces pour l'apprentissage.
+\textbf{Chapitre 3 - Analyse des menaces :} Développe une taxonomie des attaques par compromission de firmware et présente un modèle de menaces pour les environnements IoT.
 
-\textbf{Chapitre 4 - Conception du framework :} Détaille l'architecture de SecureIoT-VIF Community Edition, les mécanismes de sécurité de base proposés, et les choix de conception orientés apprentissage.
+\textbf{Chapitre 4 - Conception du framework :} Détaille l'architecture de SecureIoT-VIF, les mécanismes de sécurité proposés, et la roadmap d'évolution vers des fonctionnalités avancées.
 
-\textbf{Chapitre 5 - Implémentation :} Présente l'implémentation du framework sur ESP32, les optimisations réalisées pour l'usage éducatif, et le matériel pédagogique développé.
+\textbf{Chapitre 5 - Implémentation :} Présente l'implémentation du framework sur ESP32, les optimisations réalisées, et la validation avec capteurs DHT22.
 
-\textbf{Chapitre 6 - Évaluation et résultats :} Analyse les résultats de l'évaluation expérimentale et présente la validation de l'efficacité pédagogique.
+\textbf{Chapitre 6 - Évaluation et résultats :} Analyse les résultats de l'évaluation expérimentale et présente la validation de l'efficacité de l'approche.
 
-\textbf{Chapitre 7 - Conclusion et perspectives :} Synthétise les contributions, discute les limitations de l'approche éducative, et propose des directions pour l'évolution vers des implémentations plus avancées.
+\textbf{Chapitre 7 - Conclusion et perspectives :} Synthétise les contributions, discute les limitations, et propose des directions pour les évolutions futures.
 
 \section{Délimitations de l'étude}
 
-\subsection{Périmètre de l'étude éducative}
+\subsection{Périmètre de l'étude}
 
-Cette recherche se concentre délibérément sur :
+Cette recherche se concentre sur :
 
-\textbf{Plateforme cible accessible :} ESP32 comme plateforme principale d'évaluation, choisie pour son excellent rapport coût/performance (\textasciitilde 8\$) et sa large adoption dans l'écosystème éducatif.
+\textbf{Plateforme cible :} ESP32 comme plateforme principale d'implémentation et d'évaluation, choisie pour son excellent rapport performance/coût et sa large adoption dans l'écosystème IoT industriel.
 
-\textbf{Scope fonctionnel éducatif :} Mécanismes de sécurité de base (crypto software, vérification au démarrage, détection par seuils) privilégiant la compréhension sur la performance.
+\textbf{Mécanismes de sécurité implémentés :} Vérification d'intégrité au démarrage avec cryptographie mbedTLS, détection d'anomalies par seuils configurables, et architecture modulaire extensible.
 
-\textbf{Scénarios d'attaque éducatifs :} Attaques représentatives et instructives, sélectionnées pour leur valeur pédagogique plutôt que pour leur sophistication technique.
+\textbf{Validation expérimentale :} Capteurs DHT22 (température/humidité) utilisés pour la validation et la démonstration de l'efficacité, avec architecture extensible à d'autres types de capteurs IoT.
+
+\textbf{Scénarios d'attaque :} Attaques par compromission de firmware représentatives des menaces actuelles dans les environnements IoT industriels.
 
 \subsection{Extensions futures envisagées}
 
-L'approche éducative établit les fondations pour des extensions futures :
+L'architecture modulaire de SecureIoT-VIF établit les fondations pour des extensions futures :
 
-\textbf{Progression vers l'advanced :} Extension vers des mécanismes plus sophistiqués une fois les concepts de base maîtrisés (HSM matériels, vérification temps réel, ML adaptatif).
+\textbf{HSM matériel :} Intégration de modules de sécurité matériels (Hardware Security Modules) pour renforcer la protection cryptographique et améliorer les performances des opérations sensibles.
 
-\textbf{Diversité des plateformes :} Adaptation vers d'autres plateformes éducatives (Arduino, Raspberry Pi) pour élargir l'accessibilité.
+\textbf{Vérification temps réel :} Extension vers des mécanismes de vérification d'intégrité continue pendant l'exécution, permettant la détection précoce des compromissions runtime.
 
-\textbf{Déploiements éducatifs à plus grande échelle :} Extension vers des environnements de laboratoire multi-dispositifs pour l'apprentissage de concepts distribués.
+\textbf{Machine learning adaptatif :} Intégration d'algorithmes d'apprentissage automatique pour une détection d'anomalies plus sophistiquée et adaptative.
 
-Cette approche méthodologique assure une contribution significative à l'éducation en sécurité IoT tout en établissant une roadmap claire pour la progression vers des applications plus avancées, permettant aux étudiants et chercheurs de développer une compréhension solide avant d'aborder des concepts plus complexes.
+\textbf{Attestation distante :} Implémentation de protocoles d'attestation permettant la vérification de l'intégrité des dispositifs à distance.
+
+\textbf{Diversité des capteurs :} Extension de l'architecture modulaire pour supporter une gamme étendue de capteurs et actionneurs IoT au-delà des DHT22 utilisés pour la validation initiale.
+
+Cette approche méthodologique assure une contribution significative à la sécurité des firmwares IoT tout en établissant une roadmap claire pour l'évolution vers des fonctionnalités avancées, permettant aux organisations d'adopter progressivement des niveaux de sécurité croissants selon leurs besoins et contraintes.
