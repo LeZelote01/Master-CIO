@@ -113,7 +113,7 @@ L'ESP32 dual-core permet une répartition simple et compréhensible des charges 
 // Configuration professionnelle de vérification 
 typedef struct {
     size_t block_size;              // 4KB pour granularité professionnelle
-    uint32_t verification_interval; // 5 minutes pour déploiement industriel
+    uint32_t vérification_interval; // 5 minutes pour déploiement industriel
     bool software_crypto_only;      // Toujours true en Community
     uint8_t core_affinity;          // Core 1 dédié sécurité
 } secureiot_community_ivm_config_t;
@@ -247,7 +247,7 @@ esp_err_t secureiot_calculate_block_hash_mbedtls(uint32_t block_id,
 }
 
 // Tâche professionnelle de vérification continue Community
-void secureiot_community_continuous_verification_task(void* parameter) {
+void secureiot_community_continuous_vérification_task(void* parameter) {
     secureiot_community_ivm_config_t* config = 
         (secureiot_community_ivm_config_t*)parameter;
     
@@ -258,7 +258,7 @@ void secureiot_community_continuous_verification_task(void* parameter) {
     uint32_t total_blocks = secureiot_get_total_firmware_blocks_community();
     TickType_t last_wake_time = xTaskGetTickCount();
     
-    ESP_LOGI(TAG, "🎓 Community continuous verification task started on core 1");
+    ESP_LOGI(TAG, "🎓 Community continuous vérification task started on core 1");
     ESP_LOGI(TAG, "📚 Educational mode: software crypto only, 5-minute intervals");
     
     while (true) {
@@ -271,18 +271,18 @@ void secureiot_community_continuous_verification_task(void* parameter) {
                          current_block);
                 secureiot_trigger_educational_alert_community(current_block);
             } else {
-                ESP_LOGD(TAG, "✅ Educational block %lu verification completed", current_block);
+                ESP_LOGD(TAG, "✅ Educational block %lu vérification completed", current_block);
             }
             
             // Passage au bloc suivant avec wrap-around professionnel
             current_block = (current_block + 1) % total_blocks;
         } else {
-            ESP_LOGD(TAG, "⏳ System load high, skipping verification (educational)");
+            ESP_LOGD(TAG, "⏳ System load high, skipping vérification (educational)");
         }
         
         // Attente professionnelle avec intervalle fixe (5 minutes)
         vTaskDelayUntil(&last_wake_time, 
-                       pdMS_TO_TICKS(config->verification_interval));
+                       pdMS_TO_TICKS(config->vérification_interval));
     }
 }
 \end{lstlisting}
